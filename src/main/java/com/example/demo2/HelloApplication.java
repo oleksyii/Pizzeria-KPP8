@@ -35,6 +35,8 @@ public class HelloApplication extends Application {
 
         Parent root = FXMLLoader.load(getClass().getResource("hello-view.fxml"));
         primaryStage.setTitle("Hello world");
+
+        primaryStage.getIcons().add(new Image("pizza-box.png"));
 //        Must be at the end
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
