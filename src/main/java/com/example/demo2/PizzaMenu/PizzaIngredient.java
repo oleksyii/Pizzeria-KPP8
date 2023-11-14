@@ -1,4 +1,4 @@
-package com.example.demo2;
+package com.example.demo2.PizzaMenu;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;

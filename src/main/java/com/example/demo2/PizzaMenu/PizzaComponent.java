@@ -1,4 +1,4 @@
-package com.example.demo2;
+package com.example.demo2.PizzaMenu;
 
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
