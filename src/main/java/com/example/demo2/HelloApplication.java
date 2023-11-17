@@ -1,6 +1,7 @@
 package com.example.demo2;
 
 import com.example.demo2.PizzaMenu.MenuApplication;
+import com.example.demo2.Settings.SettingsPage;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -40,8 +41,9 @@ public class HelloApplication extends Application {
 //        primaryStage.setScene(new Scene(root));
 //        primaryStage.show();
 
+        SettingsPage settingsPage = new SettingsPage();
         MenuApplication menu = new MenuApplication();
-        menu.start(primaryStage);
+        settingsPage.start(primaryStage);
     }
 
     public static void main(String[] args) {

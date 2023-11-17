@@ -1,0 +1,23 @@
+/* styles.css */
+
+.combo-box .arrow {
+    -fx-background-color: white;
+    -fx-max-width:25px;
+    -fx-min-width:25px;
+    -fx-max-height:13px;
+    -fx-min-height:13px;
+}
+
+.combo-box .list-cell {
+    -fx-text-fill: black; /* Колір тексту елементів у списку */
+}
+
+.combo-box .list-cell:selected {
+    -fx-background-color: #AF5D26; /* Фон вибраного елемента у списку */
+    -fx-text-fill: white;
+}
+
+.combo-box .text-field {
+    -fx-text-fill: white; /* Колір тексту вибраного елемента */
+    -fx-background-color: transparent; /* Фон вибраного елемента */
+}
