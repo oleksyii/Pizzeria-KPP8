@@ -1,5 +1,6 @@
 package com.example.demo2;
 
+import com.example.demo2.Configuration.PizzaConfiguration;
 import com.example.demo2.PizzaMenu.MenuPage;
 import com.example.demo2.Settings.SettingsPage;
 import javafx.application.Application;
@@ -36,7 +37,10 @@ public class HelloApplication extends Application {
 
         SettingsPage settingsPage = new SettingsPage();
         MenuPage menuPage = new MenuPage();
-        menuPage.start(primaryStage);
+        PizzaConfiguration configuration = new PizzaConfiguration();
+        configuration.start(primaryStage);
+//        menuPage.start(primaryStage);
+//        settingsPage.start(primaryStage);
     }
 
     public static void main(String[] args) {
