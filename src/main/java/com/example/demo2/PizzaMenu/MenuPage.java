@@ -47,8 +47,8 @@ public class MenuPage {
         Image backgroundImage = new Image(getClass().getResource("/pizza-background.png").toExternalForm());
         ImageView backgroundImageView = new ImageView(backgroundImage);
 
-        backgroundImageView.setFitWidth(1500);
-        backgroundImageView.setFitHeight(800);
+        backgroundImageView.setFitWidth(1320);
+        backgroundImageView.setFitHeight(780);
 
         GridPane pizzaGrid = new GridPane();
 
