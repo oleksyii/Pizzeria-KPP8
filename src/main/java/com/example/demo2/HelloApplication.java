@@ -1,16 +1,9 @@
 package com.example.demo2;
 
-import com.example.demo2.PizzaMenu.MenuApplication;
+import com.example.demo2.PizzaMenu.MenuPage;
 import com.example.demo2.Settings.SettingsPage;
 import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import javafx.geometry.Insets;
-import javafx.scene.layout.VBox;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.StackPane;
-import java.util.List;
 
 public class HelloApplication extends Application {
 
@@ -42,8 +35,8 @@ public class HelloApplication extends Application {
 //        primaryStage.show();
 
         SettingsPage settingsPage = new SettingsPage();
-        MenuApplication menu = new MenuApplication();
-        settingsPage.start(primaryStage);
+        MenuPage menuPage = new MenuPage();
+        menuPage.start(primaryStage);
     }
 
     public static void main(String[] args) {

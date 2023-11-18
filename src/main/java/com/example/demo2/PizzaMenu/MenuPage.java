@@ -1,7 +1,9 @@
 package com.example.demo2.PizzaMenu;
 
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.shape.Line;
 import javafx.scene.image.Image;
@@ -11,9 +13,36 @@ import javafx.stage.Stage;
 import java.util.List;
 import javafx.scene.paint.Color;
 
-public class MenuApplication {
+public class MenuPage {
     public void start(Stage primaryStage) {
         StackPane root = new StackPane();
+
+        HBox header = new HBox();
+        header.setMinHeight(70);
+        header.setMaxHeight(70);
+        header.setAlignment(Pos.TOP_CENTER);
+        HBox titleContainer = new HBox();
+        titleContainer.setAlignment(Pos.CENTER_LEFT);
+
+        ImageView menuIconImageView = new ImageView(new Image(getClass().getResource("/menu.png").toExternalForm()));
+        menuIconImageView.setFitHeight(40);
+        menuIconImageView.setFitWidth(40);
+
+        ImageView backIconImageView = new ImageView(new Image(getClass().getResource("/back-icon.png").toExternalForm()));
+        backIconImageView.setFitHeight(40);
+        backIconImageView.setFitWidth(40);
+        StackPane.setMargin(backIconImageView, new Insets(15, 0, 0, 25));
+        StackPane.setAlignment(backIconImageView, Pos.TOP_LEFT);
+
+        Label titleLabel = new Label("MENU");
+        titleLabel.setStyle("-fx-font-size: 40; -fx-font-weight: bold; -fx-text-fill: white; -fx-padding: 0 15 0 15; -fx-font-family: 'Comic Sans MS'");
+        titleContainer.getChildren().addAll(menuIconImageView, titleLabel);
+
+        header.getChildren().add(titleContainer);
+
+        header.setStyle("-fx-background-color: #5F2D04;");
+
+        StackPane.setAlignment(header, Pos.TOP_CENTER);
 
         Image backgroundImage = new Image(getClass().getResource("/pizza-background.png").toExternalForm());
         ImageView backgroundImageView = new ImageView(backgroundImage);
@@ -23,8 +52,7 @@ public class MenuApplication {
 
         GridPane pizzaGrid = new GridPane();
 
-        pizzaGrid.setHgap(310);
-        pizzaGrid.setVgap(50);
+        pizzaGrid.setHgap(250);
 
         Line verticalLine = new Line();
         verticalLine.setStartX(0);
@@ -56,11 +84,13 @@ public class MenuApplication {
 
         ScrollPane scrollPane = new ScrollPane(pizzaGrid);
         scrollPane.setStyle("-fx-background: transparent; -fx-background-color: transparent; ");
-        scrollPane.setPadding(new Insets(20));
+        scrollPane.setPadding(new Insets(70, 20, 0, 20));
 
         root.getChildren().addAll(backgroundImageView, verticalLine, scrollPane);
 
-        Scene scene = new Scene(root, 1920, 1080);
+        root.getChildren().addAll(header, backIconImageView);
+
+        Scene scene = new Scene(root, 1320, 780);
 
         primaryStage.setResizable(false);
         primaryStage.setTitle("Menu");

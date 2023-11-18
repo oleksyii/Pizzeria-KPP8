@@ -1,5 +1,6 @@
 package com.example.demo2.PizzaMenu;
 
+import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -51,7 +52,7 @@ public class PizzaComponent extends HBox {
         }
 
         StackPane spacer = new StackPane();
-        spacer.setMinHeight(55);
+        spacer.setMinHeight(40);
 
         VBox labelsVBox = new VBox();
         labelsVBox.getChildren().addAll(nameLabel, descriptionLabel, spacer, ingredientsHBox);
@@ -67,6 +68,7 @@ public class PizzaComponent extends HBox {
         contextAndTimeVBox.setSpacing(10);
 
         getChildren().addAll(contextAndTimeVBox);
+        setPadding(new Insets(25, 0, 15, 0));
     }
 
     public void setPizzaName(String name) {
