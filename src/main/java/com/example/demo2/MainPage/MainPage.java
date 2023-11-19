@@ -53,8 +53,9 @@ public class MainPage {
         StackPane table = generateTable();
         VBox cashiers = generateCashiers();
         HBox clients = generateClients();
+        VBox clientsDesks = generateClientDesks();
 
-        root.getChildren().addAll(backgroundImageView, ovens, cooks, table, cashiers, clients);
+        root.getChildren().addAll(backgroundImageView, ovens, cooks, table, cashiers, clients, clientsDesks);
         root.getChildren().addAll(header, settingsButton);
 
         Scene scene = new Scene(root, 1320, 780);
@@ -168,6 +169,26 @@ public class MainPage {
 
     private VBox generateClientDesks() {
         VBox clientDesks = new VBox();
+        clientDesks.setAlignment(Pos.CENTER);
+        clientDesks.setSpacing(300);
+        clientDesks.setPadding(new Insets(40, 0, 0,0));
+        HBox clientDesks1 = new HBox();
+        HBox clientDesks2 = new HBox();
+        clientDesks1.setSpacing(80);
+        clientDesks1.setAlignment(Pos.CENTER_RIGHT);
+        clientDesks1.setPadding(new Insets(0, 60, 0, 0));
+        clientDesks2.setSpacing(80);
+        clientDesks2.setAlignment(Pos.CENTER_RIGHT);
+        clientDesks2.setPadding(new Insets(0, 60, 0, 0));
+
+        ClientDesk clientDesk1 = new ClientDesk();
+        ClientDesk clientDesk2 = new ClientDesk();
+        ClientDesk clientDesk3 = new ClientDesk();
+        ClientDesk clientDesk4 = new ClientDesk();
+
+        clientDesks1.getChildren().addAll(clientDesk1, clientDesk2);
+        clientDesks2.getChildren().addAll(clientDesk3, clientDesk4);
+        clientDesks.getChildren().addAll(clientDesks1, clientDesks2);
 
         return clientDesks;
     }
