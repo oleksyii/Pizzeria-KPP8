@@ -9,6 +9,8 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 public class MainPage {
@@ -48,8 +50,10 @@ public class MainPage {
 
         VBox ovens = generateOvens();
         VBox cooks = generateCooks();
+        StackPane table = generateTable();
+        VBox cashiers = generateCashiers();
 
-        root.getChildren().addAll(backgroundImageView, ovens, cooks);
+        root.getChildren().addAll(backgroundImageView, ovens, cooks, table, cashiers);
         root.getChildren().addAll(header, settingsButton);
 
         Scene scene = new Scene(root, 1320, 780);
@@ -87,4 +91,51 @@ public class MainPage {
         cooks.getChildren().addAll(cook1, cook2, cook3);
         return cooks;
     }
+
+    private StackPane generateTable() {
+        Rectangle rectangle = new Rectangle(100, 620);
+        rectangle.setFill(Color.SADDLEBROWN);
+
+        Image pizzaImage1 = new Image("pizza_icon.png");
+        Image pizzaImage2 = new Image("pizza_icon.png");
+
+        ImageView pizzaImageView1 = new ImageView(pizzaImage1);
+        ImageView pizzaImageView2 = new ImageView(pizzaImage2);
+
+        VBox pizzaImages = new VBox();
+
+        pizzaImageView1.setFitHeight(70);
+        pizzaImageView1.setFitWidth(70);
+
+        pizzaImageView2.setFitHeight(70);
+        pizzaImageView2.setFitWidth(70);
+
+        pizzaImages.setAlignment(Pos.TOP_LEFT);
+        pizzaImages.setPadding(new Insets(100, 15, 30, 15));
+        pizzaImages.setSpacing(300);
+
+        pizzaImages.getChildren().addAll(pizzaImageView1, pizzaImageView2);
+
+        StackPane stackPane = new StackPane();
+        stackPane.setAlignment(Pos.TOP_LEFT);
+        stackPane.setPadding(new Insets(210, 0, 150, 430));
+        stackPane.getChildren().addAll(rectangle, pizzaImages);
+
+        return stackPane;
+    }
+
+    private VBox generateCashiers() {
+        VBox cashiers = new VBox();
+        cashiers.setAlignment(Pos.TOP_CENTER);
+        cashiers.setPadding(new Insets(220, 0, 150, 50));
+        cashiers.setSpacing(75);
+
+        Cashier oven1 = new Cashier();
+        Cashier oven2 = new Cashier();
+        Cashier oven3 = new Cashier();
+
+        cashiers.getChildren().addAll(oven1, oven2, oven3);
+        return cashiers;
+    }
+
 }
