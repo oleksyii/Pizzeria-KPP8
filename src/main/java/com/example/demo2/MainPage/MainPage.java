@@ -15,9 +15,9 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 public class MainPage {
-//    private Animation animationInstance;
+    private Animation animationInstance;
     public void start(Stage primaryStage) {
-//        animationInstance = new Animation();
+        animationInstance = new Animation();
         StackPane root = new StackPane();
 
         HBox header = new HBox();
@@ -73,8 +73,8 @@ public class MainPage {
         HBox clients = generateClients();
         VBox clientsDesks = generateClientDesks();
 
-//        Cook targetCook = (Cook) cooks.getChildren().get(0);
-//        animationInstance.animateCook(targetCook, 10);
+        Cook targetCook = (Cook) cooks.getChildren().get(0);
+        targetCook.animateCook(animationInstance, 10);
 
 
         root.getChildren().addAll(backgroundImageView, ovens, cooks, table, cashiers, clients, clientsDesks);
@@ -108,9 +108,9 @@ public class MainPage {
         cooks.setPadding(new Insets(170, 0, 150, 230));
         cooks.setSpacing(60);
 
-        Cook cook1 = new Cook("atTable");
-        Cook cook2 = new Cook("atOven");
-        Cook cook3 = new Cook("atTable");
+        Cook cook1 = new Cook(CookState.AT_TABLE);
+        Cook cook2 = new Cook(CookState.AT_OVEN);
+        Cook cook3 = new Cook(CookState.AT_TABLE);
 
         cooks.getChildren().addAll(cook1, cook2, cook3);
         return cooks;
