@@ -1,5 +1,6 @@
 package com.example.demo2.MainPage;
 
+import com.example.demo2.PizzaMenu.MenuPage;
 import com.example.demo2.Settings.SettingsPage;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -14,7 +15,9 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 public class MainPage {
+//    private Animation animationInstance;
     public void start(Stage primaryStage) {
+//        animationInstance = new Animation();
         StackPane root = new StackPane();
 
         HBox header = new HBox();
@@ -25,15 +28,30 @@ public class MainPage {
         titleContainer.setAlignment(Pos.CENTER_LEFT);
 
         Button settingsButton = new Button();
+        Button menuButton = new Button();
         settingsButton.setOnAction(event -> {
             SettingsPage settings = new SettingsPage();
             settings.start(primaryStage);
         });
+        menuButton.setOnAction(event -> {
+            MenuPage menu = new MenuPage();
+            menu.start(primaryStage);
+        });
+        ImageView menuIconImageView = new ImageView(new Image(getClass().getResource("/menu.png").toExternalForm()));
+        menuIconImageView.setFitHeight(40);
+        menuIconImageView.setFitWidth(40);
+        menuButton.setGraphic(menuIconImageView);
+        menuButton.setStyle("-fx-background-color: transparent; -fx-border-color: transparent;");
+
         settingsButton.setGraphic(new ImageView(new Image(getClass().getResource("/settings.png").toExternalForm())));
-        settingsButton.setPrefSize(25, 25);
+        settingsButton.setPrefSize(20, 20);
         settingsButton.setStyle("-fx-background-color: transparent; -fx-border-color: transparent;");
+
         StackPane.setMargin(settingsButton, new Insets(4, 25, 0, 0));
+        StackPane.setMargin(menuButton, new Insets(10, 100, 0, 0));
+
         StackPane.setAlignment(settingsButton, Pos.TOP_RIGHT);
+        StackPane.setAlignment(menuButton, Pos.TOP_RIGHT);
 
         Label titleLabel = new Label("PIZZA SIMULATOR");
         titleLabel.setStyle("-fx-font-size: 40; -fx-font-weight: bold; -fx-text-fill: white; -fx-padding: 0 15 0 15; -fx-font-family: 'Comic Sans MS'");
@@ -55,8 +73,12 @@ public class MainPage {
         HBox clients = generateClients();
         VBox clientsDesks = generateClientDesks();
 
+//        Cook targetCook = (Cook) cooks.getChildren().get(0);
+//        animationInstance.animateCook(targetCook, 10);
+
+
         root.getChildren().addAll(backgroundImageView, ovens, cooks, table, cashiers, clients, clientsDesks);
-        root.getChildren().addAll(header, settingsButton);
+        root.getChildren().addAll(header, settingsButton, menuButton);
 
         Scene scene = new Scene(root, 1320, 780);
 

@@ -1,5 +1,7 @@
 package com.example.demo2.Settings;
 
+import com.example.demo2.Configuration.PizzaConfiguration;
+import com.example.demo2.MainPage.MainPage;
 import com.example.demo2.PizzaMenu.PizzaComponent;
 import com.example.demo2.PizzaMenu.PizzasList;
 import javafx.geometry.Insets;
@@ -16,6 +18,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 
+import java.lang.module.Configuration;
 import java.util.List;
 
 public class SettingsPage {
@@ -100,7 +103,10 @@ public class SettingsPage {
 
 
         // Обробник події для закриття вікна при натисканні кнопки "Close"
-        closeButton.setOnAction(event -> primaryStage.close());
+        closeButton.setOnAction(event -> {
+            MainPage main = new MainPage();
+            main.start(primaryStage);
+        });
 
         // Додаємо поля вводу та кнопки до другої колонки
         TextField kucharsInput = createTextInput("KUCHARS", "5");
@@ -110,6 +116,13 @@ public class SettingsPage {
 
         Button newGameButton = createButton("NEW GAME");
         Button quitButton = createButton("QUIT");
+
+        quitButton.setOnAction(event -> primaryStage.close());
+        newGameButton.setOnAction(event -> {
+            PizzaConfiguration configaration = new PizzaConfiguration();
+            configaration.start(primaryStage);
+        });
+
         newGameButton.setStyle("-fx-font-size: 20; -fx-min-height: 45px; -fx-min-width: 200px; -fx-max-width: 170px; -fx-font-weight: bold; -fx-text-fill: #AF5D26; -fx-padding: 0 15 0 15; -fx-font-family: 'Comic Sans MS'; -fx-background-color: #ffffff; -fx-border-radius: 20px");
         quitButton.setStyle("-fx-font-size: 20; -fx-min-height: 45px; -fx-min-width: 200px; -fx-max-width: 170px; -fx-font-weight: bold; -fx-text-fill: white; -fx-padding: 0 15 0 15; -fx-font-family: 'Comic Sans MS'; -fx-background-color: #890303; -fx-border-radius: 20px");
 
