@@ -26,8 +26,6 @@ public class PizzaComponent extends HBox {
         nameLabel.setStyle("-fx-font-family: 'Comic Sans MS'; -fx-font-size: 32px; -fx-font-weight: 800; -fx-underline: true; -fx-text-fill: white;");
 
         CheckBox checkBox = new CheckBox();
-        checkBox.setStyle("-fx-fill: #5F2D04;");
-
         VBox checkBoxVBox = new VBox();
         checkBoxVBox.getChildren().add(checkBox);
         checkBoxVBox.setAlignment(Pos.CENTER);
