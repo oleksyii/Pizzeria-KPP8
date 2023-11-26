@@ -66,10 +66,13 @@ public class MainPage {
         backgroundImageView.setFitWidth(1320);
         backgroundImageView.setFitHeight(780);
 
-        VBox ovens = generateOvens();
-        VBox cooks = generateCooks();
-        StackPane table = generateTable();
-        VBox cashiers = generateCashiers();
+        int numberOfCooks = 4;
+        int numberOfCashiers = 2;
+
+        VBox ovens = generateOvens(numberOfCooks);
+        VBox cooks = generateCooks(numberOfCooks);
+        StackPane table = generateTable(numberOfCooks);
+        VBox cashiers = generateCashiers(numberOfCashiers);
         HBox clients = generateClients();
         VBox clientsDesks = generateClientDesks();
 
@@ -88,57 +91,75 @@ public class MainPage {
         primaryStage.show();
     }
 
-    private VBox generateOvens() {
+    private void setSpacingDynamically(int numberOfElements, VBox elements, int paddingIfOne) {
+        if(numberOfElements == 1) {
+            Insets currentInsets = elements.getPadding();
+            elements.setPadding(new Insets(paddingIfOne, currentInsets.getRight(), currentInsets.getBottom(), currentInsets.getLeft()));
+        } else {
+            int defaultSpacing = 300;
+            // 2 -> 150
+            // 3 -> 75
+            // 4 -> 37.5
+            // 5 -> 18.75
+            elements.setSpacing(defaultSpacing / Math.pow(2, numberOfElements - 1));
+        }
+    }
+
+    private void setSpacingDynamically(int numberOfElements, VBox elements) {
+        this.setSpacingDynamically(numberOfElements, elements, 360);
+    }
+
+    private VBox generateOvens(int numberOfOvens) {
         VBox ovens = new VBox();
         ovens.setAlignment(Pos.TOP_LEFT);
         ovens.setPadding(new Insets(220, 0, 150, 100));
-        ovens.setSpacing(75);
 
-        Oven oven1 = new Oven();
-        Oven oven2 = new Oven();
-        Oven oven3 = new Oven();
+        this.setSpacingDynamically(numberOfOvens, ovens);
 
-        ovens.getChildren().addAll(oven1, oven2, oven3);
+        for (int i = 0; i < numberOfOvens; i++) {
+            Oven oven = new Oven();
+            ovens.getChildren().add(oven);
+        }
+
         return ovens;
     }
 
-    private VBox generateCooks() {
+    private VBox generateCooks(int numberOfCooks) {
         VBox cooks = new VBox();
         cooks.setAlignment(Pos.TOP_LEFT);
-        cooks.setPadding(new Insets(170, 0, 150, 230));
-        cooks.setSpacing(60);
+        cooks.setPadding(new Insets(180, 0, 150, 230));
 
-        Cook cook1 = new Cook(CookState.AT_TABLE);
-        Cook cook2 = new Cook(CookState.AT_OVEN);
-        Cook cook3 = new Cook(CookState.AT_TABLE);
+        this.setSpacingDynamically(numberOfCooks, cooks, 330);
 
-        cooks.getChildren().addAll(cook1, cook2, cook3);
+        for (int i = 0; i < numberOfCooks; i++) {
+            CookState cookState = i % 2 == 0 ? CookState.AT_TABLE: CookState.AT_OVEN;
+            Cook cook = new Cook(cookState);
+            cooks.getChildren().add(cook);
+        }
+
         return cooks;
     }
 
-    private StackPane generateTable() {
-        Rectangle rectangle = new Rectangle(100, 620);
+    private StackPane generateTable(int numberOfPizzas) {
+        Rectangle rectangle = new Rectangle(100, 650);
         rectangle.setFill(Color.SADDLEBROWN);
 
-        Image pizzaImage1 = new Image("pizza_icon.png");
-        Image pizzaImage2 = new Image("pizza_icon.png");
-
-        ImageView pizzaImageView1 = new ImageView(pizzaImage1);
-        ImageView pizzaImageView2 = new ImageView(pizzaImage2);
-
+        Image pizzaImage = new Image("pizza_icon.png");
         VBox pizzaImages = new VBox();
 
-        pizzaImageView1.setFitHeight(70);
-        pizzaImageView1.setFitWidth(70);
+        double paddingTop = (5.5 - numberOfPizzas) * 35;
+        pizzaImages.setPadding(new Insets(paddingTop, 15, 0, 15));
+        this.setSpacingDynamically(numberOfPizzas, pizzaImages, 260);
 
-        pizzaImageView2.setFitHeight(70);
-        pizzaImageView2.setFitWidth(70);
-
-        pizzaImages.setAlignment(Pos.TOP_LEFT);
-        pizzaImages.setPadding(new Insets(100, 15, 30, 15));
-        pizzaImages.setSpacing(300);
-
-        pizzaImages.getChildren().addAll(pizzaImageView1, pizzaImageView2);
+        for (int i = 0; i < numberOfPizzas; i++) {
+            HBox pizzaImageHBox = new HBox();
+            ImageView pizzaImageView = new ImageView(pizzaImage);
+            pizzaImageView.setFitHeight(70);
+            pizzaImageView.setFitWidth(70);
+            pizzaImageHBox.getChildren().add(pizzaImageView);
+            pizzaImageHBox.setPadding(new Insets(22, 0, 20, 0));
+            pizzaImages.getChildren().add(pizzaImageHBox);
+        }
 
         StackPane stackPane = new StackPane();
         stackPane.setAlignment(Pos.TOP_LEFT);
@@ -148,17 +169,18 @@ public class MainPage {
         return stackPane;
     }
 
-    private VBox generateCashiers() {
+    private VBox generateCashiers(int numberOfCashiers) {
         VBox cashiers = new VBox();
         cashiers.setAlignment(Pos.TOP_CENTER);
         cashiers.setPadding(new Insets(220, 0, 150, 50));
-        cashiers.setSpacing(75);
 
-        Cashier oven1 = new Cashier();
-        Cashier oven2 = new Cashier();
-        Cashier oven3 = new Cashier();
+        this.setSpacingDynamically(numberOfCashiers, cashiers);
 
-        cashiers.getChildren().addAll(oven1, oven2, oven3);
+        for (int i = 0; i < numberOfCashiers; i++) {
+            Cashier cashier = new Cashier();
+            cashiers.getChildren().add(cashier);
+        }
+
         return cashiers;
     }
 

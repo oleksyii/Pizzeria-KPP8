@@ -8,7 +8,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
-
+import javafx.scene.control.CheckBox;
+import javafx.geometry.Pos;
 import java.util.List;
 
 public class PizzaComponent extends HBox {
@@ -23,6 +24,18 @@ public class PizzaComponent extends HBox {
         timeLabel = new Label();
 
         nameLabel.setStyle("-fx-font-family: 'Comic Sans MS'; -fx-font-size: 32px; -fx-font-weight: 800; -fx-underline: true; -fx-text-fill: white;");
+
+        CheckBox checkBox = new CheckBox();
+        checkBox.setStyle("-fx-fill: #5F2D04;");
+
+        VBox checkBoxVBox = new VBox();
+        checkBoxVBox.getChildren().add(checkBox);
+        checkBoxVBox.setAlignment(Pos.CENTER);
+        checkBoxVBox.setPadding(new Insets(10, 0, 0, 10));
+
+        HBox nameHBox = new HBox();
+        nameHBox.getChildren().addAll(nameLabel, checkBoxVBox);
+
         descriptionLabel.setStyle("-fx-font-family: 'Comic Sans MS'; -fx-font-size: 16px; -fx-font-weight: 700; -fx-text-fill: #5F2D04;");
         timeLabel.setStyle("-fx-font-family: 'Comic Sans MS'; -fx-font-size: 16px; -fx-font-weight: 700; -fx-text-fill: #AF5D26;");
 
@@ -55,7 +68,7 @@ public class PizzaComponent extends HBox {
         spacer.setMinHeight(40);
 
         VBox labelsVBox = new VBox();
-        labelsVBox.getChildren().addAll(nameLabel, descriptionLabel, spacer, ingredientsHBox);
+        labelsVBox.getChildren().addAll(nameHBox, descriptionLabel, spacer, ingredientsHBox);
         labelsVBox.setSpacing(5);
 
         HBox imageAndLabelsHBox = new HBox();

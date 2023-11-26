@@ -1,8 +1,10 @@
 package com.example.demo2.PizzaMenu;
 
+import com.example.demo2.MainPage.MainPage;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.shape.Line;
@@ -31,8 +33,16 @@ public class MenuPage {
         ImageView backIconImageView = new ImageView(new Image(getClass().getResource("/back-icon.png").toExternalForm()));
         backIconImageView.setFitHeight(40);
         backIconImageView.setFitWidth(40);
-        StackPane.setMargin(backIconImageView, new Insets(15, 0, 0, 25));
-        StackPane.setAlignment(backIconImageView, Pos.TOP_LEFT);
+
+        Button backButton = new Button();
+        backButton.setGraphic(backIconImageView);
+        backButton.setStyle("-fx-background-color: transparent; -fx-border-color: transparent;");
+        StackPane.setMargin(backButton, new Insets(7, 0, 0, 7));
+        StackPane.setAlignment(backButton, Pos.TOP_LEFT);
+        backButton.setOnAction(event -> {
+            MainPage mainPage = new MainPage();
+            mainPage.start(primaryStage);
+        });
 
         Label titleLabel = new Label("MENU");
         titleLabel.setStyle("-fx-font-size: 40; -fx-font-weight: bold; -fx-text-fill: white; -fx-padding: 0 15 0 15; -fx-font-family: 'Comic Sans MS'");
@@ -88,7 +98,7 @@ public class MenuPage {
 
         root.getChildren().addAll(backgroundImageView, verticalLine, scrollPane);
 
-        root.getChildren().addAll(header, backIconImageView);
+        root.getChildren().addAll(header, backButton);
 
         Scene scene = new Scene(root, 1320, 780);
 
