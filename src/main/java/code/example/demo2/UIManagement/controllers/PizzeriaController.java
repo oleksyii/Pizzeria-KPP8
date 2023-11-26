@@ -1,4 +1,4 @@
-package code.example.demo2.controllers;
+package code.example.demo2.UIManagement.controllers;
 
 public class PizzeriaController {
     private PizzzeriaSimulatorViewModel simulatorViewModel;
