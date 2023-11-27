@@ -6,7 +6,7 @@ import javafx.util.Duration;
 
 public class Animation {
     public void animateClient(Client client, double targetX) {
-        TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(1), client);
+        TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(3), client);
         translateTransition.setToX(targetX);  // Встановлюємо відстань по осі X від поточної позиції до цільової
         translateTransition.play();
     }

@@ -20,7 +20,7 @@ import javafx.stage.Stage;
 
 public class MainPage {
     private Animation animationInstance;
-    private double initialDistance = -350;
+    private double initialDistance = -400;
     private boolean stopGenerating = false;
 
     public void start(Stage primaryStage) {
@@ -79,23 +79,31 @@ public class MainPage {
         VBox cooks = generateCooks(numberOfCooks);
         StackPane table = generateTable(numberOfCooks);
         VBox cashiers = generateCashiers(numberOfCashiers);
+        StackPane clientsContainer = new StackPane();
         HBox clients = new HBox();
+        clients.setPrefSize(550, 75);
+        clients.setSpacing(10);
+        clients.setMaxWidth(Region.USE_PREF_SIZE);
+        clientsContainer.setAlignment(Pos.CENTER_RIGHT);
+        clientsContainer.setPadding(new Insets(0, -500, 0, -100));
+        clients.setPadding(new Insets(380, 0, 0, 0));
+        clientsContainer.getChildren().add(clients);
         VBox clientsDesks = generateClientDesks();
 
         Cook targetCook = (Cook) cooks.getChildren().get(0);
         targetCook.animateCook(animationInstance, 10);
 
-        root.getChildren().addAll(backgroundImageView, ovens, cooks, table, cashiers, clients, clientsDesks);
+        root.getChildren().addAll(backgroundImageView, ovens, cooks, table, cashiers, clientsContainer, clientsDesks);
         root.getChildren().addAll(header, settingsButton, menuButton);
 
-        Scene scene = new Scene(root, 1320, 780);
+        Scene scene = new Scene(root,  1320, 780);
 
         primaryStage.setResizable(false);
         primaryStage.setTitle("Pizza Simulator");
         primaryStage.setScene(scene);
         primaryStage.show();
 
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(3), e->generateClients(clients)));
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(5), e->generateClients(clients)));
         timeline.setCycleCount(timeline.INDEFINITE);
         timeline.play();
     }
@@ -193,50 +201,17 @@ public class MainPage {
         return cashiers;
     }
 
-    private HBox generateClients() {
-        HBox clients = new HBox();
-        VBox firstClients = new VBox();
-        HBox otherClients = new HBox();
-
-        clients.setAlignment(Pos.TOP_CENTER);
-        clients.setPadding(new Insets(80, 0, 0,620));
-        clients.setSpacing(40);
-
-        Client client1 = new Client();
-        Client client2 = new Client();
-        Client client3 = new Client();
-        firstClients.getChildren().addAll(client1, client2, client3);
-        firstClients.setSpacing(125);
-        firstClients.setAlignment(Pos.CENTER);
-
-
-        Client client4 = new Client();
-        Client client5 = new Client();
-        Client client6 = new Client();
-        Client client7 = new Client();
-        otherClients.getChildren().addAll(client4, client5, client6, client7);
-        otherClients.setAlignment(Pos.CENTER);
-        otherClients.setSpacing(10);
-
-        clients.getChildren().addAll(/*firstClients,*/ otherClients);
-        return clients;
-    }
-
     private void generateClients(HBox clients) {
-        clients.setAlignment(Pos.TOP_RIGHT);
-        clients.setPadding(new Insets(380, 0, 0, 0));
-        clients.setSpacing(40);
         if (clients.getChildren().size() < 5) {
             Client client = new Client();
             clients.getChildren().add(client);
-//            initialDistance += 30;
+            initialDistance += 10;
 
             PauseTransition pauseTransition = new PauseTransition(Duration.seconds(0.05));
             pauseTransition.setOnFinished(event -> animationInstance.animateClient(client, initialDistance));
             pauseTransition.play();
         }
     }
-
 
     private VBox generateClientDesks() {
         VBox clientDesks = new VBox();
