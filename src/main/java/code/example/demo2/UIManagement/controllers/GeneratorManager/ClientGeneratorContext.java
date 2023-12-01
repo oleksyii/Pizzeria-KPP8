@@ -30,7 +30,7 @@ public class ClientGeneratorContext  {
             this.strategy = strategy;
         }
 
-        // Method to execute the strategy
+
         public void executeStrategy(int numOfCashiers) {
             if (strategy != null) {
                 currentClients = strategy.generateClients();

@@ -3,17 +3,26 @@ package code.example.demo2.UIManagement.controllers.OrderManager;
 import java.util.Dictionary;
 
 public class Order {
-    int orderId;
-    Dictionary<Integer,Dictionary<Integer, Integer>> pizzaIdAmount;
-    OrderStatus orderStatus;
+    private static int nextOrderId =1;
+    private int orderId;
+    private Dictionary<Integer, Integer> pizzaIdAmount;
+    private OrderStatus orderStatus;
 
-    int clientId;
+    private int clientId;
 
-    public Order(int orderId,Dictionary<Integer,Dictionary<Integer, Integer>> pizzaIdAmount){
+    public Order(Dictionary<Integer, Integer> pizzaIdAmount){
 
-        this.orderId=orderId;
+        this.orderId=nextOrderId++;
         this.pizzaIdAmount=pizzaIdAmount;
 
+    }
+
+    public void setClientId(int clientId) {
+        this.clientId = clientId;
+    }
+
+    public int getClientId(){
+        return this.clientId;
     }
 
     public void setStatus(OrderStatus status){
@@ -28,12 +37,14 @@ public class Order {
         return orderId;
     }
 
-    public Dictionary<Integer,Dictionary<Integer, Integer>> getPizzas(){
+    public Dictionary<Integer, Integer> getPizzas(){
 
         return pizzaIdAmount;
     }
 
     public Order giveAwayOrder(){
+        orderStatus = OrderStatus.Completed;
+
         return this;
     }
 
