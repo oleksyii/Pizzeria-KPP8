@@ -5,7 +5,7 @@ public class Task {
     private int pizzaId;
     private PizzaStatus status;
 
-    Task(int orderId, int pizzaId){
+    public Task(int orderId, int pizzaId){
         this.orderId = orderId;
         this.pizzaId = pizzaId;
         status = PizzaStatus.NotTaken;

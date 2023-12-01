@@ -3,7 +3,7 @@ package code.example.demo2.UIManagement.controllers.OrderManager;
 import java.util.Dictionary;
 
 public class Order {
-    private static int nextOrderId =1;
+    private static int nextOrderId = 1;
     private int orderId;
     private Dictionary<Integer, Integer> pizzaIdAmount;
     private OrderStatus orderStatus;
