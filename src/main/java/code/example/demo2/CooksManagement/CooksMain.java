@@ -4,7 +4,6 @@ import code.example.demo2.CooksManagement.strategies.FullCook;
 
 public class CooksMain {
     public static void main(String[] args){
-        TestTask TT = new TestTask();
         FullCook daemonThread = new FullCook();
         daemonThread.setDaemon(true); // Set the thread as daemon
         daemonThread.start();
