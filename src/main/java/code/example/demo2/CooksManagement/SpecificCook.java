@@ -8,9 +8,11 @@ public class SpecificCook {
 
     SpecificCook(Cook strategy){
         id++;
+        strategy.Id(id);
         this.strategy = strategy;
     }
     public void setStrategy(Cook strategy){
+        strategy.Id(this.strategy.Id());
         this.strategy.interrupt();
         this.strategy = strategy;
     }
@@ -18,7 +20,7 @@ public class SpecificCook {
         strategy.setDaemon(true); // Set the thread as daemon
         strategy.start();
     }
-    public int Id(){return id;}
+    public int Id(){return strategy.Id();}
     public void pause(){
         strategy.pauseCook();
     }
