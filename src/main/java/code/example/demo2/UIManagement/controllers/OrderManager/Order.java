@@ -1,16 +1,17 @@
 package code.example.demo2.UIManagement.controllers.OrderManager;
 
 import java.util.Dictionary;
+import java.util.Map;
 
 public class Order {
     private static int nextOrderId = 1;
     private int orderId;
-    private Dictionary<Integer, Integer> pizzaIdAmount;
+    private Map<Integer, Integer> pizzaIdAmount;
     private OrderStatus orderStatus;
 
     private int clientId;
 
-    public Order(Dictionary<Integer, Integer> pizzaIdAmount){
+    public Order(Map<Integer, Integer> pizzaIdAmount){
 
         this.orderId=nextOrderId++;
         this.pizzaIdAmount=pizzaIdAmount;
@@ -37,7 +38,7 @@ public class Order {
         return orderId;
     }
 
-    public Dictionary<Integer, Integer> getPizzas(){
+    public Map<Integer, Integer> getPizzas(){
 
         return pizzaIdAmount;
     }

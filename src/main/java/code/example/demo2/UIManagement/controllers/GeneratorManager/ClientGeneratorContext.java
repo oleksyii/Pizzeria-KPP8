@@ -16,7 +16,7 @@ public class ClientGeneratorContext  {
 
 
         private ClientGeneratorContext() {
-            this.strategy = null; // You might want to set a default strategy
+            this.strategy = null;
             this.currentClients = new ArrayList<>();
         }
 

@@ -1,17 +1,17 @@
 package code.example.demo2.UIManagement.controllers.ClientManager;
 
+import code.example.demo2.UIManagement.controllers.GeneratorManager.ClientGenerator;
+import code.example.demo2.UIManagement.controllers.GeneratorManager.RegularDayGenerator;
 import code.example.demo2.UIManagement.controllers.OrderManager.Order;
 
-import java.util.Dictionary;
-import java.util.Hashtable;
-import java.util.Random;
+import java.util.*;
 
 public class PizzeriaClient {
     private static int nextClientId = 1;
     int clientId;
     Order order;
 
-    PizzeriaClient(){
+    public PizzeriaClient(){
 
     this.clientId = nextClientId++;
 
@@ -31,7 +31,7 @@ public class PizzeriaClient {
 
     public void makeOrder(){
         Random random = new Random();
-        Dictionary<Integer,Integer> pizzas = new Hashtable<>();
+        Map<Integer,Integer> pizzas = new HashMap<>();
         for(int i =1; i<11;i++){
             pizzas.put(i, random.nextInt(4));
 
