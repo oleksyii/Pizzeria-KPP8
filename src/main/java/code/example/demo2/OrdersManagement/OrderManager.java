@@ -8,15 +8,15 @@ import java.util.List;
 
 public class OrderManager {
 
-    private List<Order> orders;
-    private List<Task> pizzaTaskList;
+    private static List<Order> orders;
+    private static List<Task> pizzaTaskList;
 
     public OrderManager(){
         orders = new ArrayList<>();
         pizzaTaskList = new ArrayList<>();
     }
 
-    public  List<Task> getPizzaTaskList() {
+    public static List<Task> getPizzaTaskList() {
 
         List<Integer> completedOrdersId = orders.stream()
                 .filter(order -> order.getOrderStatus() == OrderStatus.Completed)

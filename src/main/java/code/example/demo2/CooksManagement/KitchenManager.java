@@ -16,7 +16,13 @@ public class KitchenManager {
             cooks.add(new SpecificCook(new FullCook()));
         }
     }
-    public void MorphCook(int id, CookType type){
+    public void startCooks(){
+        for (SpecificCook cook :
+                cooks) {
+            cook.executeStrategy();
+        }
+    }
+    public void morphCook(int id, CookType type){
         switch (type){
             case Full -> {
                 for (SpecificCook cook :
