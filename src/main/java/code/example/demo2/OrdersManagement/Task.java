@@ -1,8 +1,8 @@
 package code.example.demo2.OrdersManagement;
 
 public class Task {
-    private int orderId;
-    private int pizzaId;
+    private final int orderId;
+    private final int pizzaId;
     private PizzaStatus status;
 
     public Task(int orderId, int pizzaId){
