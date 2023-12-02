@@ -1,12 +1,17 @@
 package code.example.demo2.UIManagement.controllers.OrderManager;
 
+import code.example.demo2.Observer.OrderObserver;
+
+import java.util.ArrayList;
 import java.util.Dictionary;
+import java.util.List;
 import java.util.Map;
 
 public class Order {
     private static int nextOrderId = 1;
     private int orderId;
     private Map<Integer, Integer> pizzaIdAmount;
+    OrderObserver observer;
     private OrderStatus orderStatus;
 
     private int clientId;
@@ -49,8 +54,8 @@ public class Order {
         return this;
     }
 
-    public void registerObserver(){
-
+    public void registerObserver(OrderObserver orderObserver){
+        observer = orderObserver;
     }
 
     public void removeObserver(){
@@ -59,6 +64,8 @@ public class Order {
 
     public void notifyObserver(String newRecord){
 
+
+    observer.addNewRecord(newRecord);
 
     }
 

@@ -9,18 +9,20 @@ import java.util.concurrent.TimeUnit;
 
 public class WeekEndGenerator implements ClientGenerator{
     private final int interval = 10;
+    private ClientGeneratorContext clientGeneratorContext = ClientGeneratorContext.getInstance();
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
     @Override
-    public List<PizzeriaClient> generateClients() {
+    public void generateClients() {
         scheduler.scheduleAtFixedRate(this::generateClient, 0, interval, TimeUnit.SECONDS);
-        return null;
+
     }
 
     private void generateClient() {
 
         PizzeriaClient client = new PizzeriaClient();
         client.makeOrder();
+        clientGeneratorContext.addClient(client);
 
     }
 }

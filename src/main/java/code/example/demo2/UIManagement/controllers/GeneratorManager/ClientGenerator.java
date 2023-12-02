@@ -7,6 +7,6 @@ import java.util.List;
 public interface ClientGenerator {
 
     int interval = 0;
-   List<PizzeriaClient> generateClients();
+   void generateClients();
 
 }
