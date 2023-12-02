@@ -5,10 +5,11 @@ import code.example.demo2.OrdersManagement.Task;
 public abstract class Cook extends Thread {
     public static final int COOKING_TIME = 40000;
     protected Task currentTask;
+    protected CookStatus cookStatus;
 
-
+    //TODO: Make takeTask serious
     /***
-     * Sort out the tasks based by a cook. For Full cook it could be anything
+     * Sort out the tasks based by a cook from OrderManager. For Full cook it could be anything
      * for a baking or creating cook, there are some limitations
      * @return Task, that should be processed by cook.
      */
@@ -23,6 +24,7 @@ public abstract class Cook extends Thread {
      * */
     public abstract void pauseCook();
 //    public abstract void notifyControllerWithStatus();
+    public abstract CookStatus Status();
 }
 
 

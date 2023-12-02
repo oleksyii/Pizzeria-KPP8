@@ -1,5 +1,7 @@
 //package code.example.demo2.UIManagement.controllers;
 //
+//import code.example.demo2.CooksManagement.strategies.Cook;
+//
 //public class PizzeriaController {
 //    private PizzzeriaSimulatorViewModel simulatorViewModel;
 //    private SettingsViewModel settingsView;
@@ -22,4 +24,5 @@
 //    public StoreCook(id){
 //
 //    }
+//    public static updateCookStatus(Cook cook)
 //}

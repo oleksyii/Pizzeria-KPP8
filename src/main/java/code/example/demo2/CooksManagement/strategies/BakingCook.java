@@ -1,28 +1,37 @@
 package code.example.demo2.CooksManagement.strategies;
 
 import code.example.demo2.CooksManagement.TestTask;
+import code.example.demo2.OrdersManagement.PizzaStatus;
+import code.example.demo2.OrdersManagement.Task;
 
 public class BakingCook extends Cook{
     public BakingCook(){
-        this.Task = takeTask();
+        this.currentTask = takeTask();
     }
 
     @Override
     public Task takeTask() {
-        return TestTask.getListTasks().get(0);
+        return new Task(1, 1);
     }
 
     @Override
     public void processPizza() {
-        try {
-            for(int i = 0; i < 6; i++) {
-                // Code to be executed in the background
-                System.out.println("Baking thread is running. Task: " + this.Task);
-                Thread.sleep(1000); // Simulating some work
+        takeTask();
+        // If slice or bake correspondingly to the pizza status
+        while(currentTask.getStatus() != PizzaStatus.Baked){
+            try {
+                if(currentTask.getStatus() == PizzaStatus.ReadyForBaking){
+                    System.out.println("FullCook thread is creating pizza Task: " + this.currentTask);
+                    this.cookStatus = CookStatus.Creating;
+                    currentTask.setStatus(PizzaStatus.Processing);
+                    Thread.sleep(COOKING_TIME); // Simulating some work
+                    currentTask.setStatus(PizzaStatus.Baked);
+                }
+            } catch (InterruptedException e) {
+                // Handle InterruptedException if needed
             }
-        } catch (InterruptedException e) {
-            // Handle InterruptedException if needed
         }
+        currentTask.setStatus(PizzaStatus.Baked);
 
     }
 
@@ -36,6 +45,9 @@ public class BakingCook extends Cook{
             // Handle InterruptedException if needed
         }
     }
+
+    @Override
+    public CookStatus Status() {return this.cookStatus;}
 
     public void run() {
         processPizza();
