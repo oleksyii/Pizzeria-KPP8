@@ -4,16 +4,19 @@ import java.lang.reflect.GenericArrayType;
 import java.util.*;
 
 public class Menu {
-
-    private Map<Integer, String> pizzas;
+    private final Map<Integer, String> pizzas;
     private int counter;
-    public Menu(){
+
+    public Menu(List<Integer> pizzaIds){
+        Map<Integer, String> allPizzas = getAllIdPizzasMap();
         pizzas = new HashMap<>();
         counter = 1;
-    }
 
-    Menu(Collection<String> pizzas){
-        pizzas.forEach(this::addPizza);
+        for (Map.Entry<Integer, String> entry : allPizzas.entrySet()) {
+            if (pizzaIds.contains(entry.getKey())) {
+                pizzas.put(entry.getKey(), entry.getValue());
+            }
+        }
     }
 
     public void addPizza(String pizza){
@@ -55,8 +58,16 @@ public class Menu {
     public Collection<Integer> getIdsSet(){
         return pizzas.keySet();
     }
-    public static void main(String[] args) {
 
+    public static Map<Integer, String> getAllIdPizzasMap() {
+        Map<Integer, String> idPizzasMap = new HashMap<>();
+        String[] pizzaNames = {"Margherita", "Pepperoni", "Vegetarian", "Mediterranean", "Bacon Deluxe",
+                "Mushroom Madness", "Hawaiian", "Sausage Feast", "Spicy Veggie", "Onion Delight"};
+
+        for (int i = 0; i < pizzaNames.length; i++) {
+            idPizzasMap.put(i + 1, pizzaNames[i]);
+        }
+
+        return idPizzasMap;
     }
-
 }
