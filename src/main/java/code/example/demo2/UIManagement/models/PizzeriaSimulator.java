@@ -15,16 +15,17 @@ import java.util.List;
 public class PizzeriaSimulator {
 
     private final Menu menu;
-    private KitchenManager kitchenManager;
+    private final KitchenManager kitchenManager;
     private final CashierManager cashierManager;
     private final OrderManager orderManager;
-    private ClientGeneratorContext generatorContext;
+    private final ClientGeneratorContext generatorContext;
 
     public PizzeriaSimulator() {
         this.menu = new Menu();
         this.kitchenManager =  new KitchenManager() ;
         this.cashierManager = new CashierManager();
         this.orderManager = new OrderManager();
+        this.generatorContext = ClientGeneratorContext.getInstance();
     }
 
     public void generateClients(){
@@ -48,7 +49,7 @@ public class PizzeriaSimulator {
     }
 
     public List<Order> getListOfOrders(){
-        return orderManager.getOrderList();
+        return OrderManager.getOrderList();
     }
 
     public List<Task> getAllTasks(){

@@ -1,5 +1,6 @@
 package code.example.demo2.UIManagement.controllers.ClientManager;
 
+import code.example.demo2.OrdersManagement.OrderManager;
 import code.example.demo2.UIManagement.controllers.GeneratorManager.ClientGenerator;
 import code.example.demo2.UIManagement.controllers.GeneratorManager.RegularDayGenerator;
 import code.example.demo2.UIManagement.controllers.OrderManager.Order;
@@ -38,15 +39,11 @@ public class PizzeriaClient {
         }
         order = new Order(pizzas);
         order.setClientId(clientId);
-
-
-
+        OrderManager.addOrderAndCreateTasks(order);
     }
 
     public void takeOrderAndLeave(){
         order.giveAwayOrder();
-
-
     }
 
 }

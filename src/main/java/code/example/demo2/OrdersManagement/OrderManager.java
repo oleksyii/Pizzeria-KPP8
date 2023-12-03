@@ -47,7 +47,7 @@ public class OrderManager {
         OrderManager.pizzaTaskList = pizzaTaskList;
     }
 
-    public List<Order> getOrderList(){
+    public static List<Order> getOrderList(){
         return orders;
     }
 
@@ -58,7 +58,7 @@ public class OrderManager {
                 .orElse(null);
     }
 
-    public void addOrderAndCreateTasks(Order order) {
+    public static void addOrderAndCreateTasks(Order order) {
         if (order == null){
             return;
         }
