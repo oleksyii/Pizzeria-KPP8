@@ -10,6 +10,7 @@ import code.example.demo2.UIManagement.controllers.GeneratorManager.ClientGenera
 import code.example.demo2.UIManagement.controllers.OrderManager.Order;
 import code.example.demo2.UIManagement.controllers.OrderManager.OrderStatus;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PizzeriaSimulator {
@@ -20,8 +21,8 @@ public class PizzeriaSimulator {
     private final OrderManager orderManager;
     private final ClientGeneratorContext generatorContext;
 
-    public PizzeriaSimulator() {
-        this.menu = new Menu();
+    public PizzeriaSimulator(List<Integer> checkedPizzas) {
+        this.menu = new Menu(checkedPizzas);
         this.kitchenManager =  new KitchenManager() ;
         this.cashierManager = new CashierManager();
         this.orderManager = new OrderManager();

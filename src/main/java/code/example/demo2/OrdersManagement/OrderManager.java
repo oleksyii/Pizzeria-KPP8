@@ -21,7 +21,7 @@ public class OrderManager {
     //check if all tasks from order are in Baked status
     //if yes -> mark Order as completed -> call giveAwayOrder
     // -> remove tasks and orders from lists
-    public static List<Task> getPizzaTaskList() {
+    public static synchronized List<Task>  getPizzaTaskList() {
         List<Order> ordersToRemove = new ArrayList<>();
         List<Task> tasksToRemove = new ArrayList<>();
 
