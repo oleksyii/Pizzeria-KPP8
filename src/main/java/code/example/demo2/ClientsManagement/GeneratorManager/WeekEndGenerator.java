@@ -8,7 +8,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class WeekEndGenerator implements ClientGenerator{
-    private final int interval = 10;
+    private final int interval = 40;
     private ClientGeneratorContext clientGeneratorContext = ClientGeneratorContext.getInstance();
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 

@@ -62,4 +62,6 @@ public class KitchenManager {
             }
         }
     }
+
+    public ArrayList<SpecificCook> getCooks() {return cooks;}
 }

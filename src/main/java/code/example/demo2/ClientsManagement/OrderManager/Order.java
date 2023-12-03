@@ -10,7 +10,6 @@ public class Order {
     private Map<Integer, Integer> pizzaIdAmount;
     OrderObserver observer;
     private OrderStatus orderStatus;
-
     private int clientId;
 
     public Order(Map<Integer, Integer> pizzaIdAmount){
@@ -48,6 +47,8 @@ public class Order {
     public Order giveAwayOrder(){
         orderStatus = OrderStatus.Completed;
 
+        //TODO: NOTIFY CONTROLLER ORDER FINISHED
+
         return this;
     }
 
@@ -71,6 +72,7 @@ public class Order {
         return "Order{" +
                 "orderId=" + orderId +
                 ", orderStatus=" + orderStatus +
+                ", pizzas and ids=" + pizzaIdAmount +
                 '}';
     }
 

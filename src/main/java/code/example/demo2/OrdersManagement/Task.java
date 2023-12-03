@@ -4,11 +4,13 @@ public class Task {
     private final int orderId;
     private final int pizzaId;
     private PizzaStatus status;
+    private int id = 0;
 
-    public Task(int orderId, int pizzaId){
+    public Task(int orderId, int pizzaId, int taskId){
         this.orderId = orderId;
         this.pizzaId = pizzaId;
         status = PizzaStatus.NotTaken;
+        id = taskId;
     }
 
     public int getOrderId() {
@@ -33,6 +35,7 @@ public class Task {
                 "orderId=" + orderId +
                 ", pizzaId=" + pizzaId +
                 ", status=" + status +
+                ", taskId=" + id +
                 '}';
     }
 }

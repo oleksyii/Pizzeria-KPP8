@@ -78,5 +78,9 @@ public class PizzeriaSimulator {
         return OrderManager.getPizzaTaskList();
     }
 
+    public KitchenManager getKitchenManager(){
+        return kitchenManager;
+    }
+
 
 }

@@ -12,6 +12,8 @@ public class OrderManager {
 
     private static List<Order> orders;
     private static List<Task> pizzaTaskList;
+    private static int tasksIds = 0;
+
 
     public OrderManager(){
         orders = new ArrayList<>();
@@ -25,6 +27,7 @@ public class OrderManager {
      * @return List of tasks available for cooks
      */
     public static synchronized List<Task>  getPizzaTaskList() {
+
         List<Order> ordersToRemove = new ArrayList<>();
         List<Task> tasksToRemove = new ArrayList<>();
 
@@ -43,6 +46,8 @@ public class OrderManager {
 
         pizzaTaskList.removeAll(tasksToRemove);
         orders.removeAll(ordersToRemove);
+
+        System.out.println("There are tasks " + pizzaTaskList);
 
         return pizzaTaskList;
     }
@@ -72,7 +77,7 @@ public class OrderManager {
 
         order.getPizzas().forEach((key, value) -> {
             for (int i = 0; i < value; i++) {
-                pizzaTaskList.add(new Task(order.getId(), key));
+                pizzaTaskList.add(new Task(order.getId(), key, tasksIds++));
             }
         });
 

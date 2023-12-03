@@ -37,14 +37,15 @@ public class PizzeriaClient {
     public void makeOrder(){
         Random random = new Random();
         Map<Integer,Integer> pizzas = new HashMap<>();
-        for(int i =1; i<4;i++){
-            pizzas.put(i, random.nextInt(4));
+        for(int i =1; i<5;i++){
+            pizzas.put(i, random.nextInt(2, 3));
 
         }
         order = new Order(pizzas);
         order.setClientId(clientId);
 
         OrderManager.addOrderAndCreateTasks(order);
+        // TODO: CALL CONTROLLER
     }
 
     public void takeOrderAndLeave(){

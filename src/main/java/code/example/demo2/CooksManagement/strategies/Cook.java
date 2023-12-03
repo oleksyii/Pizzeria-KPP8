@@ -28,6 +28,9 @@ public abstract class Cook extends Thread {
     public abstract CookStatus Status();
     public abstract int Id();
     public abstract void Id(int id);
+    public abstract Task getCurrentTask();
+    public abstract void customInterrupt();
+    public abstract String getType();
 }
 
 
