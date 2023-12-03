@@ -30,11 +30,13 @@ public class PizzeriaSimulator {
         // Cashiers initialization
         this.cashierManager = new CashierManager(numOfCashiers);
         this.generatorContext = ClientGeneratorContext.getInstance();
-        generatorContext.setStrategy(strategy);
+        generatorContext.setStrategy(strategy, this.cashierManager);
+
         generatorContext.executeStrategy();
 
         // Kitchen initialization
         this.kitchenManager =  new KitchenManager(numOfCooks, minTimeCooking);
+
 
 
 

@@ -1,5 +1,7 @@
 package code.example.demo2.ClientsManagement;
 
+import code.example.demo2.ClientsManagement.CashiersManager.Cashier;
+import code.example.demo2.ClientsManagement.CashiersManager.CashierManager;
 import code.example.demo2.OrdersManagement.OrderManager;
 import code.example.demo2.ClientsManagement.OrderManager.Order;
 
@@ -14,9 +16,13 @@ public class PizzeriaClient {
 
     this.clientId = nextClientId++;
 
+
     }
 
-    public void chooseQueue(){
+    public void chooseQueue(CashierManager cashierManager){
+        cashierManager.addClientToCashierWithSmallestQueue(this);
+
+
 
 
     }

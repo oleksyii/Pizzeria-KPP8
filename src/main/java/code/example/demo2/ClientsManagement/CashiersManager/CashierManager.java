@@ -1,16 +1,47 @@
 package code.example.demo2.ClientsManagement.CashiersManager;
 
+import code.example.demo2.ClientsManagement.PizzeriaClient;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class CashierManager {
 
+
+    private static List<Cashier> cashiers = new ArrayList<>();
+
+    private static int cashierAmount;
+
     public CashierManager(int cashiersAmount){
         createCashiers(cashiersAmount);
     }
-    private List<Cashier> cashiers = new ArrayList<>();
 
-    private int cashierAmount;
+
+    public Cashier getCashierWithSmallestQueue() {
+        if (cashiers.isEmpty()) {
+            return null; // No cashiers available
+        }
+
+        Cashier smallestQueueCashier = cashiers.get(0);
+
+        for (Cashier cashier : cashiers) {
+            if (cashier.getClientsQueue().size() < smallestQueueCashier.getClientsQueue().size()) {
+                smallestQueueCashier = cashier;
+            }
+        }
+
+        return smallestQueueCashier;
+    }
+
+    public void addClientToCashierWithSmallestQueue(PizzeriaClient pizzeriaClient) {
+        Cashier smallestQueueCashier = getCashierWithSmallestQueue();
+
+        if (smallestQueueCashier != null) {
+            smallestQueueCashier.addClient(pizzeriaClient);
+        } else {
+            System.out.println("No cashiers available.");
+        }
+    }
 
     public void createCashiers(int amount){
         cashierAmount = amount;
@@ -22,6 +53,7 @@ public class CashierManager {
     }
 
     public List<Cashier> getCashiers(){
+
         return cashiers;
     }
 
@@ -30,7 +62,7 @@ public class CashierManager {
     }
 
     public void setCashierAmount(int cashierAmount){
-        this.cashierAmount = cashierAmount;
+        cashierAmount = cashierAmount;
     }
 
     public int getCashierAmount(){

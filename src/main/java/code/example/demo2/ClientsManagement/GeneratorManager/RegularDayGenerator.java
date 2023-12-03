@@ -1,5 +1,6 @@
 package code.example.demo2.ClientsManagement.GeneratorManager;
 
+import code.example.demo2.ClientsManagement.CashiersManager.CashierManager;
 import code.example.demo2.ClientsManagement.PizzeriaClient;
 
 import java.util.concurrent.Executors;
@@ -12,6 +13,17 @@ public class RegularDayGenerator implements ClientGenerator {
     private ClientGeneratorContext clientGeneratorContext = ClientGeneratorContext.getInstance();
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
+    CashierManager cashierManager;
+
+    public RegularDayGenerator(){
+
+    }
+    public RegularDayGenerator(CashierManager cashierManager){
+
+        this.cashierManager = cashierManager;
+    }
+
+
     @Override
     public void generateClients() {
         scheduler.scheduleAtFixedRate(this::generateClient, 0, interval, TimeUnit.SECONDS);
@@ -22,7 +34,9 @@ public class RegularDayGenerator implements ClientGenerator {
 
         PizzeriaClient client = new PizzeriaClient();
         client.makeOrder();
+        client.chooseQueue(this.cashierManager);
         clientGeneratorContext.addClient(client);
+
 
     }
 }
