@@ -12,7 +12,6 @@ public abstract class Cook extends Thread {
     protected List<PizzaStatus> pizzaStatuses;
     protected int id;
 
-    //TODO: Make takeTask serious
     /***
      * Sort out the tasks based by a cook from OrderManager. For Full cook it could be anything
      * for a baking or creating cook, there are some limitations

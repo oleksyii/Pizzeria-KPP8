@@ -1,6 +1,6 @@
-package code.example.demo2.UIManagement.controllers.GeneratorManager;
+package code.example.demo2.ClientsManagement.GeneratorManager;
 
-import code.example.demo2.UIManagement.controllers.ClientManager.PizzeriaClient;
+import code.example.demo2.ClientsManagement.PizzeriaClient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,8 +30,9 @@ public class ClientGeneratorContext  {
     }
 
 
-    public void setStrategy(ClientGenerator strategy) {
-        this.strategy = strategy;
+    //TODO: VLAD switch to create a strategy for yourself base on enum
+    public void setStrategy(ClientGenerationStrategies strategy) {
+//        this.strategy = strategy;
     }
 
 

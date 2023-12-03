@@ -1,9 +1,7 @@
-package code.example.demo2.UIManagement.controllers.ClientManager;
+package code.example.demo2.ClientsManagement;
 
 import code.example.demo2.OrdersManagement.OrderManager;
-import code.example.demo2.UIManagement.controllers.GeneratorManager.ClientGenerator;
-import code.example.demo2.UIManagement.controllers.GeneratorManager.RegularDayGenerator;
-import code.example.demo2.UIManagement.controllers.OrderManager.Order;
+import code.example.demo2.ClientsManagement.OrderManager.Order;
 
 import java.util.*;
 

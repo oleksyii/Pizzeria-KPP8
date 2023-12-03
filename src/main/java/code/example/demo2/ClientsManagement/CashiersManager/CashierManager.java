@@ -1,10 +1,13 @@
-package code.example.demo2.UIManagement.controllers.CashiersManager;
+package code.example.demo2.ClientsManagement.CashiersManager;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class CashierManager {
 
+    public CashierManager(int cashiersAmount){
+        createCashiers(cashiersAmount);
+    }
     private List<Cashier> cashiers = new ArrayList<>();
 
     private int cashierAmount;
@@ -14,7 +17,6 @@ public class CashierManager {
         for(int i = 0;i<amount;i++){
             Cashier cashier = new Cashier();
             cashiers.add(cashier);
-
         }
 
     }

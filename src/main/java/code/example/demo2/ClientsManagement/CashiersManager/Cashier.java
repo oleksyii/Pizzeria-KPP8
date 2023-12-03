@@ -1,6 +1,6 @@
-package code.example.demo2.UIManagement.controllers.CashiersManager;
+package code.example.demo2.ClientsManagement.CashiersManager;
 
-import code.example.demo2.UIManagement.controllers.ClientManager.PizzeriaClient;
+import code.example.demo2.ClientsManagement.PizzeriaClient;
 
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -13,7 +13,6 @@ public class Cashier {
 
     public Cashier(){
         this.cashierId = nextClientId++;
-
 
     }
 

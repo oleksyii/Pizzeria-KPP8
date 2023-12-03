@@ -1,14 +1,15 @@
 package code.example.demo2.UIManagement.models;
 
+import code.example.demo2.ClientsManagement.GeneratorManager.ClientGenerationStrategies;
 import code.example.demo2.CooksManagement.KitchenManager;
 import code.example.demo2.OrdersManagement.Menu;
 import code.example.demo2.OrdersManagement.OrderManager;
 import code.example.demo2.OrdersManagement.Task;
-import code.example.demo2.UIManagement.controllers.CashiersManager.Cashier;
-import code.example.demo2.UIManagement.controllers.CashiersManager.CashierManager;
-import code.example.demo2.UIManagement.controllers.GeneratorManager.ClientGeneratorContext;
-import code.example.demo2.UIManagement.controllers.OrderManager.Order;
-import code.example.demo2.UIManagement.controllers.OrderManager.OrderStatus;
+import code.example.demo2.ClientsManagement.CashiersManager.Cashier;
+import code.example.demo2.ClientsManagement.CashiersManager.CashierManager;
+import code.example.demo2.ClientsManagement.GeneratorManager.ClientGeneratorContext;
+import code.example.demo2.ClientsManagement.OrderManager.Order;
+import code.example.demo2.ClientsManagement.OrderManager.OrderStatus;
 
 import java.util.List;
 
@@ -20,12 +21,27 @@ public class PizzeriaSimulator {
     private final OrderManager orderManager;
     private final ClientGeneratorContext generatorContext;
 
-    public PizzeriaSimulator() {
+    public PizzeriaSimulator(int numOfCooks, int numOfCashiers, List<Integer> pizzasAvailable, ClientGenerationStrategies strategy, int minTimeCooking) {
         this.menu = new Menu();
-        this.kitchenManager =  new KitchenManager() ;
-        this.cashierManager = new CashierManager();
-        this.orderManager = new OrderManager();
+        // Kitchen initialization
+        this.kitchenManager =  new KitchenManager(numOfCooks);
+
+        // Cashiers initialization
+        this.cashierManager = new CashierManager(numOfCashiers);
         this.generatorContext = ClientGeneratorContext.getInstance();
+        generatorContext.setStrategy(strategy);
+
+
+
+        this.orderManager = new OrderManager();
+
+        this.StartJob();
+    }
+
+    private void StartJob() {
+        generatorContext.executeStrategy();
+
+        kitchenManager.startCooks();
     }
 
     public void generateClients(){

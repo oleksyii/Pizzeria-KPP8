@@ -1,7 +1,7 @@
 package code.example.demo2.OrdersManagement;
 
-import code.example.demo2.UIManagement.controllers.OrderManager.Order;
-import code.example.demo2.UIManagement.controllers.OrderManager.OrderStatus;
+import code.example.demo2.ClientsManagement.OrderManager.Order;
+import code.example.demo2.ClientsManagement.OrderManager.OrderStatus;
 
 import java.util.ArrayList;
 import java.util.List;

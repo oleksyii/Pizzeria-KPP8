@@ -8,8 +8,9 @@ public class KitchenManager {
     static ArrayList<SpecificCook> cooks;
 
 
-    public KitchenManager(){
+    public KitchenManager(int cooksAmount){
         cooks = new ArrayList<>();
+        createCooks(cooksAmount);
     }
     public void createCooks(int amount){
         for(int i = 0; i < amount; i++){

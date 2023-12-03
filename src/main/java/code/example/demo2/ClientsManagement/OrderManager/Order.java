@@ -1,10 +1,7 @@
-package code.example.demo2.UIManagement.controllers.OrderManager;
+package code.example.demo2.ClientsManagement.OrderManager;
 
 import code.example.demo2.Observer.OrderObserver;
 
-import java.util.ArrayList;
-import java.util.Dictionary;
-import java.util.List;
 import java.util.Map;
 
 public class Order {
@@ -62,7 +59,7 @@ public class Order {
 
     }
 
-    public void notifyObserver(String newRecord){
+    public void notifyObserver(Order newRecord){
 
 
     observer.addNewRecord(newRecord);
