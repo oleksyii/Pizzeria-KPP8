@@ -18,9 +18,12 @@ public class OrderManager {
         pizzaTaskList = new ArrayList<>();
     }
 
-    //check if all tasks from order are in Baked status
-    //if yes -> mark Order as completed -> call giveAwayOrder
-    // -> remove tasks and orders from lists
+    /***
+     * check if all tasks from order are in Baked status
+     * if yes -> mark Order as completed -> call giveAwayOrder
+     *  -> remove tasks and orders from lists
+     * @return List of tasks available for cooks
+     */
     public static synchronized List<Task>  getPizzaTaskList() {
         List<Order> ordersToRemove = new ArrayList<>();
         List<Task> tasksToRemove = new ArrayList<>();
@@ -32,6 +35,7 @@ public class OrderManager {
                 order.setStatus(OrderStatus.Completed);
                 order.giveAwayOrder();
 
+                System.out.println("Removed order " + order);
                 ordersToRemove.add(order);
                 tasksToRemove.addAll(tasks);
             }
@@ -58,7 +62,7 @@ public class OrderManager {
                 .orElse(null);
     }
 
-    public static void addOrderAndCreateTasks(Order order) {
+    public static synchronized void addOrderAndCreateTasks(Order order) {
         if (order == null){
             return;
         }
@@ -71,5 +75,7 @@ public class OrderManager {
                 pizzaTaskList.add(new Task(order.getId(), key));
             }
         });
+
+        System.out.println("Received order,sliced by tasks: " + order);
     }
 }

@@ -22,24 +22,28 @@ public class PizzeriaSimulator {
     private final ClientGeneratorContext generatorContext;
 
     public PizzeriaSimulator(int numOfCooks, int numOfCashiers, List<Integer> pizzasAvailable, ClientGenerationStrategies strategy, int minTimeCooking) {
-        this.menu = new Menu();
-        // Kitchen initialization
-        this.kitchenManager =  new KitchenManager(numOfCooks);
+
+        // Order Manager initialization
+        this.orderManager = new OrderManager();
+        this.menu = new Menu(pizzasAvailable);
 
         // Cashiers initialization
         this.cashierManager = new CashierManager(numOfCashiers);
         this.generatorContext = ClientGeneratorContext.getInstance();
         generatorContext.setStrategy(strategy);
+        generatorContext.executeStrategy();
+
+        // Kitchen initialization
+        this.kitchenManager =  new KitchenManager(numOfCooks, minTimeCooking);
 
 
 
-        this.orderManager = new OrderManager();
 
         this.StartJob();
     }
 
     private void StartJob() {
-        generatorContext.executeStrategy();
+
 
         kitchenManager.startCooks();
     }
@@ -68,7 +72,7 @@ public class PizzeriaSimulator {
         return OrderManager.getOrderList();
     }
 
-    public List<Task> getAllTasks(){
+    public synchronized List<Task> getAllTasks(){
         return OrderManager.getPizzaTaskList();
     }
 
