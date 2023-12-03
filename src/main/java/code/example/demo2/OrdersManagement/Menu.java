@@ -7,7 +7,7 @@ public class Menu {
 
     private Map<Integer, String> pizzas;
     private int counter;
-    Menu(){
+    public Menu(){
         pizzas = new HashMap<>();
         counter = 1;
     }
