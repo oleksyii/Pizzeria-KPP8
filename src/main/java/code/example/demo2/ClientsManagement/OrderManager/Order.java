@@ -66,6 +66,14 @@ public class Order {
 
     }
 
+    @Override
+    public String toString(){
+        return "Order{" +
+                "orderId=" + orderId +
+                ", orderStatus=" + orderStatus +
+                '}';
+    }
+
 
 
 }

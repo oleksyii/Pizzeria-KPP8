@@ -6,9 +6,15 @@ import code.example.demo2.OrdersManagement.OrderManager;
 import code.example.demo2.OrdersManagement.PizzaStatus;
 import code.example.demo2.OrdersManagement.Task;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FullCook extends Cook{
+
+    private Task currentTask;
+    private CookStatus cookStatus;
+    private List<PizzaStatus> pizzaStatuses = new ArrayList<>();
+    private int id;
 
     public FullCook(){
         this.pizzaStatuses.add(PizzaStatus.NotTaken);
@@ -21,8 +27,9 @@ public class FullCook extends Cook{
     @Override
     public Task takeTask() {
         Task res = new Task(-1,-1);
-        List<Task> tasks =  OrderManager.getPizzaTaskList();
-        while(res.getOrderId() == -1){
+        List<Task> tasks;
+        while(res.getOrderId() == -1 ){
+            tasks =  OrderManager.getPizzaTaskList();
 
             for (Task task :
                     tasks) {
@@ -46,9 +53,9 @@ public class FullCook extends Cook{
 
         try {
             if(currentTask.getStatus() == PizzaStatus.NotTaken){
-                System.out.println("FullCook thread is creating pizza Task: " + this.currentTask);
                 this.cookStatus = CookStatus.Creating;
                 currentTask.setStatus(PizzaStatus.Processing);
+                System.out.println("FullCook thread " + this.id + " is creating pizza Task: " + this.currentTask);
 
                 //SEND SIGNAL HERE
 
@@ -63,6 +70,7 @@ public class FullCook extends Cook{
 
                 Thread.sleep(COOKING_TIME/2); // Simulating some work
                 currentTask.setStatus(PizzaStatus.Baked);
+                currentTask = null;
             }
         } catch (InterruptedException e) {
             // Handle InterruptedException if needed
@@ -97,7 +105,9 @@ public class FullCook extends Cook{
 
     public void run() {
         while(true){
-            takeTask();
+            System.out.println("Getting the task cook id: " + this.id);
+            currentTask = takeTask();
+            System.out.println("Got the task cook id: " + this.id);
             processPizza();
         }
     }

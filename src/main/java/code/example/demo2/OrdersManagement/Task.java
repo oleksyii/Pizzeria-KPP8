@@ -27,7 +27,8 @@ public class Task {
         this.status = status;
     }
 
-    public String getDescription(){
+    @Override
+    public String toString(){
         return "Task{" +
                 "orderId=" + orderId +
                 ", pizzaId=" + pizzaId +

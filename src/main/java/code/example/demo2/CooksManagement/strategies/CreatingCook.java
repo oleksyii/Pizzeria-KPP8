@@ -4,9 +4,16 @@ import code.example.demo2.OrdersManagement.OrderManager;
 import code.example.demo2.OrdersManagement.PizzaStatus;
 import code.example.demo2.OrdersManagement.Task;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CreatingCook extends Cook{
+
+    private Task currentTask;
+    private CookStatus cookStatus;
+    private List<PizzaStatus> pizzaStatuses = new ArrayList<>();
+    private int id;
+
     public CreatingCook(){
         this.pizzaStatuses.add(PizzaStatus.NotTaken);
         this.currentTask = takeTask();

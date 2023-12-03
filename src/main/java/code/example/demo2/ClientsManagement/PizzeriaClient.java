@@ -37,12 +37,13 @@ public class PizzeriaClient {
     public void makeOrder(){
         Random random = new Random();
         Map<Integer,Integer> pizzas = new HashMap<>();
-        for(int i =1; i<11;i++){
+        for(int i =1; i<4;i++){
             pizzas.put(i, random.nextInt(4));
 
         }
         order = new Order(pizzas);
         order.setClientId(clientId);
+
         OrderManager.addOrderAndCreateTasks(order);
     }
 

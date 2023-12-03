@@ -8,13 +8,14 @@ public class KitchenManager {
     static ArrayList<SpecificCook> cooks;
 
 
-    public KitchenManager(int cooksAmount){
+    public KitchenManager(int cooksAmount, int minCookingTime){
+        Cook.COOKING_TIME = minCookingTime;
         cooks = new ArrayList<>();
         createCooks(cooksAmount);
     }
     public void createCooks(int amount){
         for(int i = 0; i < amount; i++){
-            cooks.add(new SpecificCook(new FullCook()));
+             cooks.add(new SpecificCook(new FullCook()));
         }
     }
     public void startCooks(){
@@ -23,6 +24,8 @@ public class KitchenManager {
             cook.executeStrategy();
         }
     }
+
+
     public void morphCook(int id, CookType type){
         switch (type){
             case Full -> {

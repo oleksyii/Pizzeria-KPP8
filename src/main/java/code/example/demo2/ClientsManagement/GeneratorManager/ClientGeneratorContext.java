@@ -22,7 +22,7 @@ public class ClientGeneratorContext  {
         this.currentClients = new ArrayList<>();
     }
 
-    public void addClient(PizzeriaClient pizzeriaClient){
+    public synchronized void addClient(PizzeriaClient pizzeriaClient){
         currentClients.add(pizzeriaClient);
     }
 
@@ -33,6 +33,7 @@ public class ClientGeneratorContext  {
 
 
     //TODO: VLAD switch to create a strategy for yourself base on enum
+
     public void setStrategy(ClientGenerationStrategies strategy, CashierManager cashierMan) {
           String strategyWork = strategy.toString();
           this.cashierManager = cashierMan;
@@ -45,7 +46,6 @@ public class ClientGeneratorContext  {
           }else{
               System.out.println("Incorrect strategy");
           }
-
 
     }
 
