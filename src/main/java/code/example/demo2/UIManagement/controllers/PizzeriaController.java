@@ -4,8 +4,10 @@ import com.example.demo2.MainPage.*;
 import com.example.demo2.PizzaMenu.MenuPage;
 import com.example.demo2.Settings.SettingsPage;
 import javafx.animation.PauseTransition;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -95,7 +97,7 @@ public class PizzeriaController {
         return cooks;
     }
 
-    static public StackPane generateTable(int numberOfPizzas) {
+    static public StackPane generateTable(int numberOfPizzas, ObservableList<Node> cooksData) {
         Rectangle rectangle = new Rectangle(100, 650);
         rectangle.setFill(Color.SADDLEBROWN);
 
@@ -107,12 +109,18 @@ public class PizzeriaController {
         setSpacingDynamically(numberOfPizzas, pizzaImages, 260);
 
         for (int i = 0; i < numberOfPizzas; i++) {
+            Node cookNode = cooksData.get(i);
+            Cook cook = (Cook) cookNode;
+            CookState cookState = cook.getState();
+
             HBox pizzaImageHBox = new HBox();
-            ImageView pizzaImageView = new ImageView(pizzaImage);
+            Image pizzaImageData = cookState == CookState.AT_TABLE ? pizzaImage: null;
+            ImageView pizzaImageView = new ImageView(pizzaImageData);
             pizzaImageView.setFitHeight(70);
             pizzaImageView.setFitWidth(70);
-            pizzaImageHBox.getChildren().add(pizzaImageView);
             pizzaImageHBox.setPadding(new Insets(22, 0, 20, 0));
+
+            pizzaImageHBox.getChildren().add(pizzaImageView);
             pizzaImages.getChildren().add(pizzaImageHBox);
         }
 

@@ -3,6 +3,8 @@ package com.example.demo2.MainPage;
 import code.example.demo2.UIManagement.controllers.PizzeriaController;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.collections.ObservableList;
+import javafx.scene.Node;
 import javafx.util.Duration;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -64,7 +66,8 @@ public class MainPage {
         int numberOfCashiers = 2;
         VBox ovens = PizzeriaController.generateOvens(numberOfCooks);
         VBox cooks = PizzeriaController.generateCooks(numberOfCooks);
-        StackPane table = PizzeriaController.generateTable(numberOfCooks);
+        ObservableList<Node> cooksData = cooks.getChildren();
+        StackPane table = PizzeriaController.generateTable(numberOfCooks, cooksData);
         VBox cashiers = PizzeriaController.generateCashiers(numberOfCashiers);
         StackPane clientsContainer = new StackPane();
         HBox clients = new HBox();
