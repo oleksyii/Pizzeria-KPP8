@@ -1,9 +1,7 @@
 package com.example.demo2.Configuration;
 
-import com.example.demo2.PizzaMenu.MenuPage;
-import com.example.demo2.MainPage.MainPage;
+import code.example.demo2.UIManagement.controllers.PizzeriaController;
 import javafx.animation.ScaleTransition;
-import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
@@ -14,10 +12,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -183,12 +179,7 @@ public class PizzaConfiguration {
         startButton.setOnMousePressed(event -> pressTransition.playFromStart());
         startButton.setOnMouseReleased(event -> releaseTransition.playFromStart());
 
-        startButton.setOnAction(event -> {
-            MainPage mainPage = new MainPage();
-            mainPage.start(primaryStage);
-        });
-
-
+        startButton.setOnAction(event -> PizzeriaController.handleStartMainPageButtonClick(primaryStage));
 
         root.getChildren().addAll(backgroundImageView, startButton, pizzaTitleGroup, fields);
         Scene scene = new Scene(root, 800, 700);
