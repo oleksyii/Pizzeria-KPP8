@@ -18,9 +18,17 @@ import javafx.util.Duration;
 
 public class PizzeriaController {
     static private double initialDistance = -400;
+    static private VBox uiCooks;
+
     static public void handleSettingsButtonClick(Stage primaryStage) {
         SettingsPage settings = new SettingsPage();
         settings.start(primaryStage);
+    }
+
+    static public void startCookAnimation(int cookId) {
+        System.out.println(uiCooks);
+        Cook cook = (Cook) uiCooks.getChildren().get(cookId);
+        Animation.animateCook(cook, 10);
     }
 
     static public void handleMenuButtonClick(Stage primaryStage) {
@@ -66,6 +74,10 @@ public class PizzeriaController {
         return ovens;
     }
 
+    static public VBox getUiCooks() {
+        return uiCooks;
+    }
+
     static public VBox generateCooks(int numberOfCooks) {
         VBox cooks = new VBox();
         cooks.setAlignment(Pos.TOP_LEFT);
@@ -79,6 +91,7 @@ public class PizzeriaController {
             cooks.getChildren().add(cook);
         }
 
+        uiCooks = cooks;
         return cooks;
     }
 

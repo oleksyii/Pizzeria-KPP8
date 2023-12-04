@@ -18,7 +18,6 @@ public class MainPage {
     private Animation animationInstance;
 
     public void start(Stage primaryStage) {
-        animationInstance = new Animation();
         StackPane root = new StackPane();
 
         HBox header = new HBox();
@@ -78,8 +77,7 @@ public class MainPage {
         clientsContainer.getChildren().add(clients);
         VBox clientsDesks = PizzeriaController.generateClientDesks();
 
-        Cook targetCook = (Cook) cooks.getChildren().get(0);
-        targetCook.animateCook(animationInstance, 10);
+        PizzeriaController.startCookAnimation(1);
 
         root.getChildren().addAll(backgroundImageView, ovens, cooks, table, cashiers, clientsContainer, clientsDesks);
         root.getChildren().addAll(header, settingsButton, menuButton);

@@ -5,13 +5,13 @@ import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
 public class Animation {
-    public void animateClient(Client client, double targetX) {
+    public static void animateClient(Client client, double targetX) {
         TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(3), client);
         translateTransition.setToX(targetX);  // Встановлюємо відстань по осі X від поточної позиції до цільової
         translateTransition.play();
     }
 
-    public void animateCook(Cook cook, double standStillDuration) {
+    public static void animateCook(Cook cook, double standStillDuration) {
         TranslateTransition moveLeft = new TranslateTransition(Duration.seconds(2), cook);
         moveLeft.setByX(-120);
 

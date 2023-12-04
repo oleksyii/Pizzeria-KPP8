@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@Settings/settingsStyles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo2.HelloController">
+   <children>
+      <Button layoutX="24.0" layoutY="354.0" mnemonicParsing="false" onAction="#switchToScene1" text="Go to scene 1" />
+
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#471a01" height="50.0" layoutY="-4.0" stroke="BLACK" strokeType="INSIDE" width="600.0">
+         <effect>
+            <DropShadow />
+         </effect></Rectangle>
+      <Label layoutX="237.0" layoutY="4.0" text="SETTINGS" textFill="WHITE">
+         <font>
+            <Font size="28.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
