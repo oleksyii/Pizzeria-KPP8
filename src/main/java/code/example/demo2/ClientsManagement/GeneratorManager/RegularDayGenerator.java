@@ -1,16 +1,28 @@
-package code.example.demo2.UIManagement.controllers.GeneratorManager;
+package code.example.demo2.ClientsManagement.GeneratorManager;
 
-import code.example.demo2.UIManagement.controllers.ClientManager.PizzeriaClient;
+import code.example.demo2.ClientsManagement.CashiersManager.CashierManager;
+import code.example.demo2.ClientsManagement.PizzeriaClient;
 
-import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-public class WeekEndGenerator implements ClientGenerator{
-    private final int interval = 10;
+public class RegularDayGenerator implements ClientGenerator {
+    private final int interval = 20;
+
     private ClientGeneratorContext clientGeneratorContext = ClientGeneratorContext.getInstance();
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+
+    CashierManager cashierManager;
+
+    public RegularDayGenerator(){
+
+    }
+    public RegularDayGenerator(CashierManager cashierManager){
+
+        this.cashierManager = cashierManager;
+    }
+
 
     @Override
     public void generateClients() {
@@ -22,7 +34,9 @@ public class WeekEndGenerator implements ClientGenerator{
 
         PizzeriaClient client = new PizzeriaClient();
         client.makeOrder();
+        client.chooseQueue(this.cashierManager);
         clientGeneratorContext.addClient(client);
+
 
     }
 }

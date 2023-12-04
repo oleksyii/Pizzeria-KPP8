@@ -6,13 +6,9 @@ import code.example.demo2.OrdersManagement.Task;
 import java.util.List;
 
 public abstract class Cook extends Thread {
-    public static final int COOKING_TIME = 40000;
-    protected Task currentTask;
-    protected CookStatus cookStatus;
-    protected List<PizzaStatus> pizzaStatuses;
-    protected int id;
+    public static int COOKING_TIME = 0;
 
-    //TODO: Make takeTask serious
+
     /***
      * Sort out the tasks based by a cook from OrderManager. For Full cook it could be anything
      * for a baking or creating cook, there are some limitations
@@ -32,6 +28,9 @@ public abstract class Cook extends Thread {
     public abstract CookStatus Status();
     public abstract int Id();
     public abstract void Id(int id);
+    public abstract Task getCurrentTask();
+    public abstract void customInterrupt();
+    public abstract String getType();
 }
 
 

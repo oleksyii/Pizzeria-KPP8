@@ -1,4 +1,4 @@
-package code.example.demo2.UIManagement.controllers.OrderManager;
+package code.example.demo2.ClientsManagement.OrderManager;
 
 public enum OrderStatus {
 

@@ -1,6 +1,6 @@
 package code.example.demo2.Observer;
 
-import code.example.demo2.UIManagement.controllers.OrderManager.Order;
+import code.example.demo2.ClientsManagement.OrderManager.Order;
 
 import java.io.FileWriter;
 import java.io.IOException;

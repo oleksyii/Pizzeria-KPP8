@@ -1,16 +1,16 @@
 package code.example.demo2.UIManagement.models;
 
+import code.example.demo2.ClientsManagement.GeneratorManager.ClientGenerationStrategies;
 import code.example.demo2.CooksManagement.KitchenManager;
 import code.example.demo2.OrdersManagement.Menu;
 import code.example.demo2.OrdersManagement.OrderManager;
 import code.example.demo2.OrdersManagement.Task;
-import code.example.demo2.UIManagement.controllers.CashiersManager.Cashier;
-import code.example.demo2.UIManagement.controllers.CashiersManager.CashierManager;
-import code.example.demo2.UIManagement.controllers.GeneratorManager.ClientGeneratorContext;
-import code.example.demo2.UIManagement.controllers.OrderManager.Order;
-import code.example.demo2.UIManagement.controllers.OrderManager.OrderStatus;
+import code.example.demo2.ClientsManagement.CashiersManager.Cashier;
+import code.example.demo2.ClientsManagement.CashiersManager.CashierManager;
+import code.example.demo2.ClientsManagement.GeneratorManager.ClientGeneratorContext;
+import code.example.demo2.ClientsManagement.OrderManager.Order;
+import code.example.demo2.ClientsManagement.OrderManager.OrderStatus;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class PizzeriaSimulator {
@@ -21,12 +21,33 @@ public class PizzeriaSimulator {
     private final OrderManager orderManager;
     private final ClientGeneratorContext generatorContext;
 
-    public PizzeriaSimulator(List<Integer> checkedPizzas) {
-        this.menu = new Menu(checkedPizzas);
-        this.kitchenManager =  new KitchenManager() ;
-        this.cashierManager = new CashierManager();
+    public PizzeriaSimulator(int numOfCooks, int numOfCashiers, List<Integer> pizzasAvailable, ClientGenerationStrategies strategy, int minTimeCooking) {
+
+        // Order Manager initialization
         this.orderManager = new OrderManager();
+        this.menu = new Menu(pizzasAvailable);
+
+        // Cashiers initialization
+        this.cashierManager = new CashierManager(numOfCashiers);
         this.generatorContext = ClientGeneratorContext.getInstance();
+        generatorContext.setStrategy(strategy, this.cashierManager);
+
+        generatorContext.executeStrategy();
+
+        // Kitchen initialization
+        this.kitchenManager =  new KitchenManager(numOfCooks, minTimeCooking);
+
+
+
+
+
+        this.StartJob();
+    }
+
+    private void StartJob() {
+
+
+        kitchenManager.startCooks();
     }
 
     public void generateClients(){
@@ -53,8 +74,12 @@ public class PizzeriaSimulator {
         return OrderManager.getOrderList();
     }
 
-    public List<Task> getAllTasks(){
+    public synchronized List<Task> getAllTasks(){
         return OrderManager.getPizzaTaskList();
+    }
+
+    public KitchenManager getKitchenManager(){
+        return kitchenManager;
     }
 
 

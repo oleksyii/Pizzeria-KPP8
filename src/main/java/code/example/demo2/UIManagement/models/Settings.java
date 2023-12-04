@@ -1,6 +1,6 @@
 package code.example.demo2.UIManagement.models;
 
-import code.example.demo2.UIManagement.controllers.GeneratorManager.ClientGenerator;
+import code.example.demo2.ClientsManagement.GeneratorManager.ClientGenerator;
 
 public class Settings {
     private static Settings instance;

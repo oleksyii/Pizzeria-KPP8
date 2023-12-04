@@ -4,26 +4,34 @@ import code.example.demo2.OrdersManagement.OrderManager;
 import code.example.demo2.OrdersManagement.PizzaStatus;
 import code.example.demo2.OrdersManagement.Task;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BakingCook extends Cook{
+    private volatile boolean isInterrupted = false;
+    private Task currentTask;
+    private CookStatus cookStatus;
+    private List<PizzaStatus> pizzaStatuses = new ArrayList<>();
+    private int id;
+
     public BakingCook(){
         this.pizzaStatuses.add(PizzaStatus.ReadyForBaking);
-        this.currentTask = takeTask();
 
     }
 
 
     @Override
     public Task takeTask() {
-        Task res = new Task(-1,-1);
-        List<Task> tasks =  OrderManager.getPizzaTaskList();
-        while(res.getOrderId() == -1){
+        Task res = null;
+        List<Task> tasks;
+        while(res == null ){
+            tasks =  OrderManager.getPizzaTaskList();
 
             for (Task task :
                     tasks) {
                 if(pizzaStatuses.contains(task.getStatus())){
                     res = task;
+                    res.setStatus(PizzaStatus.Processing);
                     break;
                 }
             }
@@ -36,20 +44,19 @@ public class BakingCook extends Cook{
         return res;
     }
 
-    //TODO: CONTROLLER send signal to
     @Override
     public void processPizza() {
         try {
             if(currentTask.getStatus() == PizzaStatus.ReadyForBaking){
-                System.out.println("CreatingCook thread is creating pizza Task: " + this.currentTask);
-                this.cookStatus = CookStatus.Creating;
+                System.out.println("BackingCook thread "+ this.id +" is baking pizza Task: " + this.currentTask);
+                this.cookStatus = CookStatus.Baking;
                 currentTask.setStatus(PizzaStatus.Processing);
 
-                //SEND SIGNAL HERE
+                //TODO: NOTIFY CONTROLLER COOK IS BAKING
 
                 Thread.sleep(COOKING_TIME/3); // Simulating some work
                 currentTask.setStatus(PizzaStatus.Baked);
-
+                currentTask = null;
             }
         } catch (InterruptedException e) {
             // Handle InterruptedException if needed
@@ -81,10 +88,32 @@ public class BakingCook extends Cook{
         this.id = id;
     }
 
+    @Override
+    public Task getCurrentTask(){
+        return currentTask;
+    }
+    @Override
+    public String getType(){
+        return "BakingCook";
+    }
+
     public void run() {
-        while(true){
-            takeTask();
-            processPizza();
+        while(!isInterrupted){
+            System.out.println("Getting the task cook id: " + this.id);
+            currentTask = takeTask();
+            if(currentTask != null){
+                System.out.println("Got the task cook id: " + this.id);
+                processPizza();
+            }
         }
+        if(currentTask != null){currentTask.setStatus(PizzaStatus.NotTaken);}
+    }
+
+    public void customInterrupt(){
+        isInterrupted = true;
+        if (currentTask != null)
+            currentTask.setStatus(PizzaStatus.NotTaken);
+        interrupt(); // Optional: Interrupt the thread if it is currently blocked in a sleep, wait, or join operation.
+
     }
 }

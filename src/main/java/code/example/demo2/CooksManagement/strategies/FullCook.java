@@ -6,32 +6,39 @@ import code.example.demo2.OrdersManagement.OrderManager;
 import code.example.demo2.OrdersManagement.PizzaStatus;
 import code.example.demo2.OrdersManagement.Task;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FullCook extends Cook{
+    private volatile boolean isInterrupted = false;
+    private Task currentTask;
+    private CookStatus cookStatus;
+    private List<PizzaStatus> pizzaStatuses = new ArrayList<>();
+    private int id;
 
     public FullCook(){
         this.pizzaStatuses.add(PizzaStatus.NotTaken);
         this.pizzaStatuses.add(PizzaStatus.ReadyForBaking);
-        this.currentTask = takeTask();
-
     }
 
 
     @Override
     public Task takeTask() {
-        Task res = new Task(-1,-1);
-        List<Task> tasks =  OrderManager.getPizzaTaskList();
-        while(res.getOrderId() == -1){
+        Task res = null;
+        List<Task> tasks;
+        while(res == null ){
+            tasks =  OrderManager.getPizzaTaskList();
 
             for (Task task :
                     tasks) {
                 if(pizzaStatuses.contains(task.getStatus())){
                     res = task;
+                    res.setStatus(PizzaStatus.Processing);
                     break;
                 }
             }
             try{
+                if(Thread.interrupted()){return null;}
                 Thread.sleep(1000);
             } catch (InterruptedException e){
                 //Processing
@@ -40,29 +47,35 @@ public class FullCook extends Cook{
         return res;
     }
 
-    //TODO: CONTROLLER send signal to
+
     @Override
     public void processPizza() {
 
         try {
-            if(currentTask.getStatus() == PizzaStatus.NotTaken){
-                System.out.println("FullCook thread is creating pizza Task: " + this.currentTask);
+            if(currentTask.getStatus() == PizzaStatus.Processing && !Thread.interrupted()){
+
+
                 this.cookStatus = CookStatus.Creating;
-                currentTask.setStatus(PizzaStatus.Processing);
+                System.out.println("FullCook thread " + this.id + " is creating pizza Task: " + this.currentTask);
 
-                //SEND SIGNAL HERE
+                //TODO: NOTIFY CONTROLLER COOK IS CREATING
 
+                if(Thread.interrupted()){return;}
                 Thread.sleep(COOKING_TIME/2); // Simulating some work
-                currentTask.setStatus(PizzaStatus.ReadyForBaking);
+//                currentTask.setStatus(PizzaStatus.ReadyForBaking);
 
-                System.out.println("FullCook thread is baking pizza Task: " + this.currentTask);
+                System.out.println("FullCook " + this.id + " thread is baking pizza Task: " + this.currentTask);
+
+
                 this.cookStatus = CookStatus.Baking;
-                currentTask.setStatus(PizzaStatus.Processing);
+//                currentTask.setStatus(PizzaStatus.Processing);
 
-                //SEND SIGNAL HERE
+                //TODO: NOTIFY CONTROLLER COOK IS BAKING
 
+                if(Thread.interrupted()){return;}
                 Thread.sleep(COOKING_TIME/2); // Simulating some work
                 currentTask.setStatus(PizzaStatus.Baked);
+                currentTask = null;
             }
         } catch (InterruptedException e) {
             // Handle InterruptedException if needed
@@ -95,10 +108,33 @@ public class FullCook extends Cook{
         this.id = id;
     }
 
-    public void run() {
-        while(true){
-            takeTask();
-            processPizza();
-        }
+    @Override
+    public Task getCurrentTask(){
+        return currentTask;
     }
+
+    @Override
+    public void customInterrupt() {
+
+    }
+
+    @Override
+    public String getType(){
+        return "FullCook";
+    }
+
+    public void run() {
+
+        while(!Thread.interrupted()){
+            System.out.println("Getting the task cook id: " + this.id);
+            currentTask = takeTask();
+            if(currentTask != null){
+                System.out.println("Got the task cook id: " + this.id);
+                processPizza();
+            }
+        }
+        if(currentTask != null){currentTask.setStatus(PizzaStatus.NotTaken);}
+
+    }
+
 }

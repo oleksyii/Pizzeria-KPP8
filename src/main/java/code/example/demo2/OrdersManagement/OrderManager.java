@@ -1,7 +1,7 @@
 package code.example.demo2.OrdersManagement;
 
-import code.example.demo2.UIManagement.controllers.OrderManager.Order;
-import code.example.demo2.UIManagement.controllers.OrderManager.OrderStatus;
+import code.example.demo2.ClientsManagement.OrderManager.Order;
+import code.example.demo2.ClientsManagement.OrderManager.OrderStatus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,16 +12,22 @@ public class OrderManager {
 
     private static List<Order> orders;
     private static List<Task> pizzaTaskList;
+    private static int tasksIds = 0;
+
 
     public OrderManager(){
         orders = new ArrayList<>();
         pizzaTaskList = new ArrayList<>();
     }
 
-    //check if all tasks from order are in Baked status
-    //if yes -> mark Order as completed -> call giveAwayOrder
-    // -> remove tasks and orders from lists
+    /***
+     * check if all tasks from order are in Baked status
+     * if yes -> mark Order as completed -> call giveAwayOrder
+     *  -> remove tasks and orders from lists
+     * @return List of tasks available for cooks
+     */
     public static synchronized List<Task>  getPizzaTaskList() {
+
         List<Order> ordersToRemove = new ArrayList<>();
         List<Task> tasksToRemove = new ArrayList<>();
 
@@ -32,6 +38,7 @@ public class OrderManager {
                 order.setStatus(OrderStatus.Completed);
                 order.giveAwayOrder();
 
+                System.out.println("Removed order " + order);
                 ordersToRemove.add(order);
                 tasksToRemove.addAll(tasks);
             }
@@ -39,6 +46,8 @@ public class OrderManager {
 
         pizzaTaskList.removeAll(tasksToRemove);
         orders.removeAll(ordersToRemove);
+
+        System.out.println("There are tasks " + pizzaTaskList);
 
         return pizzaTaskList;
     }
@@ -58,7 +67,7 @@ public class OrderManager {
                 .orElse(null);
     }
 
-    public static void addOrderAndCreateTasks(Order order) {
+    public static synchronized void addOrderAndCreateTasks(Order order) {
         if (order == null){
             return;
         }
@@ -68,8 +77,10 @@ public class OrderManager {
 
         order.getPizzas().forEach((key, value) -> {
             for (int i = 0; i < value; i++) {
-                pizzaTaskList.add(new Task(order.getId(), key));
+                pizzaTaskList.add(new Task(order.getId(), key, tasksIds++));
             }
         });
+
+        System.out.println("Received order,sliced by tasks: " + order);
     }
 }

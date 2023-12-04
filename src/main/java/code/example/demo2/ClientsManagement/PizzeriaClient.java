@@ -1,9 +1,9 @@
-package code.example.demo2.UIManagement.controllers.ClientManager;
+package code.example.demo2.ClientsManagement;
 
+import code.example.demo2.ClientsManagement.CashiersManager.Cashier;
+import code.example.demo2.ClientsManagement.CashiersManager.CashierManager;
 import code.example.demo2.OrdersManagement.OrderManager;
-import code.example.demo2.UIManagement.controllers.GeneratorManager.ClientGenerator;
-import code.example.demo2.UIManagement.controllers.GeneratorManager.RegularDayGenerator;
-import code.example.demo2.UIManagement.controllers.OrderManager.Order;
+import code.example.demo2.ClientsManagement.OrderManager.Order;
 
 import java.util.*;
 
@@ -16,9 +16,13 @@ public class PizzeriaClient {
 
     this.clientId = nextClientId++;
 
+
     }
 
-    public void chooseQueue(){
+    public void chooseQueue(CashierManager cashierManager){
+        cashierManager.addClientToCashierWithSmallestQueue(this);
+
+
 
 
     }
@@ -33,13 +37,15 @@ public class PizzeriaClient {
     public void makeOrder(){
         Random random = new Random();
         Map<Integer,Integer> pizzas = new HashMap<>();
-        for(int i =1; i<11;i++){
-            pizzas.put(i, random.nextInt(4));
+        for(int i =1; i<5;i++){
+            pizzas.put(i, random.nextInt(2, 3));
 
         }
         order = new Order(pizzas);
         order.setClientId(clientId);
+
         OrderManager.addOrderAndCreateTasks(order);
+        // TODO: CALL CONTROLLER
     }
 
     public void takeOrderAndLeave(){

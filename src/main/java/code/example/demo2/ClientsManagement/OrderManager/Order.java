@@ -1,10 +1,7 @@
-package code.example.demo2.UIManagement.controllers.OrderManager;
+package code.example.demo2.ClientsManagement.OrderManager;
 
 import code.example.demo2.Observer.OrderObserver;
 
-import java.util.ArrayList;
-import java.util.Dictionary;
-import java.util.List;
 import java.util.Map;
 
 public class Order {
@@ -13,7 +10,6 @@ public class Order {
     private Map<Integer, Integer> pizzaIdAmount;
     OrderObserver observer;
     private OrderStatus orderStatus;
-
     private int clientId;
 
     public Order(Map<Integer, Integer> pizzaIdAmount){
@@ -51,6 +47,8 @@ public class Order {
     public Order giveAwayOrder(){
         orderStatus = OrderStatus.Completed;
 
+        //TODO: NOTIFY CONTROLLER ORDER FINISHED
+
         return this;
     }
 
@@ -62,11 +60,20 @@ public class Order {
 
     }
 
-    public void notifyObserver(String newRecord){
+    public void notifyObserver(Order newRecord){
 
 
     observer.addNewRecord(newRecord);
 
+    }
+
+    @Override
+    public String toString(){
+        return "Order{" +
+                "orderId=" + orderId +
+                ", orderStatus=" + orderStatus +
+                ", pizzas and ids=" + pizzaIdAmount +
+                '}';
     }
 
 
