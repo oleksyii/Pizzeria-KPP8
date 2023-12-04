@@ -1,6 +1,11 @@
 package com.example.demo2.MainPage;
 
+import com.example.demo2.PizzaMenu.MenuPage;
 import com.example.demo2.Settings.SettingsPage;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.animation.PauseTransition;
+import javafx.util.Duration;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -14,7 +19,12 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 public class MainPage {
+    private Animation animationInstance;
+    private double initialDistance = -400;
+    private boolean stopGenerating = false;
+
     public void start(Stage primaryStage) {
+        animationInstance = new Animation();
         StackPane root = new StackPane();
 
         HBox header = new HBox();
@@ -25,15 +35,30 @@ public class MainPage {
         titleContainer.setAlignment(Pos.CENTER_LEFT);
 
         Button settingsButton = new Button();
+        Button menuButton = new Button();
         settingsButton.setOnAction(event -> {
             SettingsPage settings = new SettingsPage();
             settings.start(primaryStage);
         });
+        menuButton.setOnAction(event -> {
+            MenuPage menu = new MenuPage();
+            menu.start(primaryStage);
+        });
+        ImageView menuIconImageView = new ImageView(new Image(getClass().getResource("/menu.png").toExternalForm()));
+        menuIconImageView.setFitHeight(40);
+        menuIconImageView.setFitWidth(40);
+        menuButton.setGraphic(menuIconImageView);
+        menuButton.setStyle("-fx-background-color: transparent; -fx-border-color: transparent;");
+
         settingsButton.setGraphic(new ImageView(new Image(getClass().getResource("/settings.png").toExternalForm())));
-        settingsButton.setPrefSize(25, 25);
+        settingsButton.setPrefSize(20, 20);
         settingsButton.setStyle("-fx-background-color: transparent; -fx-border-color: transparent;");
+
         StackPane.setMargin(settingsButton, new Insets(4, 25, 0, 0));
+        StackPane.setMargin(menuButton, new Insets(10, 100, 0, 0));
+
         StackPane.setAlignment(settingsButton, Pos.TOP_RIGHT);
+        StackPane.setAlignment(menuButton, Pos.TOP_RIGHT);
 
         Label titleLabel = new Label("PIZZA SIMULATOR");
         titleLabel.setStyle("-fx-font-size: 40; -fx-font-weight: bold; -fx-text-fill: white; -fx-padding: 0 15 0 15; -fx-font-family: 'Comic Sans MS'");
@@ -48,75 +73,110 @@ public class MainPage {
         backgroundImageView.setFitWidth(1320);
         backgroundImageView.setFitHeight(780);
 
-        VBox ovens = generateOvens();
-        VBox cooks = generateCooks();
-        StackPane table = generateTable();
-        VBox cashiers = generateCashiers();
-        HBox clients = generateClients();
+        int numberOfCooks = 4;
+        int numberOfCashiers = 2;
+        VBox ovens = generateOvens(numberOfCooks);
+        VBox cooks = generateCooks(numberOfCooks);
+        StackPane table = generateTable(numberOfCooks);
+        VBox cashiers = generateCashiers(numberOfCashiers);
+        StackPane clientsContainer = new StackPane();
+        HBox clients = new HBox();
+        clients.setPrefSize(550, 75);
+        clients.setSpacing(10);
+        clients.setMaxWidth(Region.USE_PREF_SIZE);
+        clientsContainer.setAlignment(Pos.CENTER_RIGHT);
+        clientsContainer.setPadding(new Insets(0, -500, 0, -100));
+        clients.setPadding(new Insets(380, 0, 0, 0));
+        clientsContainer.getChildren().add(clients);
         VBox clientsDesks = generateClientDesks();
 
-        root.getChildren().addAll(backgroundImageView, ovens, cooks, table, cashiers, clients, clientsDesks);
-        root.getChildren().addAll(header, settingsButton);
+        Cook targetCook = (Cook) cooks.getChildren().get(0);
+        targetCook.animateCook(animationInstance, 10);
 
-        Scene scene = new Scene(root, 1320, 780);
+        root.getChildren().addAll(backgroundImageView, ovens, cooks, table, cashiers, clientsContainer, clientsDesks);
+        root.getChildren().addAll(header, settingsButton, menuButton);
+
+        Scene scene = new Scene(root,  1320, 780);
 
         primaryStage.setResizable(false);
         primaryStage.setTitle("Pizza Simulator");
         primaryStage.setScene(scene);
         primaryStage.show();
+
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(5), e->generateClients(clients)));
+        timeline.setCycleCount(timeline.INDEFINITE);
+        timeline.play();
     }
 
-    private VBox generateOvens() {
+    private void setSpacingDynamically(int numberOfElements, VBox elements, int paddingIfOne) {
+        if(numberOfElements == 1) {
+            Insets currentInsets = elements.getPadding();
+            elements.setPadding(new Insets(paddingIfOne, currentInsets.getRight(), currentInsets.getBottom(), currentInsets.getLeft()));
+        } else {
+            int defaultSpacing = 300;
+            // 2 -> 150
+            // 3 -> 75
+            // 4 -> 37.5
+            // 5 -> 18.75
+            elements.setSpacing(defaultSpacing / Math.pow(2, numberOfElements - 1));
+        }
+    }
+
+    private void setSpacingDynamically(int numberOfElements, VBox elements) {
+        this.setSpacingDynamically(numberOfElements, elements, 360);
+    }
+
+    private VBox generateOvens(int numberOfOvens) {
         VBox ovens = new VBox();
         ovens.setAlignment(Pos.TOP_LEFT);
         ovens.setPadding(new Insets(220, 0, 150, 100));
-        ovens.setSpacing(75);
 
-        Oven oven1 = new Oven();
-        Oven oven2 = new Oven();
-        Oven oven3 = new Oven();
+        this.setSpacingDynamically(numberOfOvens, ovens);
 
-        ovens.getChildren().addAll(oven1, oven2, oven3);
+        for (int i = 0; i < numberOfOvens; i++) {
+            Oven oven = new Oven();
+            ovens.getChildren().add(oven);
+        }
+
         return ovens;
     }
 
-    private VBox generateCooks() {
+    private VBox generateCooks(int numberOfCooks) {
         VBox cooks = new VBox();
         cooks.setAlignment(Pos.TOP_LEFT);
-        cooks.setPadding(new Insets(170, 0, 150, 230));
-        cooks.setSpacing(60);
+        cooks.setPadding(new Insets(180, 0, 150, 230));
 
-        Cook cook1 = new Cook("atTable");
-        Cook cook2 = new Cook("atOven");
-        Cook cook3 = new Cook("atTable");
+        this.setSpacingDynamically(numberOfCooks, cooks, 330);
 
-        cooks.getChildren().addAll(cook1, cook2, cook3);
+        for (int i = 0; i < numberOfCooks; i++) {
+            CookState cookState = i % 2 == 0 ? CookState.AT_TABLE: CookState.AT_OVEN;
+            Cook cook = new Cook(cookState);
+            cooks.getChildren().add(cook);
+        }
+
         return cooks;
     }
 
-    private StackPane generateTable() {
-        Rectangle rectangle = new Rectangle(100, 620);
+    private StackPane generateTable(int numberOfPizzas) {
+        Rectangle rectangle = new Rectangle(100, 650);
         rectangle.setFill(Color.SADDLEBROWN);
 
-        Image pizzaImage1 = new Image("pizza_icon.png");
-        Image pizzaImage2 = new Image("pizza_icon.png");
-
-        ImageView pizzaImageView1 = new ImageView(pizzaImage1);
-        ImageView pizzaImageView2 = new ImageView(pizzaImage2);
-
+        Image pizzaImage = new Image("pizza_icon.png");
         VBox pizzaImages = new VBox();
 
-        pizzaImageView1.setFitHeight(70);
-        pizzaImageView1.setFitWidth(70);
+        double paddingTop = (5.5 - numberOfPizzas) * 35;
+        pizzaImages.setPadding(new Insets(paddingTop, 15, 0, 15));
+        this.setSpacingDynamically(numberOfPizzas, pizzaImages, 260);
 
-        pizzaImageView2.setFitHeight(70);
-        pizzaImageView2.setFitWidth(70);
-
-        pizzaImages.setAlignment(Pos.TOP_LEFT);
-        pizzaImages.setPadding(new Insets(100, 15, 30, 15));
-        pizzaImages.setSpacing(300);
-
-        pizzaImages.getChildren().addAll(pizzaImageView1, pizzaImageView2);
+        for (int i = 0; i < numberOfPizzas; i++) {
+            HBox pizzaImageHBox = new HBox();
+            ImageView pizzaImageView = new ImageView(pizzaImage);
+            pizzaImageView.setFitHeight(70);
+            pizzaImageView.setFitWidth(70);
+            pizzaImageHBox.getChildren().add(pizzaImageView);
+            pizzaImageHBox.setPadding(new Insets(22, 0, 20, 0));
+            pizzaImages.getChildren().add(pizzaImageHBox);
+        }
 
         StackPane stackPane = new StackPane();
         stackPane.setAlignment(Pos.TOP_LEFT);
@@ -126,45 +186,31 @@ public class MainPage {
         return stackPane;
     }
 
-    private VBox generateCashiers() {
+    private VBox generateCashiers(int numberOfCashiers) {
         VBox cashiers = new VBox();
         cashiers.setAlignment(Pos.TOP_CENTER);
         cashiers.setPadding(new Insets(220, 0, 150, 50));
-        cashiers.setSpacing(75);
 
-        Cashier oven1 = new Cashier();
-        Cashier oven2 = new Cashier();
-        Cashier oven3 = new Cashier();
+        this.setSpacingDynamically(numberOfCashiers, cashiers);
 
-        cashiers.getChildren().addAll(oven1, oven2, oven3);
+        for (int i = 0; i < numberOfCashiers; i++) {
+            Cashier cashier = new Cashier();
+            cashiers.getChildren().add(cashier);
+        }
+
         return cashiers;
     }
 
-    private HBox generateClients() {
-        HBox clients = new HBox();
-        VBox firstClients = new VBox();
-        HBox otherClients = new HBox();
+    private void generateClients(HBox clients) {
+        if (clients.getChildren().size() < 5) {
+            Client client = new Client();
+            clients.getChildren().add(client);
+            initialDistance += 10;
 
-        clients.setAlignment(Pos.TOP_CENTER);
-        clients.setPadding(new Insets(80, 0, 0,620));
-        clients.setSpacing(40);
-        Client client1 = new Client();
-        Client client2 = new Client();
-        Client client3 = new Client();
-        firstClients.getChildren().addAll(client1, client2, client3);
-        firstClients.setSpacing(125);
-        firstClients.setAlignment(Pos.CENTER);
-
-        Client client4 = new Client();
-        Client client5 = new Client();
-        Client client6 = new Client();
-        Client client7 = new Client();
-        otherClients.getChildren().addAll(client4, client5, client6, client7);
-        otherClients.setAlignment(Pos.CENTER);
-        otherClients.setSpacing(10);
-
-        clients.getChildren().addAll(firstClients, otherClients);
-        return clients;
+            PauseTransition pauseTransition = new PauseTransition(Duration.seconds(0.05));
+            pauseTransition.setOnFinished(event -> animationInstance.animateClient(client, initialDistance));
+            pauseTransition.play();
+        }
     }
 
     private VBox generateClientDesks() {

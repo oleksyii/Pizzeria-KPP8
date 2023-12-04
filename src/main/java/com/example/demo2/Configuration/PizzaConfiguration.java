@@ -1,6 +1,7 @@
 package com.example.demo2.Configuration;
 
 import com.example.demo2.PizzaMenu.MenuPage;
+import com.example.demo2.MainPage.MainPage;
 import javafx.animation.ScaleTransition;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
@@ -183,9 +184,8 @@ public class PizzaConfiguration {
         startButton.setOnMouseReleased(event -> releaseTransition.playFromStart());
 
         startButton.setOnAction(event -> {
-            //Open pizza simulator page
-            MenuPage menu = new MenuPage(); //testing
-            menu.start(primaryStage);
+            MainPage mainPage = new MainPage();
+            mainPage.start(primaryStage);
         });
 
 
