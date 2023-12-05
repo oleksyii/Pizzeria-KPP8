@@ -11,12 +11,16 @@ import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PizzeriaController {
     static private double initialDistance = -400;
@@ -147,17 +151,94 @@ public class PizzeriaController {
         return cashiers;
     }
 
-    static public void generateClients(HBox clients, Animation animationInstance) {
-        if (clients.getChildren().size() < 5) {
-            Client client = new Client();
-            clients.getChildren().add(client);
-            initialDistance += 10;
+    static public void generateClientsForCashiers(List<HBox> cashierQueues, Animation animationInstance, int numberOfClientsPerCashier) {
+        for (HBox clientsQueue : cashierQueues) {
+            if (clientsQueue.getChildren().size() < 5) {
+                Client client = new Client();
+                clientsQueue.getChildren().add(client);
+                initialDistance += 10;
 
-            PauseTransition pauseTransition = new PauseTransition(Duration.seconds(0.05));
-            pauseTransition.setOnFinished(event -> animationInstance.animateClient(client, initialDistance));
-            pauseTransition.play();
+                PauseTransition pauseTransition = new PauseTransition(Duration.seconds(0.05));
+                pauseTransition.setOnFinished(event -> animationInstance.animateClient(client, initialDistance));
+                pauseTransition.play();
+                System.out.println(initialDistance);
+            }
         }
     }
+
+    public static List<HBox> createClientsQueues(int size) {
+        List<HBox> cashierQueues = new ArrayList<>();
+
+        if (size > 2) {
+            for (int i = 0; i < size; i++) {
+                HBox clients = new HBox();
+                clients.setPrefSize(650, 75);
+                clients.setSpacing(10);
+                clients.setMaxWidth(Region.USE_PREF_SIZE);
+                cashierQueues.add(clients);
+                System.out.println(size);
+            }
+        } else {
+            for (int i = 0; i < size; i++) {
+                HBox clients = new HBox();
+                clients.setPrefSize(550, 75);
+                clients.setSpacing(10);
+                clients.setMaxWidth(Region.USE_PREF_SIZE);
+                cashierQueues.add(clients);
+                System.out.println(size);
+            }
+        }
+
+        return cashierQueues;
+    }
+
+    static public void setClientsSpacing(int numberOfCashiers, VBox cashiersContainer) {
+        int defaultSpacing = 300;
+        if (numberOfCashiers == 1) {
+            cashiersContainer.setSpacing(0);
+        }
+        else if (numberOfCashiers == 2) {
+            double spacingValue = (defaultSpacing / (numberOfCashiers - 1)) - (numberOfCashiers * 50);
+            cashiersContainer.setSpacing(spacingValue);
+        }
+        else if (numberOfCashiers == 3) {
+            double spacingValue = (defaultSpacing / (numberOfCashiers - 1)) - (numberOfCashiers * 10);
+            cashiersContainer.setSpacing(spacingValue);
+        }
+        else if (numberOfCashiers == 4) {
+            double spacingValue = (defaultSpacing / (numberOfCashiers - 1)) - 15;
+            cashiersContainer.setSpacing(spacingValue);
+        } else {
+            double spacingValue = (defaultSpacing / (numberOfCashiers - 1)) - 20;
+            cashiersContainer.setSpacing(spacingValue);
+        }
+    }
+
+    static public VBox createQueuesBox(List<HBox> clientsQueues) {
+        VBox queuesBox = new VBox();
+        queuesBox.setAlignment(Pos.CENTER_RIGHT);
+        for (int i = 0; i < clientsQueues.size(); i++) {
+            HBox queue = clientsQueues.get(i);
+            queue.setId("queue" + i);
+            queuesBox.getChildren().add(queue);
+        }
+
+        return queuesBox;
+    }
+
+
+
+//    static public void generateClients(HBox clients, Animation animationInstance, numberOfCashiers) {
+//        if (clients.getChildren().size() < 5) {
+//            Client client = new Client();
+//            clients.getChildren().add(client);
+//            initialDistance += 10;
+//
+//            PauseTransition pauseTransition = new PauseTransition(Duration.seconds(0.05));
+//            pauseTransition.setOnFinished(event -> animationInstance.animateClient(client, initialDistance));
+//            pauseTransition.play();
+//        }
+//    }
 
     static public VBox generateClientDesks() {
         VBox clientDesks = new VBox();

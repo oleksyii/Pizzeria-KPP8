@@ -15,6 +15,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import java.util.List;
+import java.util.ArrayList;
+import javafx.scene.Node;
+
 
 public class MainPage {
     private Animation animationInstance;
@@ -63,26 +67,21 @@ public class MainPage {
         backgroundImageView.setFitHeight(780);
 
         int numberOfCooks = 4;
-        int numberOfCashiers = 2;
+        int numberOfCashiers = 5;
         VBox ovens = PizzeriaController.generateOvens(numberOfCooks);
         VBox cooks = PizzeriaController.generateCooks(numberOfCooks);
         ObservableList<Node> cooksData = cooks.getChildren();
         StackPane table = PizzeriaController.generateTable(numberOfCooks, cooksData);
         VBox cashiers = PizzeriaController.generateCashiers(numberOfCashiers);
         StackPane clientsContainer = new StackPane();
-        HBox clients = new HBox();
-        clients.setPrefSize(550, 75);
-        clients.setSpacing(10);
-        clients.setMaxWidth(Region.USE_PREF_SIZE);
+        List<HBox> clientsQueues = PizzeriaController.createClientsQueues(numberOfCashiers);
         clientsContainer.setAlignment(Pos.CENTER_RIGHT);
-        clientsContainer.setPadding(new Insets(0, -500, 0, -100));
-        clients.setPadding(new Insets(380, 0, 0, 0));
-        clientsContainer.getChildren().add(clients);
-        VBox clientsDesks = PizzeriaController.generateClientDesks();
+        clientsContainer.setPadding(new Insets(80, -500, 0, -100));
+        VBox queuesBox = PizzeriaController.createQueuesBox(clientsQueues);
+        PizzeriaController.setClientsSpacing(numberOfCashiers, queuesBox);
 
-        PizzeriaController.startCookAnimation(1);
-
-        root.getChildren().addAll(backgroundImageView, ovens, cooks, table, cashiers, clientsContainer, clientsDesks);
+        clientsContainer.getChildren().add(queuesBox);
+        root.getChildren().addAll(backgroundImageView, ovens, cooks, table, cashiers, clientsContainer);
         root.getChildren().addAll(header, settingsButton, menuButton);
 
         Scene scene = new Scene(root,  1320, 780);
@@ -92,7 +91,7 @@ public class MainPage {
         primaryStage.setScene(scene);
         primaryStage.show();
 
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(5), e->PizzeriaController.generateClients(clients, animationInstance)));
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(5), e -> PizzeriaController.generateClientsForCashiers(clientsQueues, animationInstance, numberOfCashiers)));
         timeline.setCycleCount(timeline.INDEFINITE);
         timeline.play();
     }
