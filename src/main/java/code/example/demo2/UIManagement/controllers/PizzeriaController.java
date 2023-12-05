@@ -32,12 +32,10 @@ public class PizzeriaController {
     }
 
     static public void startCookAnimation(int cookId) {
-        Cook uiCook = (Cook) uiCooks.getChildren().get(cookId);
         Animation.startCookAnimation(cookId - 1);
     }
 
     static public void finishCookAnimation(int cookId) {
-        Cook uiCook = (Cook) uiCooks.getChildren().get(cookId);
         Animation.finishCookAnimation(cookId - 1);
     }
 

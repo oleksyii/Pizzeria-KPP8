@@ -18,7 +18,7 @@ public class HelloApplication extends Application {
     public void start(Stage primaryStage) throws Exception {
 
         PizzeriaSimulator p = new PizzeriaSimulator(
-                3,
+                4,
                 3,
                 new ArrayList<>(List.of(1)),
                 ClientGenerationStrategies.Weekend,
