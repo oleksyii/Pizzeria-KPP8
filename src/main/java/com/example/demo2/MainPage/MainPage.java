@@ -70,8 +70,7 @@ public class MainPage {
         int numberOfCashiers = 5;
         VBox ovens = PizzeriaController.generateOvens(numberOfCooks);
         VBox cooks = PizzeriaController.generateCooks(numberOfCooks);
-        ObservableList<Node> cooksData = cooks.getChildren();
-        StackPane table = PizzeriaController.generateTable(numberOfCooks, cooksData);
+        StackPane table = PizzeriaController.generateTable();
         VBox cashiers = PizzeriaController.generateCashiers(numberOfCashiers);
         StackPane clientsContainer = new StackPane();
         List<HBox> clientsQueues = PizzeriaController.createClientsQueues(numberOfCashiers);

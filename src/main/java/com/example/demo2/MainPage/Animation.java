@@ -38,6 +38,7 @@ public class Animation {
 
                 moveLeft.setOnFinished(event -> {
                     currentUiCook.changeState(CookState.AT_OVEN);
+                    PizzeriaController.generateTable();
                 });
                 moveLeft.play();
             });
@@ -66,6 +67,7 @@ public class Animation {
 
                 moveRight.setOnFinished(event -> {
                     currentUiCook.changeState(CookState.AT_TABLE);
+                    PizzeriaController.generateTable();
                 });
                 moveRight.play();
             });

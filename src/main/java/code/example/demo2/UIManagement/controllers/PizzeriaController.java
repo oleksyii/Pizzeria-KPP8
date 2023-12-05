@@ -25,6 +25,7 @@ import java.util.List;
 public class PizzeriaController {
     static private double initialDistance = -400;
     static private VBox uiCooks;
+    static private StackPane uiTable = new StackPane();
 
     static public void handleSettingsButtonClick(Stage primaryStage) {
         SettingsPage settings = new SettingsPage();
@@ -103,13 +104,17 @@ public class PizzeriaController {
         return cooks;
     }
 
-    static public StackPane generateTable(int numberOfPizzas, ObservableList<Node> cooksData) {
+    static public StackPane generateTable() {
+        uiTable.getChildren().clear();
+
         Rectangle rectangle = new Rectangle(100, 650);
         rectangle.setFill(Color.SADDLEBROWN);
 
         Image pizzaImage = new Image("pizza_icon.png");
         VBox pizzaImages = new VBox();
 
+        ObservableList<Node> cooksData = uiCooks.getChildren();
+        int numberOfPizzas = cooksData.size();
         double paddingTop = (5.5 - numberOfPizzas) * 35;
         pizzaImages.setPadding(new Insets(paddingTop, 15, 0, 15));
         setSpacingDynamically(numberOfPizzas, pizzaImages, 260);
@@ -130,12 +135,11 @@ public class PizzeriaController {
             pizzaImages.getChildren().add(pizzaImageHBox);
         }
 
-        StackPane stackPane = new StackPane();
-        stackPane.setAlignment(Pos.TOP_LEFT);
-        stackPane.setPadding(new Insets(210, 0, 150, 430));
-        stackPane.getChildren().addAll(rectangle, pizzaImages);
+        uiTable.setAlignment(Pos.TOP_LEFT);
+        uiTable.setPadding(new Insets(210, 0, 150, 430));
+        uiTable.getChildren().addAll(rectangle, pizzaImages);
 
-        return stackPane;
+        return uiTable;
     }
 
     static public VBox generateCashiers(int numberOfCashiers) {
