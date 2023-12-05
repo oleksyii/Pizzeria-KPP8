@@ -14,7 +14,8 @@ public class PizzeriaSimulatorTestMain {
                 2,
                 new ArrayList<>(List.of(1, 2, 4, 6)),
                 ClientGenerationStrategies.Weekend,
-                20000);
+                20000
+        );
 
         // TODO: WARNING DO NOT USE DIFFERENT TYPES OF COOKS, THEY SEEM TO NOT TO WILLING TO FINISH WITH .interrupt(), please, help fix
 

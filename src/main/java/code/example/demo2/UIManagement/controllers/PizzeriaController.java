@@ -32,9 +32,13 @@ public class PizzeriaController {
     }
 
     static public void startCookAnimation(int cookId) {
-        System.out.println(uiCooks);
-        Cook cook = (Cook) uiCooks.getChildren().get(cookId);
-        Animation.animateCook(cook, 10);
+        Cook uiCook = (Cook) uiCooks.getChildren().get(cookId);
+        Animation.startCookAnimation(cookId - 1);
+    }
+
+    static public void finishCookAnimation(int cookId) {
+        Cook uiCook = (Cook) uiCooks.getChildren().get(cookId);
+        Animation.finishCookAnimation(cookId - 1);
     }
 
     static public void handleMenuButtonClick(Stage primaryStage) {
@@ -92,7 +96,7 @@ public class PizzeriaController {
         setSpacingDynamically(numberOfCooks, cooks, 330);
 
         for (int i = 0; i < numberOfCooks; i++) {
-            CookState cookState = i % 2 == 0 ? CookState.AT_TABLE: CookState.AT_OVEN;
+            CookState cookState = CookState.AT_TABLE;
             com.example.demo2.MainPage.Cook cook = new Cook(cookState);
             cooks.getChildren().add(cook);
         }

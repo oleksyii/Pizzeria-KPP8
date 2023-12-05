@@ -1,6 +1,13 @@
 package com.example.demo2.MainPage;
 
+import code.example.demo2.CooksManagement.KitchenManager;
+import code.example.demo2.CooksManagement.strategies.CookStatus;
+import code.example.demo2.UIManagement.controllers.PizzeriaController;
+import javafx.animation.PauseTransition;
 import javafx.animation.TranslateTransition;
+import javafx.application.Platform;
+import javafx.collections.ObservableList;
+import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
@@ -11,28 +18,60 @@ public class Animation {
         translateTransition.play();
     }
 
-    public static void animateCook(Cook cook, double standStillDuration) {
-        TranslateTransition moveLeft = new TranslateTransition(Duration.seconds(2), cook);
-        moveLeft.setByX(-120);
+    public static void startCookAnimation(int cookId) {
+        Cook currentUiCook;
+        ObservableList<Node> uiCooksChildren = PizzeriaController.getUiCooks().getChildren();
 
-        TranslateTransition standStill = new TranslateTransition(Duration.seconds(standStillDuration), cook);
-        standStill.setByX(0);
+        if (cookId >= 0 && cookId < uiCooksChildren.size()) {
+            currentUiCook = (Cook) uiCooksChildren.get(cookId);
+        } else {
+            currentUiCook = null;
+            System.out.println("Invalid cookId: " + cookId);
+        }
 
-        TranslateTransition moveBack = new TranslateTransition(Duration.seconds(2), cook);
-        moveBack.setByX(120);
+        if (currentUiCook != null) {
+            System.out.println("cook" + currentUiCook);
 
-        moveLeft.setOnFinished(event -> {
-            cook.changeState(CookState.AT_OVEN);
-            standStill.play();
-            standStill.setOnFinished(e -> {
-                moveBack.play();
-                moveBack.setOnFinished(f -> {
-                    // Оновлення стану тільки після закінчення анімації
-                    cook.changeState(CookState.AT_TABLE);
+            Platform.runLater(() -> {
+                TranslateTransition moveLeft = new TranslateTransition(Duration.seconds(2), currentUiCook);
+                moveLeft.setByX(-120);
+
+                moveLeft.setOnFinished(event -> {
+                    currentUiCook.changeState(CookState.AT_OVEN);
                 });
+                moveLeft.play();
             });
-        });
-
-        moveLeft.play();
+        } else {
+            System.out.println("Animation skipped due to invalid cookId or missing cook");
+        }
     }
+
+    public static void finishCookAnimation(int cookId) {
+        Cook currentUiCook;
+        ObservableList<Node> uiCooksChildren = PizzeriaController.getUiCooks().getChildren();
+
+        if (cookId >= 0 && cookId < uiCooksChildren.size()) {
+            currentUiCook = (Cook) uiCooksChildren.get(cookId);
+        } else {
+            currentUiCook = null;
+            System.out.println("Invalid cookId: " + cookId);
+        }
+
+        if (currentUiCook != null) {
+            System.out.println("cook" + currentUiCook);
+
+            Platform.runLater(() -> {
+                TranslateTransition moveRight = new TranslateTransition(Duration.seconds(2), currentUiCook);
+                moveRight.setByX(120);
+
+                moveRight.setOnFinished(event -> {
+                    currentUiCook.changeState(CookState.AT_TABLE);
+                });
+                moveRight.play();
+            });
+        } else {
+            System.out.println("Animation skipped due to invalid cookId or missing cook");
+        }
+    }
+
 }

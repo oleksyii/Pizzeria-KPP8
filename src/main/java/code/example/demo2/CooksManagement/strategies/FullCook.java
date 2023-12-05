@@ -5,6 +5,7 @@ package code.example.demo2.CooksManagement.strategies;
 import code.example.demo2.OrdersManagement.OrderManager;
 import code.example.demo2.OrdersManagement.PizzaStatus;
 import code.example.demo2.OrdersManagement.Task;
+import code.example.demo2.UIManagement.controllers.PizzeriaController;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +58,7 @@ public class FullCook extends Cook{
 
                 this.cookStatus = CookStatus.Creating;
                 System.out.println("FullCook thread " + this.id + " is creating pizza Task: " + this.currentTask);
-
+                PizzeriaController.startCookAnimation(this.id);
                 //TODO: NOTIFY CONTROLLER COOK IS CREATING
 
                 if(Thread.interrupted()){return;}
@@ -69,7 +70,7 @@ public class FullCook extends Cook{
 
                 this.cookStatus = CookStatus.Baking;
 //                currentTask.setStatus(PizzaStatus.Processing);
-
+                PizzeriaController.finishCookAnimation(this.id);
                 //TODO: NOTIFY CONTROLLER COOK IS BAKING
 
                 if(Thread.interrupted()){return;}

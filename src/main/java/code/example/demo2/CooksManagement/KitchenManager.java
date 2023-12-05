@@ -63,5 +63,16 @@ public class KitchenManager {
         }
     }
 
+    static public CookStatus getCookStatus(int id) {
+        for (SpecificCook cook :
+                cooks) {
+            if (cook.Id() == id) {
+                return cook.getCookStatus();
+            }
+        }
+
+        return null;
+    }
+
     public ArrayList<SpecificCook> getCooks() {return cooks;}
 }

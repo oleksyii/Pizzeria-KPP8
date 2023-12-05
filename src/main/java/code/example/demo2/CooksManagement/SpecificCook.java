@@ -1,6 +1,7 @@
 package code.example.demo2.CooksManagement;
 
 import code.example.demo2.CooksManagement.strategies.Cook;
+import code.example.demo2.CooksManagement.strategies.CookStatus;
 import code.example.demo2.OrdersManagement.PizzaStatus;
 
 public class SpecificCook {
@@ -25,6 +26,8 @@ public class SpecificCook {
         strategy.start();
     }
     public int Id(){return strategy.Id();}
+
+    public CookStatus getCookStatus(){return strategy.Status();}
     public void pause(){
         strategy.pauseCook();
     }

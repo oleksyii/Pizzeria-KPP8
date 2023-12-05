@@ -43,8 +43,9 @@ public class Cook extends VBox {
         getChildren().addAll(cloudImageBox, cookImage);
     }
 
-    public void animateCook(Animation animation, double standStillDuration) {
-        animation.animateCook(this, standStillDuration);
+    public void rerenderCook() {
+        getChildren().clear();
+        renderCook();
     }
 
     public void changeState(CookState state) {
