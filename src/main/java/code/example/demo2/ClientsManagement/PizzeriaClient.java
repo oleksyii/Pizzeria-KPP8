@@ -45,7 +45,7 @@ public class PizzeriaClient {
         order.setClientId(clientId);
 
         OrderManager.addOrderAndCreateTasks(order);
-        // TODO: CALL CONTROLLER
+        // TODO: CALL THE CONTROLLER THAT CLIENT WAS CREATED
     }
 
     public void takeOrderAndLeave(){

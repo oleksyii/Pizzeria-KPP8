@@ -41,6 +41,8 @@ public class CashierManager {
         } else {
             System.out.println("No cashiers available.");
         }
+
+        // TODO: call controller and send a cashier that was chosen
     }
 
     public void createCashiers(int amount){
