@@ -96,7 +96,7 @@ public class BakingCook extends Cook{
     public String getType(){
         return "BakingCook";
     }
-
+    @Override
     public void run() {
         while(!isInterrupted){
             System.out.println("Getting the task cook id: " + this.id);
@@ -109,11 +109,4 @@ public class BakingCook extends Cook{
         if(currentTask != null){currentTask.setStatus(PizzaStatus.NotTaken);}
     }
 
-    public void customInterrupt(){
-        isInterrupted = true;
-        if (currentTask != null)
-            currentTask.setStatus(PizzaStatus.NotTaken);
-        interrupt(); // Optional: Interrupt the thread if it is currently blocked in a sleep, wait, or join operation.
-
-    }
 }

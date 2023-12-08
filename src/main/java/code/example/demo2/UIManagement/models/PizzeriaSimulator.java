@@ -37,7 +37,7 @@ public class PizzeriaSimulator {
 
         // Kitchen initialization
         this.kitchenManager =  new KitchenManager(numOfCooks, minTimeCooking);
-
+        this.kitchenManager.startCooks();
 
 
 

@@ -19,7 +19,7 @@ public class PizzeriaSimulatorTestMain {
 
         // TODO: WARNING DO NOT USE DIFFERENT TYPES OF COOKS, THEY SEEM TO NOT TO WILLING TO FINISH WITH .interrupt(), please, help fix
 
-//        p.getKitchenManager().morphCook(1, CookType.Creating);
+        p.getKitchenManager().morphCook(1, CookType.Creating);
 //        p.getKitchenManager().morphCook(3, CookType.Baking);
 //        p.getKitchenManager().morphCook(2, CookType.Baking);
 

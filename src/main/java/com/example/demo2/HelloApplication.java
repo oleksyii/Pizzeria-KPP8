@@ -1,6 +1,7 @@
 package com.example.demo2;
 
 import code.example.demo2.ClientsManagement.GeneratorManager.ClientGenerationStrategies;
+import code.example.demo2.CooksManagement.strategies.CookType;
 import code.example.demo2.UIManagement.models.PizzeriaSimulator;
 import com.example.demo2.Configuration.PizzaConfiguration;
 import com.example.demo2.MainPage.MainPage;
@@ -22,7 +23,7 @@ public class HelloApplication extends Application {
                 3,
                 new ArrayList<>(List.of(1)),
                 ClientGenerationStrategies.Weekend,
-                20000
+                10000
         );
 
 
@@ -33,6 +34,9 @@ public class HelloApplication extends Application {
         mainPage.start(primaryStage);
 //        menuPage.start(primaryStage);
 //        settingsPage.start(primaryStage);
+
+        System.out.println("Morphing the cook 1");
+        p.getKitchenManager().morphCook(1, CookType.Creating);
     }
 
     public static void main(String[] args) {

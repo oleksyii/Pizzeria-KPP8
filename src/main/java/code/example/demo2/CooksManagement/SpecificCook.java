@@ -7,6 +7,7 @@ import code.example.demo2.OrdersManagement.PizzaStatus;
 public class SpecificCook {
     static int id = 0;
     Cook strategy;
+    Thread workingThread;
 
     SpecificCook(Cook strategy){
         id++;
@@ -15,15 +16,19 @@ public class SpecificCook {
     }
     public void setStrategy(Cook strategy){
         System.out.println("Morphing the cook " + this.strategy.Id());
+
         strategy.Id(this.strategy.Id());
-        this.strategy.interrupt();
+        this.workingThread.interrupt();
+
         System.out.println("Morphed");
         this.strategy = strategy;
-//        this.executeStrategy();
+
+        this.executeStrategy();
     }
     public void executeStrategy(){
 //        strategy.setDaemon(true); // Set the thread as daemon
-        strategy.start();
+//        strategy.start();
+        workingThread = new Thread(strategy, "Thread-"+strategy.Id());
     }
     public int Id(){return strategy.Id();}
 

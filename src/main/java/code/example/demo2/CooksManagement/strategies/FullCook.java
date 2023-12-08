@@ -115,17 +115,12 @@ public class FullCook extends Cook{
     }
 
     @Override
-    public void customInterrupt() {
-
-    }
-
-    @Override
     public String getType(){
         return "FullCook";
     }
-
+    @Override
     public void run() {
-
+        System.out.println("Getting the task cook id: " + this.id);
         while(!Thread.interrupted()){
             System.out.println("Getting the task cook id: " + this.id);
             currentTask = takeTask();
