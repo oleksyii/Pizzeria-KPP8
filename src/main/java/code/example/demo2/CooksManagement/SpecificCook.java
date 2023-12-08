@@ -22,7 +22,7 @@ public class SpecificCook {
 //        this.executeStrategy();
     }
     public void executeStrategy(){
-        strategy.setDaemon(true); // Set the thread as daemon
+//        strategy.setDaemon(true); // Set the thread as daemon
         strategy.start();
     }
     public int Id(){return strategy.Id();}
