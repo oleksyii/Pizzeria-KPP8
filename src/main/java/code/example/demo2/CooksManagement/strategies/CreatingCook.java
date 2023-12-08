@@ -96,11 +96,4 @@ public Task takeTask() {
         }
     }
 
-//    public void customInterrupt(){
-//        isInterrupted = true;
-//        if (currentTask != null)
-//            currentTask.setStatus(PizzaStatus.NotTaken);
-//        interrupt(); // Optional: Interrupt the thread if it is currently blocked in a sleep, wait, or join operation.
-//
-//    }
 }

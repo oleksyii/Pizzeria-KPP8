@@ -37,14 +37,11 @@ public class PizzeriaSimulator {
 
         // Kitchen initialization
         this.kitchenManager =  new KitchenManager(numOfCooks, minTimeCooking);
-    // Added a comment
 
         this.StartJob();
     }
 
     private void StartJob() {
-
-
         kitchenManager.startCooks();
     }
 

@@ -34,8 +34,6 @@ public class SpecificCook {
         System.out.println("Morphed");
     }
     public void executeStrategy(){
-//        strategy.setDaemon(true); // Set the thread as daemon
-//        strategy.start();
         workingThread = new Thread(runningCook, "Thread-"+runningCook.getId());
         workingThread.start();
     }
