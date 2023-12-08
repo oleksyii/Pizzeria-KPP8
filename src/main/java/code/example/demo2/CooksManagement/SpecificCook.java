@@ -30,18 +30,18 @@ public class SpecificCook {
 //        strategy.start();
         workingThread = new Thread(strategy, "Thread-"+strategy.Id());
     }
-    public int Id(){return strategy.Id();}
+    public int Id(){return runningCook.getId();}
 
-    public CookStatus getCookStatus(){return strategy.Status();}
+    public CookStatus getCookStatus(){return runningCook.getStatus();}
     public void pause(){
-        strategy.pauseCook();
+        runningCook.pauseCook();
     }
 
     @Override
     public String toString(){
         return "SpecificCook{" +
-                "cookID=" + strategy.Id() +
-                ", CookType=" + strategy.getType() +
+                "cookID=" + runningCook.getId() +
+                ", CookType=" + runningCook.getType() +
                 '}';
     }
 }

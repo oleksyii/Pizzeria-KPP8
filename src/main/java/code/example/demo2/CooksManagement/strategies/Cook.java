@@ -6,7 +6,7 @@ import code.example.demo2.OrdersManagement.Task;
 import java.util.List;
 
 //public abstract class Cook extends Thread {
-public abstract class Cook implements Runnable {
+public abstract class Cook {
     public static int COOKING_TIME = 0;
 
 
@@ -24,7 +24,6 @@ public abstract class Cook implements Runnable {
     /**
      * Function to pause a thread
      * */
-    public abstract void pauseCook();
 //    public abstract void notifyControllerWithStatus();
     public abstract CookStatus Status();
     public abstract int Id();
@@ -32,6 +31,9 @@ public abstract class Cook implements Runnable {
     public abstract Task getCurrentTask();
 //    public abstract void customInterrupt();
     public abstract String getType();
+    public abstract void execute();
+
+
 }
 
 

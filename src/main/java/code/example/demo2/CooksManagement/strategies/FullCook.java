@@ -86,17 +86,6 @@ public class FullCook extends Cook{
     }
 
     @Override
-    public void pauseCook() {
-        try {
-            System.out.println("Cook " + this.Id() +" is sleeping");
-            Thread.sleep(10000); // Pausing
-
-        } catch (InterruptedException e) {
-            // Handle InterruptedException if needed
-        }
-    }
-
-    @Override
     public CookStatus Status() {return this.cookStatus;}
 
     @Override
@@ -118,19 +107,15 @@ public class FullCook extends Cook{
     public String getType(){
         return "FullCook";
     }
-    @Override
-    public void run() {
-        System.out.println("Getting the task cook id: " + this.id);
-        while(!Thread.interrupted()){
-            System.out.println("Getting the task cook id: " + this.id);
-            currentTask = takeTask();
-            if(currentTask != null){
-                System.out.println("Got the task cook id: " + this.id);
-                processPizza();
-            }
-        }
-        if(currentTask != null){currentTask.setStatus(PizzaStatus.NotTaken);}
 
+    @Override
+    public void execute(){
+        System.out.println("Getting the task cook id: " + this.id);
+        currentTask = takeTask();
+        if(currentTask != null){
+            System.out.println("Got the task cook id: " + this.id);
+            processPizza();
+        }
     }
 
 }
