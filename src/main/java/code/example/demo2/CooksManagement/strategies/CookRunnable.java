@@ -44,7 +44,7 @@ public class CookRunnable implements Runnable{
             this.strategy.getCurrentTask().setStatus(PizzaStatus.NotTaken);
             strategy.Id(this.Id);
         }
-//        strategy.Id(this.Id);
+        strategy.Id(this.Id);
         this.strategy = strategy;
     }
 

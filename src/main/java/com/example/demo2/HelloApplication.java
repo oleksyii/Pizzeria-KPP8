@@ -18,6 +18,12 @@ public class HelloApplication extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
+        SettingsPage settingsPage = new SettingsPage();
+        MenuPage menuPage = new MenuPage();
+        PizzaConfiguration configuration = new PizzaConfiguration();
+        MainPage mainPage = new MainPage();
+        mainPage.start(primaryStage);
+
         PizzeriaSimulator p = new PizzeriaSimulator(
                 4,
                 3,
@@ -26,17 +32,13 @@ public class HelloApplication extends Application {
                 10000
         );
 
-
-        SettingsPage settingsPage = new SettingsPage();
-        MenuPage menuPage = new MenuPage();
-        PizzaConfiguration configuration = new PizzaConfiguration();
-        MainPage mainPage = new MainPage();
-        mainPage.start(primaryStage);
 //        menuPage.start(primaryStage);
 //        settingsPage.start(primaryStage);
 
-        System.out.println("Morphing the cook 1");
-        p.getKitchenManager().morphCook(1, CookType.Creating);
+//        p.getKitchenManager().morphCook(1, CookType.Creating);
+//        p.getKitchenManager().morphCook(2, CookType.Creating);
+//        p.getKitchenManager().morphCook(3, CookType.Baking);
+//        p.getKitchenManager().morphCook(4, CookType.Baking);
     }
 
     public static void main(String[] args) {
