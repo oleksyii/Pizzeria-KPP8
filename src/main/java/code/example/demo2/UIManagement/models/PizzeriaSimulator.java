@@ -13,13 +13,16 @@ import code.example.demo2.ClientsManagement.GeneratorManager.ClientGeneratorCont
 import code.example.demo2.ClientsManagement.OrderManager.Order;
 import code.example.demo2.ClientsManagement.OrderManager.OrderStatus;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class PizzeriaSimulator {
 
     private static PizzeriaSimulator instance;
 
-    private final Menu menu;
+    private Menu menu;
     private final KitchenManager kitchenManager;
     private final CashierManager cashierManager;
     private final OrderManager orderManager;
@@ -52,6 +55,22 @@ public class PizzeriaSimulator {
 
     public static synchronized PizzeriaSimulator getInstance() {
         return instance;
+    }
+
+    public Menu getMenu(){
+        return menu;
+    }
+
+    public void addPizza(Integer id) {
+        Set<Integer> pizzasIds = new HashSet<>(menu.getIdsSet());
+        pizzasIds.add(id);
+        menu = new Menu(new ArrayList<>(pizzasIds));
+    }
+
+    public void removePizza(Integer id) {
+        Set<Integer> pizzasIds = new HashSet<>(menu.getIdsSet());
+        pizzasIds.remove(id);
+        menu = new Menu(new ArrayList<>(pizzasIds));
     }
 
     private void StartJob() {
