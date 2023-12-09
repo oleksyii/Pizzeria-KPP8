@@ -2,11 +2,13 @@ package com.example.demo2.Settings;
 
 import code.example.demo2.CooksManagement.SpecificCook;
 import code.example.demo2.CooksManagement.strategies.Cook;
+import code.example.demo2.UIManagement.controllers.PizzeriaController;
 import code.example.demo2.UIManagement.models.PizzeriaSimulator;
 import com.example.demo2.Configuration.PizzaConfiguration;
 import com.example.demo2.MainPage.MainPage;
 import com.example.demo2.PizzaMenu.PizzaComponent;
 import com.example.demo2.PizzaMenu.PizzasList;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -103,11 +105,8 @@ public class SettingsPage {
         StackPane.setMargin(closeButton, new Insets(0, 0, 30, 60));
 
 
-        // Обробник події для закриття вікна при натисканні кнопки "Close"
-        closeButton.setOnAction(event -> {
-            MainPage main = new MainPage();
-            main.start(primaryStage);
-        });
+        closeButton.setOnAction(event ->  Platform.runLater(() -> PizzeriaController.handleCloseButtonClick(primaryStage)));
+
 
         // Додаємо поля вводу та кнопки до другої колонки
         TextField kucharsInput = createTextInput("KUCHARS", String.valueOf(PizzeriaSimulator.getInstance().getAllCooks().size()));

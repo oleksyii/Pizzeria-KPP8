@@ -38,8 +38,13 @@ public class PizzeriaController {
     static private PizzeriaSimulator pizzeriaSimulator;
 
     static public void handleSettingsButtonClick(Stage primaryStage) {
-        SettingsPage settings = new SettingsPage();
+        SettingsPage settings = PizzeriaSimulator.getInstance().getSettingsPage();
         settings.start(primaryStage);
+    }
+
+    static public void handleCloseButtonClick(Stage primaryStage) {
+        MainPage main = PizzeriaSimulator.getInstance().getMainPage();
+        main.start(primaryStage);
     }
 
     static public void startCookAnimation(int cookId) {
@@ -51,13 +56,13 @@ public class PizzeriaController {
     }
 
     static public void handleMenuButtonClick(Stage primaryStage) {
-        MenuPage menu = new MenuPage();
+        MenuPage menu = PizzeriaSimulator.getInstance().getMenuPage();
         menu.start(primaryStage);
     }
 
     static public void handleStartMainPageButtonClick(Stage primaryStage) {
-        MainPage mainPage = new MainPage();
-        mainPage.start(primaryStage);
+        MainPage main = PizzeriaSimulator.getInstance().getMainPage();
+        main.start(primaryStage);
     }
 
     static private void setSpacingDynamically(int numberOfElements, VBox elements, int paddingIfOne) {
@@ -258,7 +263,7 @@ public class PizzeriaController {
                 convertToClientGenerationStrategy(selectedStrategy),
                 Integer.parseInt(minTime.getText())* 500);
         pizzeriaSimulator = PizzeriaSimulator.getInstance();
-        MainPage mainPage = new MainPage();
+        MainPage mainPage = pizzeriaSimulator.getMainPage();
         mainPage.start(primaryStage);
     }
 
