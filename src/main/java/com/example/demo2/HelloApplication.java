@@ -17,22 +17,22 @@ public class HelloApplication extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        PizzeriaSimulator p = new PizzeriaSimulator(
-                4,
-                3,
-                new ArrayList<>(List.of(1)),
-                ClientGenerationStrategies.Weekend,
-                20000
-        );
-
-
-        SettingsPage settingsPage = new SettingsPage();
-        MenuPage menuPage = new MenuPage();
+//        PizzeriaSimulator p = new PizzeriaSimulator(
+//                4,
+//                3,
+//                new ArrayList<>(List.of(1)),
+//                ClientGenerationStrategies.Weekend,
+//                20000
+//        );
+//
+//        SettingsPage settingsPage = new SettingsPage();
+//        MenuPage menuPage = new MenuPage();
         PizzaConfiguration configuration = new PizzaConfiguration();
-        MainPage mainPage = new MainPage();
-        mainPage.start(primaryStage);
-//        menuPage.start(primaryStage);
-//        settingsPage.start(primaryStage);
+//        MainPage mainPage = new MainPage();
+//        mainPage.start(primaryStage);
+        configuration.start(primaryStage);
+//      menuPage.start(primaryStage);
+//      settingsPage.start(primaryStage);
     }
 
     public static void main(String[] args) {

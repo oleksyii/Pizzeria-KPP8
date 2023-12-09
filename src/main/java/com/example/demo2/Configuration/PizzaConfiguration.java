@@ -22,8 +22,7 @@ import javafx.util.Duration;
 import javafx.scene.paint.Color;
 
 public class PizzaConfiguration {
-    public void start(Stage primaryStage)
-    {
+    public void start(Stage primaryStage) {
         StackPane root = new StackPane();
 
         //Add background
@@ -55,6 +54,7 @@ public class PizzaConfiguration {
         cookImageView.setFitHeight(70);
         cookImageView.setFitWidth(70);
         TextField numberOfCooks = new TextField("5");
+        PizzeriaController.setTextFieldLimit(numberOfCooks, 1, 5);
         numberOfCooks.setAlignment(Pos.CENTER);
         numberOfCooks.setFont(Font.font("Comic Sans MS", FontWeight.EXTRA_BOLD, 20));
         numberOfCooks.setMinSize(240, 30);
@@ -72,6 +72,7 @@ public class PizzaConfiguration {
         cashierImageView.setFitHeight(70);
         cashierImageView.setFitWidth(70);
         TextField numberOfCashiers = new TextField("5");
+        PizzeriaController.setTextFieldLimit(numberOfCashiers, 1, 5);
         numberOfCashiers.setFont(Font.font("Comic Sans MS", FontWeight.EXTRA_BOLD, 20));
         numberOfCashiers.setStyle(
                 "-fx-background-color: #AF5D26; " +
@@ -96,7 +97,7 @@ public class PizzaConfiguration {
         Label textStrategy = new Label("STRATEGY");
         textStrategy.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, 20));
         ChoiceBox<String> strategy = new ChoiceBox<>();
-        strategy.getItems().addAll("strategy1", "strategy2", "strategy3");
+        strategy.getItems().addAll("Regular Day", "Pizza Day", "Weekend");
         textStrategy.setStyle("-fx-text-fill: white;");
         strategy.setStyle(
                 "-fx-background-color: #AF5D26; " +
@@ -108,7 +109,7 @@ public class PizzaConfiguration {
 
         Label textMinTime = new Label("MIN.TIME");
         textMinTime.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, 20));
-        TextField minTime = new TextField ("40s");
+        TextField minTime = new TextField ("40");
         minTime.setFont(Font.font("Comic Sans MS", FontWeight.EXTRA_BOLD, 20));
         textMinTime.setStyle("-fx-text-fill: white;");
         minTime.setStyle(
@@ -167,6 +168,8 @@ public class PizzaConfiguration {
                         "-fx-max-height: 3px;"
         );
 
+        startButton.setOnAction(event -> PizzeriaController.handlePizzaConfigurationButtonClick(primaryStage, numberOfCooks, numberOfCashiers, numberOfPizza, strategy, minTime));
+
         //Add button animation
         ScaleTransition pressTransition = new ScaleTransition(Duration.millis(50), startButton);
         pressTransition.setToX(1.05);
@@ -176,10 +179,10 @@ public class PizzaConfiguration {
         releaseTransition.setToX(1.0);
         releaseTransition.setToY(1.0);
 
-        startButton.setOnMousePressed(event -> pressTransition.playFromStart());
-        startButton.setOnMouseReleased(event -> releaseTransition.playFromStart());
+//        startButton.setOnMousePressed(event -> pressTransition.playFromStart());
+//        startButton.setOnMouseReleased(event -> releaseTransition.playFromStart());
 
-        startButton.setOnAction(event -> PizzeriaController.handleStartMainPageButtonClick(primaryStage));
+//        startButton.setOnAction(event -> PizzeriaController.handleStartMainPageButtonClick(primaryStage));
 
         root.getChildren().addAll(backgroundImageView, startButton, pizzaTitleGroup, fields);
         Scene scene = new Scene(root, 800, 700);
