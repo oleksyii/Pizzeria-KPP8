@@ -34,7 +34,7 @@ public class SpecificCook {
         System.out.println("Morphed");
     }
     public String getCookType(){
-        return strategy.getType();
+        return runningCook.getType();
     }
     public void executeStrategy(){
         workingThread = new Thread(runningCook, "Thread-"+runningCook.getId());
