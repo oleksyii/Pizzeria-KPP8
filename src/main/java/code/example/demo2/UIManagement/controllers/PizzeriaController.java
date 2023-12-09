@@ -2,12 +2,15 @@ package code.example.demo2.UIManagement.controllers;
 
 import code.example.demo2.ClientsManagement.CashiersManager.CashierManager;
 import code.example.demo2.ClientsManagement.GeneratorManager.ClientGenerationStrategies;
+import code.example.demo2.CooksManagement.KitchenManager;
+import code.example.demo2.CooksManagement.strategies.CookStatus;
 import code.example.demo2.UIManagement.models.PizzeriaSimulator;
 import com.example.demo2.MainPage.*;
 import com.example.demo2.PizzaMenu.MenuPage;
 import com.example.demo2.Settings.SettingsPage;
 import com.example.demo2.Configuration.PizzaConfiguration;
 import javafx.animation.PauseTransition;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -102,7 +105,9 @@ public class PizzeriaController {
         setSpacingDynamically(numberOfCooks, cooks, 330);
 
         for (int i = 0; i < numberOfCooks; i++) {
-            CookState cookState = CookState.AT_TABLE;
+            CookState cookState = KitchenManager.getCookStatus(i + 1) == CookStatus.Baking ?
+                    CookState.AT_OVEN:
+                    CookState.AT_TABLE;
             com.example.demo2.MainPage.Cook cook = new Cook(cookState);
             cooks.getChildren().add(cook);
         }
@@ -292,5 +297,12 @@ public class PizzeriaController {
 
     static public int getNumberOfCooks() {
         return pizzeriaSimulator.getAllCooks().size();
+    }
+
+    static public void setIsCookWorking(Integer index, boolean isCookWorking) {
+        Platform.runLater(() -> {
+            Cook cook = (Cook) uiCooks.getChildren().get(index - 1);
+            cook.setIsCookWorking(isCookWorking);
+        });
     }
 }

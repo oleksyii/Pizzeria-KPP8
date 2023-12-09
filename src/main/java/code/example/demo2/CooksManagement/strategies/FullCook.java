@@ -59,7 +59,8 @@ public class FullCook extends Cook{
                 this.cookStatus = CookStatus.Creating;
                 System.out.println("FullCook thread " + this.id + " is creating pizza Task: " + this.currentTask);
                 PizzeriaController.startCookAnimation(this.id);
-                //TODO: NOTIFY CONTROLLER COOK IS CREATING
+
+                PizzeriaController.setIsCookWorking(id, true);
 
                 if(Thread.interrupted()){return;}
                 Thread.sleep(COOKING_TIME/2); // Simulating some work
@@ -77,6 +78,8 @@ public class FullCook extends Cook{
                 Thread.sleep(COOKING_TIME/2); // Simulating some work
                 currentTask.setStatus(PizzaStatus.Baked);
                 currentTask = null;
+
+                PizzeriaController.setIsCookWorking(id, false);
             }
         } catch (InterruptedException e) {
             // Handle InterruptedException if needed
