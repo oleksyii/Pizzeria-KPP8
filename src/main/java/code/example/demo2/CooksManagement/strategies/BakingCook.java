@@ -19,7 +19,6 @@ public class BakingCook extends Cook{
 
     }
 
-
     @Override
     public Task takeTask() {
         Task res = null;
@@ -47,32 +46,19 @@ public class BakingCook extends Cook{
     @Override
     public void processPizza() {
         try {
-            if(currentTask.getStatus() == PizzaStatus.ReadyForBaking){
-                System.out.println("BackingCook thread "+ this.id +" is baking pizza Task: " + this.currentTask);
-                this.cookStatus = CookStatus.Baking;
-                currentTask.setStatus(PizzaStatus.Processing);
+            System.out.println("BackingCook thread "+ this.id +" is baking pizza Task: " + this.currentTask);
+            this.cookStatus = CookStatus.Baking;
+            currentTask.setStatus(PizzaStatus.Processing);
 
-                //TODO: NOTIFY CONTROLLER COOK IS BAKING
+            //TODO: NOTIFY CONTROLLER COOK IS BAKING
 
-                Thread.sleep(COOKING_TIME/3); // Simulating some work
-                currentTask.setStatus(PizzaStatus.Baked);
-                currentTask = null;
-            }
+            Thread.sleep(COOKING_TIME/3); // Simulating some work
+            currentTask.setStatus(PizzaStatus.Baked);
+            currentTask = null;
         } catch (InterruptedException e) {
             // Handle InterruptedException if needed
         }
 
-    }
-
-    @Override
-    public void pauseCook() {
-        try {
-            System.out.println("Cook " + this.Id() +" is sleeping");
-            Thread.sleep(10000); // Pausing
-
-        } catch (InterruptedException e) {
-            // Handle InterruptedException if needed
-        }
     }
 
     @Override
@@ -97,23 +83,13 @@ public class BakingCook extends Cook{
         return "BakingCook";
     }
 
-    public void run() {
-        while(!isInterrupted){
-            System.out.println("Getting the task cook id: " + this.id);
-            currentTask = takeTask();
-            if(currentTask != null){
-                System.out.println("Got the task cook id: " + this.id);
-                processPizza();
-            }
+    @Override
+    public void execute(){
+        System.out.println("Getting the task cook id: " + this.id);
+        currentTask = takeTask();
+        if(currentTask != null){
+            System.out.println("Got the task cook id: " + this.id);
+            processPizza();
         }
-        if(currentTask != null){currentTask.setStatus(PizzaStatus.NotTaken);}
-    }
-
-    public void customInterrupt(){
-        isInterrupted = true;
-        if (currentTask != null)
-            currentTask.setStatus(PizzaStatus.NotTaken);
-        interrupt(); // Optional: Interrupt the thread if it is currently blocked in a sleep, wait, or join operation.
-
     }
 }

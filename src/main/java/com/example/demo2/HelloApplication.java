@@ -25,6 +25,7 @@ public class HelloApplication extends Application {
 //        );
 
 
+
         SettingsPage settingsPage = new SettingsPage();
         MenuPage menuPage = new MenuPage();
         PizzaConfiguration configuration = new PizzaConfiguration();
@@ -33,6 +34,11 @@ public class HelloApplication extends Application {
         configuration.start(primaryStage);
 //      menuPage.start(primaryStage);
 //      settingsPage.start(primaryStage);
+
+        //        p.getKitchenManager().morphCook(1, CookType.Creating);
+//        p.getKitchenManager().morphCook(2, CookType.Creating);
+//        p.getKitchenManager().morphCook(3, CookType.Baking);
+//        p.getKitchenManager().morphCook(4, CookType.Baking);
     }
 
     public static void main(String[] args) {

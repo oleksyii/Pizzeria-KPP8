@@ -65,17 +65,6 @@ public Task takeTask() {
     }
 
     @Override
-    public void pauseCook() {
-        try {
-            System.out.println("Cook " + this.Id() +" is sleeping");
-            Thread.sleep(10000); // Pausing
-
-        } catch (InterruptedException e) {
-            // Handle InterruptedException if needed
-        }
-    }
-
-    @Override
     public CookStatus Status() {return this.cookStatus;}
 
     @Override
@@ -97,23 +86,14 @@ public Task takeTask() {
         return "CreatingCook";
     }
 
-    public void run() {
-        while(!isInterrupted){
-            System.out.println("Getting the task cook id: " + this.id);
-            currentTask = takeTask();
-            if(currentTask != null){
-                System.out.println("Got the task cook id: " + this.id);
-                processPizza();
-            }
+    @Override
+    public void execute(){
+        System.out.println("Getting the task cook id: " + this.id);
+        currentTask = takeTask();
+        if(currentTask != null){
+            System.out.println("Got the task cook id: " + this.id);
+            processPizza();
         }
-        if(currentTask != null){currentTask.setStatus(PizzaStatus.NotTaken);}
     }
 
-    public void customInterrupt(){
-        isInterrupted = true;
-        if (currentTask != null)
-            currentTask.setStatus(PizzaStatus.NotTaken);
-        interrupt(); // Optional: Interrupt the thread if it is currently blocked in a sleep, wait, or join operation.
-
-    }
 }
