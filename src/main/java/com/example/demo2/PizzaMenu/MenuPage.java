@@ -1,6 +1,7 @@
 package com.example.demo2.PizzaMenu;
 
 import code.example.demo2.UIManagement.controllers.PizzeriaController;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -39,7 +40,7 @@ public class MenuPage {
         backButton.setStyle("-fx-background-color: transparent; -fx-border-color: transparent;");
         StackPane.setMargin(backButton, new Insets(7, 0, 0, 7));
         StackPane.setAlignment(backButton, Pos.TOP_LEFT);
-        backButton.setOnAction(event -> PizzeriaController.handleStartMainPageButtonClick(primaryStage));
+        backButton.setOnAction(event -> Platform.runLater(() -> PizzeriaController.handleStartMainPageButtonClick(primaryStage)));
 
         Label titleLabel = new Label("MENU");
         titleLabel.setStyle("-fx-font-size: 40; -fx-font-weight: bold; -fx-text-fill: white; -fx-padding: 0 15 0 15; -fx-font-family: 'Comic Sans MS'");

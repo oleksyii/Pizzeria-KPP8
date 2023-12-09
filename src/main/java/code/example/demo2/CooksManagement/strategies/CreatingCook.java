@@ -4,6 +4,7 @@ import code.example.demo2.CooksManagement.strategies.ThreadStopper.Stopper;
 import code.example.demo2.OrdersManagement.OrderManager;
 import code.example.demo2.OrdersManagement.PizzaStatus;
 import code.example.demo2.OrdersManagement.Task;
+import code.example.demo2.UIManagement.controllers.PizzeriaController;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,7 +55,7 @@ public Task takeTask() {
                 System.out.println("CreatingCook thread "  + this.id + " is creating pizza Task: " + this.currentTask);
                 this.cookStatus = CookStatus.Creating;
 
-                //TODO: NOTIFY CONTROLLER COOK IS CREATING
+                PizzeriaController.setIsCookWorking(id, true);
 
                 // Spaghetti Code
                 stopper.checkForSleep();
@@ -62,6 +63,7 @@ public Task takeTask() {
                 currentTask.setStatus(PizzaStatus.ReadyForBaking);
                 currentTask = null;
 
+                PizzeriaController.setIsCookWorking(id, false);
             }
         } catch (InterruptedException e) {
             // Handle InterruptedException if needed

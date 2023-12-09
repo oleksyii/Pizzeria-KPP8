@@ -4,6 +4,7 @@ import code.example.demo2.CooksManagement.strategies.ThreadStopper.Stopper;
 import code.example.demo2.OrdersManagement.OrderManager;
 import code.example.demo2.OrdersManagement.PizzaStatus;
 import code.example.demo2.OrdersManagement.Task;
+import code.example.demo2.UIManagement.controllers.PizzeriaController;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +20,8 @@ public class BakingCook extends Cook{
     public BakingCook(Stopper stopper){
         this.pizzaStatuses.add(PizzaStatus.ReadyForBaking);
         this.stopper = stopper;
+        this.cookStatus = CookStatus.Baking;
+
     }
 
     @Override
@@ -53,13 +56,15 @@ public class BakingCook extends Cook{
             this.cookStatus = CookStatus.Baking;
             currentTask.setStatus(PizzaStatus.Processing);
 
-            //TODO: NOTIFY CONTROLLER COOK IS BAKING
+            PizzeriaController.setIsCookWorking(id, true);
 
             // Spaghetti Code
             stopper.checkForSleep();
             Thread.sleep(COOKING_TIME/3); // Simulating some work
             currentTask.setStatus(PizzaStatus.Baked);
             currentTask = null;
+
+            PizzeriaController.setIsCookWorking(id, false);
         } catch (InterruptedException e) {
             // Handle InterruptedException if needed
         }
