@@ -1,5 +1,6 @@
 package com.example.demo2.PizzaMenu;
 
+import code.example.demo2.UIManagement.models.PizzeriaSimulator;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -10,22 +11,36 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.control.CheckBox;
 import javafx.geometry.Pos;
-import java.util.List;
+import java.util.*;
 
 public class PizzaComponent extends HBox {
 
     private Label nameLabel;
     private Label descriptionLabel;
-    private Label timeLabel;
 
-    public PizzaComponent(String imageUrl, List<String> ingredients) {
+    public PizzaComponent(Integer id, String imageUrl, List<String> ingredients) {
         nameLabel = new Label();
         descriptionLabel = new Label();
-        timeLabel = new Label();
 
         nameLabel.setStyle("-fx-font-family: 'Comic Sans MS'; -fx-font-size: 32px; -fx-font-weight: 800; -fx-underline: true; -fx-text-fill: white;");
 
         CheckBox checkBox = new CheckBox();
+
+        PizzeriaSimulator instance = PizzeriaSimulator.getInstance();
+        Set<Integer> pizzasIds = new HashSet<>(instance.getMenu().getIdsSet());
+
+        if(pizzasIds.contains(id)) {
+            checkBox.setSelected(true);
+        }
+
+        checkBox.setOnAction(event -> {
+            if (checkBox.isSelected()) {
+                instance.addPizza(id);
+            } else {
+                instance.removePizza(id);
+            }
+        });
+
         VBox checkBoxVBox = new VBox();
         checkBoxVBox.getChildren().add(checkBox);
         checkBoxVBox.setAlignment(Pos.CENTER);
@@ -35,7 +50,6 @@ public class PizzaComponent extends HBox {
         nameHBox.getChildren().addAll(nameLabel, checkBoxVBox);
 
         descriptionLabel.setStyle("-fx-font-family: 'Comic Sans MS'; -fx-font-size: 16px; -fx-font-weight: 700; -fx-text-fill: #5F2D04;");
-        timeLabel.setStyle("-fx-font-family: 'Comic Sans MS'; -fx-font-size: 16px; -fx-font-weight: 700; -fx-text-fill: #AF5D26;");
 
         ImageView imageView = new ImageView(new Image(imageUrl));
         imageView.setFitWidth(148);
@@ -75,7 +89,7 @@ public class PizzaComponent extends HBox {
 
         VBox contextAndTimeVBox = new VBox();
 
-        contextAndTimeVBox.getChildren().addAll(imageAndLabelsHBox, timeLabel);
+        contextAndTimeVBox.getChildren().add(imageAndLabelsHBox);
         contextAndTimeVBox.setSpacing(10);
 
         getChildren().addAll(contextAndTimeVBox);
@@ -88,9 +102,5 @@ public class PizzaComponent extends HBox {
 
     public void setPizzaDescription(String description) {
         descriptionLabel.setText(description);
-    }
-
-    public void setEstimatedTime(String time) {
-        timeLabel.setText("Estimated Time: " + time);
     }
 }
