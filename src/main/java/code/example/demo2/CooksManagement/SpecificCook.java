@@ -45,6 +45,7 @@ public class SpecificCook {
     public CookStatus getCookStatus(){return runningCook.getStatus();}
     public void pause(){
         runningCook.pauseCook();
+//        workingThread.suspend();
     }
 
     @Override

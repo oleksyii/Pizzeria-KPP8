@@ -1,21 +1,26 @@
 package code.example.demo2.CooksManagement;
 
 import code.example.demo2.CooksManagement.strategies.*;
+import code.example.demo2.CooksManagement.strategies.ThreadStopper.Stopper;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class KitchenManager {
     static ArrayList<SpecificCook> cooks;
-
+    static HashMap<Integer, Stopper> stoppers;
 
     public KitchenManager(int cooksAmount, int minCookingTime){
         Cook.COOKING_TIME = minCookingTime;
         cooks = new ArrayList<>();
+        stoppers = new HashMap<>();
         createCooks(cooksAmount);
     }
     public void createCooks(int amount){
         for(int i = 0; i < amount; i++){
-             cooks.add(new SpecificCook(new FullCook()));
+            Stopper stp = new Stopper();
+             cooks.add(new SpecificCook(new FullCook(stp)));
+             stoppers.put(cooks.get(i).Id(), stp);
         }
     }
     public void startCooks(){
@@ -32,7 +37,7 @@ public class KitchenManager {
                 for (SpecificCook cook :
                         cooks) {
                     if (cook.Id() == id) {
-                        cook.setStrategy(new FullCook());
+                        cook.setStrategy(new FullCook(stoppers.get(cook.Id())));
                     }
                 }
             }
@@ -40,7 +45,7 @@ public class KitchenManager {
                 for (SpecificCook cook :
                         cooks) {
                     if (cook.Id() == id) {
-                        cook.setStrategy(new BakingCook());
+                        cook.setStrategy(new BakingCook(stoppers.get(cook.Id())));
                     }
                 }
             }
@@ -48,7 +53,7 @@ public class KitchenManager {
                 for (SpecificCook cook :
                         cooks) {
                     if (cook.Id() == id) {
-                        cook.setStrategy(new CreatingCook());
+                        cook.setStrategy(new CreatingCook(stoppers.get(cook.Id())));
                     }
                 }
             }
@@ -58,7 +63,8 @@ public class KitchenManager {
         for (SpecificCook cook :
                 cooks) {
             if (cook.Id() == id) {
-                cook.pause();
+                stoppers.get(cook.Id()).putCookToSleep();
+//                cook.pause();
             }
         }
     }
