@@ -9,7 +9,7 @@ import java.util.List;
 
 public class PizzeriaSimulatorTestMain {
     public static void main (String[] args){
-        PizzeriaSimulator p = new PizzeriaSimulator(
+        PizzeriaSimulator p = PizzeriaSimulator.setInstance(
                 3,
                 2,
                 new ArrayList<>(List.of(1, 2, 4, 6)),

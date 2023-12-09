@@ -17,7 +17,7 @@ public class HelloApplication extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        PizzeriaSimulator p = new PizzeriaSimulator(
+        PizzeriaSimulator.setInstance(
                 4,
                 3,
                 new ArrayList<>(List.of(1)),
