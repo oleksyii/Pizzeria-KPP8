@@ -18,6 +18,10 @@ public class RegularDayGenerator implements ClientGenerator {
     public RegularDayGenerator(){
 
     }
+
+    public String getName() {
+        return "RegularDay";
+    }
     public RegularDayGenerator(CashierManager cashierManager){
 
         this.cashierManager = cashierManager;

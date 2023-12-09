@@ -49,6 +49,10 @@ public class ClientGeneratorContext  {
 
     }
 
+    public String getStrategy() {
+        return strategy.getName();
+    }
+
 
     public void executeStrategy() {
         if (strategy != null) {

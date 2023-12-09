@@ -23,7 +23,7 @@ public class PizzeriaSimulatorTestMain {
 //        p.getKitchenManager().morphCook(3, CookType.Baking);
 //        p.getKitchenManager().morphCook(2, CookType.Baking);
 
-        System.out.println(p.getKitchenManager().getCooks());
+        System.out.println(PizzeriaSimulator.getInstance().getKitchenManager().getCooks());
 
         while(true){
 //            List<Task> t = p.getAllTasks();

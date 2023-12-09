@@ -1,6 +1,11 @@
 package com.example.demo2.Settings;
 
+import code.example.demo2.CooksManagement.SpecificCook;
+import code.example.demo2.CooksManagement.strategies.CookType;
+import code.example.demo2.UIManagement.models.PizzeriaSimulator;
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -15,21 +20,41 @@ import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class ChiefItem extends StackPane {
     private ImageView chefImage;
     private Label chefNameLabel;
     private Line verticalLine;
     private ComboBox<String> optionsComboBox;
 
-    public ChiefItem(String chefName) {
-        // Ініціалізація елементів
+    public ChiefItem(int id) {
+        Map<String, CookType> types = new HashMap<>();
+
+        // Додаємо значення в колекцію
+        types.put("FullCook", CookType.Full);
+        types.put("BakingCook", CookType.Baking);
+        types.put("CreatingCook", CookType.Creating);
         chefImage = new ImageView(new Image(getClass().getResource("/test.png").toExternalForm()));
-        chefNameLabel = new Label(chefName);
+        chefNameLabel = new Label("COOK " + id);
         verticalLine = new Line();
         optionsComboBox = new ComboBox<>();
-        optionsComboBox.getItems().addAll("Option 1", "Option 2", "Option 3");
+        optionsComboBox.getItems().addAll("FullCook", "BakingCook", "CreatingCook");
 
-        optionsComboBox.setValue("Option 1");
+        SpecificCook currentCook = PizzeriaSimulator.getInstance().getKitchenManager().getCooks().get(id - 1);
+        String currentValue = currentCook.getCookType();
+
+        optionsComboBox.setValue(currentValue);
+
+        optionsComboBox.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                String selectedValue = optionsComboBox.getValue();
+                System.out.println("Selected value: " + types.get(selectedValue) + "Cook !!!! " + currentCook.Id());
+                PizzeriaSimulator.getInstance().getKitchenManager().morphCook(currentCook.Id(), types.get(selectedValue));
+            }
+        });
 
         // Встановлюємо білий колір стріли
 

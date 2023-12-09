@@ -21,6 +21,9 @@ public class SpecificCook {
         this.strategy = strategy;
 //        this.executeStrategy();
     }
+    public String getCookType(){
+        return strategy.getType();
+    }
     public void executeStrategy(){
         strategy.setDaemon(true); // Set the thread as daemon
         strategy.start();

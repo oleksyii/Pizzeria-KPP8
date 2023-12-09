@@ -57,6 +57,10 @@ public class PizzeriaSimulator {
         return instance;
     }
 
+    public String getPizzaSimulatorStrategy() {
+        return generatorContext.getStrategy();
+    }
+
     public Menu getMenu(){
         return menu;
     }

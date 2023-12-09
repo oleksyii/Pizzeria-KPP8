@@ -7,5 +7,6 @@ public interface ClientGenerator {
 
     int interval = 0;
    void generateClients();
+   String getName();
 
 }
