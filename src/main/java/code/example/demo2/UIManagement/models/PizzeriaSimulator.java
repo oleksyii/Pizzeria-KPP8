@@ -17,14 +17,15 @@ import java.util.List;
 
 public class PizzeriaSimulator {
 
+    private static PizzeriaSimulator instance;
+
     private final Menu menu;
     private final KitchenManager kitchenManager;
     private final CashierManager cashierManager;
     private final OrderManager orderManager;
     private final ClientGeneratorContext generatorContext;
 
-    public PizzeriaSimulator(int numOfCooks, int numOfCashiers, List<Integer> pizzasAvailable, ClientGenerationStrategies strategy, int minTimeCooking) {
-
+    private PizzeriaSimulator(int numOfCooks, int numOfCashiers, List<Integer> pizzasAvailable, ClientGenerationStrategies strategy, int minTimeCooking) {
         // Order Manager initialization
         this.orderManager = new OrderManager();
         this.menu = new Menu(pizzasAvailable);
@@ -39,51 +40,57 @@ public class PizzeriaSimulator {
         // Kitchen initialization
         this.kitchenManager =  new KitchenManager(numOfCooks, minTimeCooking);
 
-
-
-
-
         this.StartJob();
     }
 
+    public static synchronized PizzeriaSimulator setInstance(int numOfCooks, int numOfCashiers, List<Integer> pizzasAvailable, ClientGenerationStrategies strategy, int minTimeCooking) {
+        if (instance == null) {
+            instance = new PizzeriaSimulator(numOfCooks, numOfCashiers, pizzasAvailable, strategy, minTimeCooking);
+        }
+        return instance;
+    }
+
+    public static synchronized PizzeriaSimulator getInstance() {
+        return instance;
+    }
+
     private void StartJob() {
-
-
         kitchenManager.startCooks();
     }
 
-    public void generateClients(){
-
+    public void generateClients() {
+        // Implementation of client generation
     }
 
-    public void StopCook(int cookId){
-
+    public void StopCook(int cookId) {
+        // Implementation of cook stopping
     }
 
-    public String getDetailsAboutOrder(int orderId){
+    public String getDetailsAboutOrder(int orderId) {
         return "no orders man";
     }
 
-    public OrderStatus getOrderStatus(int orderId){
+    public OrderStatus getOrderStatus(int orderId) {
         return OrderManager.getOrder(orderId).getOrderStatus();
     }
-    public CookStatus getCookStatus(int cookId){
+
+    public CookStatus getCookStatus(int cookId) {
         return KitchenManager.getCookStatus(cookId);
     }
 
-    public List<Cashier> getAllCashiers(){
+    public List<Cashier> getAllCashiers() {
         return cashierManager.getCashiers();
     }
 
-    public List<Order> getListOfOrders(){
+    public List<Order> getListOfOrders() {
         return OrderManager.getOrderList();
     }
 
-    public synchronized List<Task> getAllTasks(){
+    public synchronized List<Task> getAllTasks() {
         return OrderManager.getPizzaTaskList();
     }
 
-    public KitchenManager getKitchenManager(){
+    public KitchenManager getKitchenManager() {
         return kitchenManager;
     }
 

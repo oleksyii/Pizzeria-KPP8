@@ -1,5 +1,7 @@
 package com.example.demo2.Settings;
 
+import code.example.demo2.UIManagement.controllers.PizzeriaController;
+import code.example.demo2.UIManagement.models.PizzeriaSimulator;
 import com.example.demo2.Configuration.PizzaConfiguration;
 import com.example.demo2.MainPage.MainPage;
 import com.example.demo2.PizzaMenu.PizzaComponent;

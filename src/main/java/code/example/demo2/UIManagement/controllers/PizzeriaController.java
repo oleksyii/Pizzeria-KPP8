@@ -244,75 +244,15 @@ public class PizzeriaController {
         return queuesBox;
     }
 
-
-
-//    static public void generateClients(HBox clients, Animation animationInstance, numberOfCashiers) {
-//        if (clients.getChildren().size() < 5) {
-//            Client client = new Client();
-//            clients.getChildren().add(client);
-//            initialDistance += 10;
-//
-//            PauseTransition pauseTransition = new PauseTransition(Duration.seconds(0.05));
-//            pauseTransition.setOnFinished(event -> animationInstance.animateClient(client, initialDistance));
-//            pauseTransition.play();
-//        }
-//    }
-//    static public VBox generateClientDesks() {
-//        VBox clientDesks = new VBox();
-//        clientDesks.setAlignment(Pos.CENTER);
-//        clientDesks.setSpacing(300);
-//        clientDesks.setPadding(new Insets(40, 0, 0,0));
-//        HBox clientDesks1 = new HBox();
-//        HBox clientDesks2 = new HBox();
-//        clientDesks1.setSpacing(80);
-//        clientDesks1.setAlignment(Pos.CENTER_RIGHT);
-//        clientDesks1.setPadding(new Insets(0, 60, 0, 0));
-//        clientDesks2.setSpacing(80);
-//        clientDesks2.setAlignment(Pos.CENTER_RIGHT);
-//        clientDesks2.setPadding(new Insets(0, 60, 0, 0));
-//
-//        ClientDesk clientDesk1 = new ClientDesk();
-//        ClientDesk clientDesk2 = new ClientDesk();
-//        ClientDesk clientDesk3 = new ClientDesk();
-//        ClientDesk clientDesk4 = new ClientDesk();
-//
-//        clientDesks1.getChildren().addAll(clientDesk1, clientDesk2);
-//        clientDesks2.getChildren().addAll(clientDesk3, clientDesk4);
-//        clientDesks.getChildren().addAll(clientDesks1, clientDesks2);
-//
-//        return clientDesks;
-//    }
-//    private PizzzeriaSimulatorViewModel simulatorViewModel;
-//    private SettingsViewModel settingsView;
-//
-//    /**
-//     * Must generate <b>ALL</b> the other classes in here.
-//     * */
-//    public PizzeriaController(){
-//
-//    }
-//    public displayPizzaDetails(){
-//
-//    }
-//    public displayClients(){
-//
-//    }
-//    public GenerateClients(){
-//
-//    }
-//    public StoreCook(id){
-//
-//    }
-//    public static updateCookStatus(Cook cook)
-
     static public void handlePizzaConfigurationButtonClick(Stage primaryStage, TextField numberOfCooks, TextField numberOfCashiers, TextField numberOfPizza, ChoiceBox<String> strategy, TextField minTime) {
         String selectedStrategy = strategy.getValue();
-        pizzeriaSimulator = new PizzeriaSimulator(
+        PizzeriaSimulator.setInstance(
                 Integer.parseInt(numberOfCooks.getText()),
                 Integer.parseInt(numberOfCashiers.getText()),
                 new ArrayList<>(List.of(1)),
                 convertToClientGenerationStrategy(selectedStrategy),
                 Integer.parseInt(minTime.getText())* 500);
+        pizzeriaSimulator = PizzeriaSimulator.getInstance();
         MainPage mainPage = new MainPage();
         mainPage.start(primaryStage);
     }
