@@ -312,7 +312,7 @@ public class PizzeriaController {
                 Integer.parseInt(numberOfCashiers.getText()),
                 new ArrayList<>(List.of(1)),
                 convertToClientGenerationStrategy(selectedStrategy),
-                Integer.parseInt(minTime.getText()));
+                Integer.parseInt(minTime.getText())* 500);
         MainPage mainPage = new MainPage();
         mainPage.start(primaryStage);
     }

@@ -117,10 +117,8 @@ public class PizzaConfiguration {
                         "-fx-text-fill: white;"
         );
         minTime.setMinSize(240, 30);
-//        minTime.setPadding(new Insets(10));
         minTime.setAlignment(Pos.CENTER);
 
-        // Групуємо елементи за допомогою HBox та VBox
         HBox cooksBox = new HBox(cookImageView, numberOfCooks);
         cooksBox.setAlignment(Pos.CENTER);
         cooksBox.setSpacing(50);
@@ -169,31 +167,6 @@ public class PizzaConfiguration {
         );
 
         startButton.setOnAction(event -> PizzeriaController.handlePizzaConfigurationButtonClick(primaryStage, numberOfCooks, numberOfCashiers, numberOfPizza, strategy, minTime));
-//        startButton.setOnAction(event -> {
-//            String numOfCooksString = numberOfCooks.getText();
-//            String numOfCashiersString = numberOfCashiers.getText();
-//            String numOfPizzaString = numberOfPizza.getText();
-//            String selectedStrategy = strategy.getValue();
-//            String timePizzaString = minTime.getText();
-//            int numOfCooks = 0;
-//            int numOfCashier = 0;
-//            int numOfPizza = 0;
-//            int timePizza = 0;
-//            if (numOfCooksString != null && numOfCashiersString != null && numOfPizzaString != null && selectedStrategy != null && timePizzaString != null) {
-//                try {
-//                    numOfCooks = Integer.parseInt(numOfCooksString);
-//                    numOfCashier = Integer.parseInt(numOfCashiersString);
-//                    numOfPizza = Integer.parseInt(numOfPizzaString);
-//                    timePizza = Integer.parseInt(timePizzaString);
-//                } catch (NumberFormatException e) {
-//                    System.err.println("Помилка парсингу числа: " + e.getMessage());
-//                }
-//            } else {
-//                System.err.println("Рядок порожній або null.");
-//            }
-//            System.out.println(numOfCooks + "  \n" + numOfCashier + "  \n" + numOfPizza + "  \n" + selectedStrategy + "  \n" + timePizza);
-//
-//        });
 
         //Add button animation
         ScaleTransition pressTransition = new ScaleTransition(Duration.millis(50), startButton);
@@ -203,11 +176,6 @@ public class PizzaConfiguration {
         ScaleTransition releaseTransition = new ScaleTransition(Duration.millis(50), startButton);
         releaseTransition.setToX(1.0);
         releaseTransition.setToY(1.0);
-
-//        startButton.setOnMousePressed(event -> pressTransition.playFromStart());
-//        startButton.setOnMouseReleased(event -> releaseTransition.playFromStart());
-
-//        startButton.setOnAction(event -> PizzeriaController.handleStartMainPageButtonClick(primaryStage));
 
         root.getChildren().addAll(backgroundImageView, startButton, pizzaTitleGroup, fields);
         Scene scene = new Scene(root, 800, 700);
