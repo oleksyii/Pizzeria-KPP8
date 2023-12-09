@@ -2,7 +2,6 @@ package code.example.demo2.UIManagement.models;
 
 import code.example.demo2.ClientsManagement.GeneratorManager.ClientGenerationStrategies;
 import code.example.demo2.CooksManagement.KitchenManager;
-import code.example.demo2.CooksManagement.SpecificCook;
 import code.example.demo2.CooksManagement.strategies.CookStatus;
 import code.example.demo2.OrdersManagement.Menu;
 import code.example.demo2.OrdersManagement.OrderManager;
@@ -87,7 +86,5 @@ public class PizzeriaSimulator {
         return kitchenManager;
     }
 
-    public List<SpecificCook> getAllCooks() {
-        return kitchenManager.getCooks();
-    }
+
 }

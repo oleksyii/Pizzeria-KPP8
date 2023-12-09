@@ -71,4 +71,8 @@ public class CashierManager {
         return  cashierAmount;
     }
 
+
+
+
+
 }

@@ -66,8 +66,8 @@ public class MainPage {
         backgroundImageView.setFitWidth(1320);
         backgroundImageView.setFitHeight(780);
 
-        int numberOfCooks = PizzeriaController.getNumberOfCooks();
-        int numberOfCashiers = PizzeriaController.getNumberOfCashier();
+        int numberOfCooks = 4;
+        int numberOfCashiers = 5;
         VBox ovens = PizzeriaController.generateOvens(numberOfCooks);
         VBox cooks = PizzeriaController.generateCooks(numberOfCooks);
         StackPane table = PizzeriaController.generateTable();
