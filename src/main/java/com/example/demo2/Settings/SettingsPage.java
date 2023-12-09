@@ -1,5 +1,8 @@
 package com.example.demo2.Settings;
 
+import code.example.demo2.CooksManagement.SpecificCook;
+import code.example.demo2.CooksManagement.strategies.Cook;
+import code.example.demo2.UIManagement.models.PizzeriaSimulator;
 import com.example.demo2.Configuration.PizzaConfiguration;
 import com.example.demo2.MainPage.MainPage;
 import com.example.demo2.PizzaMenu.PizzaComponent;
@@ -19,6 +22,7 @@ import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 
 import java.lang.module.Configuration;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SettingsPage {
@@ -72,15 +76,12 @@ public class SettingsPage {
         column2.setHgrow(Priority.ALWAYS);
         settingsGrid.getColumnConstraints().addAll(column1, column2);
 
-        List<ChiefItem> chiefsItems = List.of(
-                new ChiefItem("KUCHAR1"),
-                new ChiefItem("KUCHAR2"),
-                new ChiefItem("KUCHAR3"),
-                new ChiefItem("KUCHAR4"),
-                new ChiefItem("KUCHAR5"),
-                new ChiefItem("KUCHAR6"),
-                new ChiefItem("KUCHAR7")
-        );
+        ArrayList<SpecificCook> cooks = PizzeriaSimulator.getInstance().getKitchenManager().getCooks();
+
+        List<ChiefItem> chiefsItems = cooks.stream()
+                .map(cook -> new ChiefItem(cook.Id()))
+                .toList();
+
 
         for (int i = 0; i < chiefsItems.size(); i++) {
             ChiefItem chiefItem = chiefsItems.get(i);
@@ -109,10 +110,10 @@ public class SettingsPage {
         });
 
         // Додаємо поля вводу та кнопки до другої колонки
-        TextField kucharsInput = createTextInput("KUCHARS", "5");
-        TextField cashersInput = createTextInput("CASHERS", "4");
-        TextField minTimeInput = createTextInput("MIN.TIME", "40s");
-        TextField strategyInput = createTextInput("STRATEGY", "STRATEGY1");
+        TextField kucharsInput = createTextInput("KUCHARS", String.valueOf(PizzeriaSimulator.getInstance().getAllCooks().size()));
+        TextField cashersInput = createTextInput("CASHERS", String.valueOf(PizzeriaSimulator.getInstance().getAllCashiers().size()));
+        TextField minTimeInput = createTextInput("MIN.TIME", String.valueOf(Cook.COOKING_TIME) + "ms");
+        TextField strategyInput = createTextInput("STRATEGY", PizzeriaSimulator.getInstance().getPizzaSimulatorStrategy());
 
         Button newGameButton = createButton("NEW GAME");
         Button quitButton = createButton("QUIT");
@@ -167,13 +168,20 @@ public class SettingsPage {
         // Додаємо всі елементи до mainLayout
         mainLayout.getChildren().addAll(header, scrollPane, verticalLine, closeButton);
 
-        Button saveButton = new Button("SAVE");
+        Button saveButton = new Button("CLOSE");
         saveButton.setStyle("-fx-font-size: 27; -fx-min-height: 50px; -fx-min-width: 140px; -fx-font-weight: bold; -fx-text-fill: white; -fx-padding: 0 15 0 15; -fx-font-family: 'Comic Sans MS'; -fx-background-color: #5F2D04; -fx-border-radius: 15px");
+
+        saveButton.setOnAction(event -> {
+            MainPage main = new MainPage();
+            main.start(primaryStage);
+        });
+
+
         StackPane.setAlignment(saveButton, Pos.BOTTOM_RIGHT);
         StackPane.setMargin(saveButton, new Insets(0, 50, 30, 240));  // Відстань зліва
 
         // Додаємо backgroundImageView та mainLayout до кореневого вузла
-        root.getChildren().addAll(backgroundImageView, scrollPane, verticalLine, closeButton,  saveButton);
+        root.getChildren().addAll(backgroundImageView, scrollPane, verticalLine, saveButton);
 
         root.getChildren().add(header);
 

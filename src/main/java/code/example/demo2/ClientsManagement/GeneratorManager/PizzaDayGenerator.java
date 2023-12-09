@@ -28,6 +28,10 @@ public class PizzaDayGenerator implements ClientGenerator{
 
     }
 
+    public String getName() {
+           return "PizzaDay";
+    }
+
     private void generateClient() {
 
         PizzeriaClient client = new PizzeriaClient();

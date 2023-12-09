@@ -18,6 +18,10 @@ public class WeekEndGenerator implements ClientGenerator{
     public WeekEndGenerator(){
 
     }
+
+    public String getName() {
+        return "WeekEndDay";
+    }
     public WeekEndGenerator(CashierManager cashierManager){
 
         this.cashierManager = cashierManager;
