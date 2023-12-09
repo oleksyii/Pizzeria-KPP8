@@ -1,13 +1,19 @@
 package code.example.demo2.UIManagement.controllers;
 
+import code.example.demo2.ClientsManagement.CashiersManager.CashierManager;
+import code.example.demo2.ClientsManagement.GeneratorManager.ClientGenerationStrategies;
+import code.example.demo2.UIManagement.models.PizzeriaSimulator;
 import com.example.demo2.MainPage.*;
 import com.example.demo2.PizzaMenu.MenuPage;
 import com.example.demo2.Settings.SettingsPage;
+import com.example.demo2.Configuration.PizzaConfiguration;
 import javafx.animation.PauseTransition;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -26,6 +32,7 @@ public class PizzeriaController {
     static private double initialDistance = -400;
     static private VBox uiCooks;
     static private StackPane uiTable = new StackPane();
+    static private PizzeriaSimulator pizzeriaSimulator;
 
     static public void handleSettingsButtonClick(Stage primaryStage) {
         SettingsPage settings = new SettingsPage();
@@ -162,12 +169,16 @@ public class PizzeriaController {
             if (clientsQueue.getChildren().size() < 5) {
                 Client client = new Client();
                 clientsQueue.getChildren().add(client);
-                initialDistance += 10;
+
+                if (getNumberOfCashier() == 5) {
+                    initialDistance += 8;
+                } else {
+                    initialDistance += 10;
+                }
 
                 PauseTransition pauseTransition = new PauseTransition(Duration.seconds(0.05));
                 pauseTransition.setOnFinished(event -> animationInstance.animateClient(client, initialDistance));
                 pauseTransition.play();
-                System.out.println(initialDistance);
             }
         }
     }
@@ -179,19 +190,17 @@ public class PizzeriaController {
             for (int i = 0; i < size; i++) {
                 HBox clients = new HBox();
                 clients.setPrefSize(650, 75);
-                clients.setSpacing(10);
+                clients.setSpacing(5);
                 clients.setMaxWidth(Region.USE_PREF_SIZE);
                 cashierQueues.add(clients);
-                System.out.println(size);
             }
         } else {
             for (int i = 0; i < size; i++) {
                 HBox clients = new HBox();
                 clients.setPrefSize(550, 75);
-                clients.setSpacing(10);
+                clients.setSpacing(-2);
                 clients.setMaxWidth(Region.USE_PREF_SIZE);
                 cashierQueues.add(clients);
-                System.out.println(size);
             }
         }
 
@@ -208,13 +217,16 @@ public class PizzeriaController {
             cashiersContainer.setSpacing(spacingValue);
         }
         else if (numberOfCashiers == 3) {
+            cashiersContainer.setPadding(new Insets(40, 0, 0, 0));
             double spacingValue = (defaultSpacing / (numberOfCashiers - 1)) - (numberOfCashiers * 10);
             cashiersContainer.setSpacing(spacingValue);
         }
         else if (numberOfCashiers == 4) {
+            cashiersContainer.setPadding(new Insets(20, 0, 0, 0));
             double spacingValue = (defaultSpacing / (numberOfCashiers - 1)) - 15;
             cashiersContainer.setSpacing(spacingValue);
         } else {
+            cashiersContainer.setPadding(new Insets(30, 0, 0, 0));
             double spacingValue = (defaultSpacing / (numberOfCashiers - 1)) - 20;
             cashiersContainer.setSpacing(spacingValue);
         }
@@ -245,33 +257,31 @@ public class PizzeriaController {
 //            pauseTransition.play();
 //        }
 //    }
-
-    static public VBox generateClientDesks() {
-        VBox clientDesks = new VBox();
-        clientDesks.setAlignment(Pos.CENTER);
-        clientDesks.setSpacing(300);
-        clientDesks.setPadding(new Insets(40, 0, 0,0));
-        HBox clientDesks1 = new HBox();
-        HBox clientDesks2 = new HBox();
-        clientDesks1.setSpacing(80);
-        clientDesks1.setAlignment(Pos.CENTER_RIGHT);
-        clientDesks1.setPadding(new Insets(0, 60, 0, 0));
-        clientDesks2.setSpacing(80);
-        clientDesks2.setAlignment(Pos.CENTER_RIGHT);
-        clientDesks2.setPadding(new Insets(0, 60, 0, 0));
-
-        ClientDesk clientDesk1 = new ClientDesk();
-        ClientDesk clientDesk2 = new ClientDesk();
-        ClientDesk clientDesk3 = new ClientDesk();
-        ClientDesk clientDesk4 = new ClientDesk();
-
-        clientDesks1.getChildren().addAll(clientDesk1, clientDesk2);
-        clientDesks2.getChildren().addAll(clientDesk3, clientDesk4);
-        clientDesks.getChildren().addAll(clientDesks1, clientDesks2);
-
-        return clientDesks;
-    }
-
+//    static public VBox generateClientDesks() {
+//        VBox clientDesks = new VBox();
+//        clientDesks.setAlignment(Pos.CENTER);
+//        clientDesks.setSpacing(300);
+//        clientDesks.setPadding(new Insets(40, 0, 0,0));
+//        HBox clientDesks1 = new HBox();
+//        HBox clientDesks2 = new HBox();
+//        clientDesks1.setSpacing(80);
+//        clientDesks1.setAlignment(Pos.CENTER_RIGHT);
+//        clientDesks1.setPadding(new Insets(0, 60, 0, 0));
+//        clientDesks2.setSpacing(80);
+//        clientDesks2.setAlignment(Pos.CENTER_RIGHT);
+//        clientDesks2.setPadding(new Insets(0, 60, 0, 0));
+//
+//        ClientDesk clientDesk1 = new ClientDesk();
+//        ClientDesk clientDesk2 = new ClientDesk();
+//        ClientDesk clientDesk3 = new ClientDesk();
+//        ClientDesk clientDesk4 = new ClientDesk();
+//
+//        clientDesks1.getChildren().addAll(clientDesk1, clientDesk2);
+//        clientDesks2.getChildren().addAll(clientDesk3, clientDesk4);
+//        clientDesks.getChildren().addAll(clientDesks1, clientDesks2);
+//
+//        return clientDesks;
+//    }
 //    private PizzzeriaSimulatorViewModel simulatorViewModel;
 //    private SettingsViewModel settingsView;
 //
@@ -294,4 +304,53 @@ public class PizzeriaController {
 //
 //    }
 //    public static updateCookStatus(Cook cook)
+
+    static public void handlePizzaConfigurationButtonClick(Stage primaryStage, TextField numberOfCooks, TextField numberOfCashiers, TextField numberOfPizza, ChoiceBox<String> strategy, TextField minTime) {
+        String selectedStrategy = strategy.getValue();
+        pizzeriaSimulator = new PizzeriaSimulator(
+                Integer.parseInt(numberOfCooks.getText()),
+                Integer.parseInt(numberOfCashiers.getText()),
+                new ArrayList<>(List.of(1)),
+                convertToClientGenerationStrategy(selectedStrategy),
+                Integer.parseInt(minTime.getText()));
+        MainPage mainPage = new MainPage();
+        mainPage.start(primaryStage);
+    }
+
+
+    private static ClientGenerationStrategies convertToClientGenerationStrategy(String selectedStrategy) {
+        switch (selectedStrategy) {
+            case "Regular Day":
+                return ClientGenerationStrategies.Regular;
+            case "Pizza Day":
+                return ClientGenerationStrategies.PizzaDay;
+            case "Weekend":
+                return ClientGenerationStrategies.Weekend;
+            default:
+                return null;
+        }
+    }
+
+    static public void setTextFieldLimit(TextField textField, int minValue, int maxValue) {
+        textField.textProperty().addListener((observable, oldValue, newValue) -> {
+            try {
+                int value = Integer.parseInt(newValue);
+                if (value < minValue) {
+                    textField.setText(String.valueOf(minValue));
+                } else if (value > maxValue) {
+                    textField.setText(String.valueOf(maxValue));
+                }
+            } catch (NumberFormatException e) {
+                textField.clear();
+            }
+        });
+    }
+
+    static public int getNumberOfCashier() {
+        return pizzeriaSimulator.getAllCashiers().size();
+    }
+
+    static public int getNumberOfCooks() {
+        return pizzeriaSimulator.getAllCooks().size();
+    }
 }
