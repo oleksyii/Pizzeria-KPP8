@@ -4,6 +4,7 @@ import code.example.demo2.ClientsManagement.CashiersManager.Cashier;
 import code.example.demo2.ClientsManagement.CashiersManager.CashierManager;
 import code.example.demo2.OrdersManagement.OrderManager;
 import code.example.demo2.ClientsManagement.OrderManager.Order;
+import code.example.demo2.UIManagement.controllers.PizzeriaController;
 
 import java.util.*;
 
@@ -19,12 +20,14 @@ public class PizzeriaClient {
 
     }
 
-    public void chooseQueue(CashierManager cashierManager){
-        cashierManager.addClientToCashierWithSmallestQueue(this);
+    public int getClientId() {
+        return this.clientId;
+    }
 
+    public Cashier chooseQueue(CashierManager cashierManager){
+        Cashier cashier = cashierManager.addClientToCashierWithSmallestQueue(this);
 
-
-
+        return cashier;
     }
 
     public String showOrder(){
@@ -34,7 +37,7 @@ public class PizzeriaClient {
 
     }
 
-    public void makeOrder(){
+    public Order makeOrder(){
         Random random = new Random();
         Map<Integer,Integer> pizzas = new HashMap<>();
         for(int i =1; i<5;i++){
@@ -45,6 +48,7 @@ public class PizzeriaClient {
         order.setClientId(clientId);
 
         OrderManager.addOrderAndCreateTasks(order);
+        return order;
         // TODO: CALL THE CONTROLLER THAT CLIENT WAS CREATED
     }
 

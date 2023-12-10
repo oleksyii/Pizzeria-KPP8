@@ -33,7 +33,7 @@ public class CashierManager {
         return smallestQueueCashier;
     }
 
-    public void addClientToCashierWithSmallestQueue(PizzeriaClient pizzeriaClient) {
+    public Cashier addClientToCashierWithSmallestQueue(PizzeriaClient pizzeriaClient) {
         Cashier smallestQueueCashier = getCashierWithSmallestQueue();
 
         if (smallestQueueCashier != null) {
@@ -41,6 +41,8 @@ public class CashierManager {
         } else {
             System.out.println("No cashiers available.");
         }
+
+        return smallestQueueCashier;
 
         // TODO: call controller and send a cashier that was chosen
     }
