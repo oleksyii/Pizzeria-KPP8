@@ -245,7 +245,9 @@ public class PizzeriaController {
     }
 
     static public void handlePizzaConfigurationButtonClick(Stage primaryStage, TextField numberOfCooks, TextField numberOfCashiers, TextField numberOfPizza, ChoiceBox<String> strategy, TextField minTime) {
-        String selectedStrategy = strategy.getValue();
+        String selectedStrategy = (strategy != null && strategy.getValue() != null && !strategy.getValue().isEmpty())
+                ? strategy.getValue()
+                : "Regular Day";
         PizzeriaSimulator.setInstance(
                 Integer.parseInt(numberOfCooks.getText()),
                 Integer.parseInt(numberOfCashiers.getText()),

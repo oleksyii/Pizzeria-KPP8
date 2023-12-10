@@ -28,8 +28,8 @@ public class PizzaConfiguration {
         //Add background
         Image backgroundImage = new Image(getClass().getResource("/pizza-background.png").toExternalForm());
         ImageView backgroundImageView = new ImageView(backgroundImage);
-        backgroundImageView.setFitWidth(1500);
-        backgroundImageView.setFitHeight(800);
+        backgroundImageView.setFitWidth(1320);
+        backgroundImageView.setFitHeight(780);
 
         //Add title
         Label simulatorTitle = new Label("Pizza Simulator");
@@ -103,9 +103,10 @@ public class PizzaConfiguration {
                 "-fx-background-color: #AF5D26; " +
                         "-fx-text-fill: white;" +
                         "-fx-font-family: \"Comic Sans MS\"; -fx-font-size: 20;"+
-                        "-fx-font-weight: 400"
+                        "-fx-font-weight: 400;" +
+                        "-fx-text-fill: white;"
         );
-        strategy.setMinSize(275, 25);
+        strategy.setMinSize(274, 25);
 
         Label textMinTime = new Label("MIN.TIME");
         textMinTime.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, 20));
@@ -178,7 +179,7 @@ public class PizzaConfiguration {
         releaseTransition.setToY(1.0);
 
         root.getChildren().addAll(backgroundImageView, startButton, pizzaTitleGroup, fields);
-        Scene scene = new Scene(root, 800, 700);
+        Scene scene = new Scene(root,  1320, 780);
         primaryStage.getIcons().add(new Image("/pizza-box.png"));
         primaryStage.setResizable(false);
         primaryStage.setTitle("Configuration");
