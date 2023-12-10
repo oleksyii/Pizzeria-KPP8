@@ -1,6 +1,7 @@
 package code.example.demo2.ClientsManagement.OrderManager;
 
 import code.example.demo2.Observer.OrderObserver;
+import code.example.demo2.UIManagement.controllers.PizzeriaController;
 
 import java.util.Map;
 
@@ -48,6 +49,7 @@ public class Order {
         orderStatus = OrderStatus.Completed;
 
         //TODO: NOTIFY CONTROLLER ORDER FINISHED
+        PizzeriaController.orderFinished(orderId);
 
         return this;
     }

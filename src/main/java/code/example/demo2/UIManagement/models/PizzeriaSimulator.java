@@ -1,6 +1,7 @@
 package code.example.demo2.UIManagement.models;
 
 import code.example.demo2.ClientsManagement.GeneratorManager.ClientGenerationStrategies;
+import code.example.demo2.ClientsManagement.PizzeriaClient;
 import code.example.demo2.CooksManagement.KitchenManager;
 import code.example.demo2.CooksManagement.SpecificCook;
 import code.example.demo2.CooksManagement.strategies.CookStatus;
@@ -15,6 +16,7 @@ import code.example.demo2.ClientsManagement.OrderManager.OrderStatus;
 import com.example.demo2.MainPage.MainPage;
 import com.example.demo2.PizzaMenu.MenuPage;
 import com.example.demo2.Settings.SettingsPage;
+import javafx.collections.ListChangeListener;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -36,6 +38,7 @@ public class PizzeriaSimulator {
     private MenuPage menuPage;
 
     private PizzeriaSimulator(int numOfCooks, int numOfCashiers, List<Integer> pizzasAvailable, ClientGenerationStrategies strategy, int minTimeCooking) {
+        this.generateScreens();
         // Order Manager initialization
         this.orderManager = new OrderManager();
         this.menu = new Menu(pizzasAvailable);
@@ -52,7 +55,6 @@ public class PizzeriaSimulator {
 
         this.StartJob();
 
-        this.generateScreens();
     }
 
     public static synchronized PizzeriaSimulator setInstance(int numOfCooks, int numOfCashiers, List<Integer> pizzasAvailable, ClientGenerationStrategies strategy, int minTimeCooking) {

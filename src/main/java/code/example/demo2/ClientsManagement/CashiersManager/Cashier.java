@@ -26,5 +26,7 @@ public class Cashier {
         return clientsQueue;
     }
 
-
+    public int getId() {
+        return this.cashierId;
+    }
 }

@@ -91,8 +91,8 @@ public class MainPage {
         primaryStage.setScene(scene);
         primaryStage.show();
 
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(5), e -> PizzeriaController.generateClientsForCashiers(clientsQueues, animationInstance, numberOfCashiers)));
-        timeline.setCycleCount(timeline.INDEFINITE);
-        timeline.play();
+//        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(5), e -> PizzeriaController.generateClientsForCashiers(1)));
+//        timeline.setCycleCount(timeline.INDEFINITE);
+//        timeline.play();
     }
 }

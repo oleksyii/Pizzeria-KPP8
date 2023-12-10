@@ -2,14 +2,17 @@ package code.example.demo2.ClientsManagement.GeneratorManager;
 
 import code.example.demo2.ClientsManagement.CashiersManager.CashierManager;
 import code.example.demo2.ClientsManagement.PizzeriaClient;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
+
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
 public class ClientGeneratorContext  {
-
-
     private static final ClientGeneratorContext INSTANCE = new ClientGeneratorContext();
     CashierManager cashierManager;
 
@@ -61,7 +64,6 @@ public class ClientGeneratorContext  {
             System.out.println("Please set a strategy before executing.");
         }
     }
-
 
     public List<PizzeriaClient> getClientsList() {
         return new ArrayList<>(currentClients);

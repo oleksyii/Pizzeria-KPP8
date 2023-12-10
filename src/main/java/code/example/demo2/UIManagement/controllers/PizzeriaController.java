@@ -29,12 +29,13 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class PizzeriaController {
-    static private double initialDistance = -400;
     static private VBox uiCooks;
     static private StackPane uiTable = new StackPane();
+    static private List<HBox> cashierQueuesUi;
     static private PizzeriaSimulator pizzeriaSimulator;
 
     static public void handleSettingsButtonClick(Stage primaryStage) {
@@ -63,6 +64,10 @@ public class PizzeriaController {
     static public void handleStartMainPageButtonClick(Stage primaryStage) {
         MainPage main = PizzeriaSimulator.getInstance().getMainPage();
         main.start(primaryStage);
+    }
+
+    static public void orderCreated(int id) {
+        System.out.println("Order created" + id);
     }
 
     static private void setSpacingDynamically(int numberOfElements, VBox elements, int paddingIfOne) {
@@ -165,7 +170,6 @@ public class PizzeriaController {
         cashiers.setPadding(new Insets(220, 0, 150, 50));
 
         setSpacingDynamically(numberOfCashiers, cashiers);
-
         for (int i = 0; i < numberOfCashiers; i++) {
             Cashier cashier = new Cashier();
             cashiers.getChildren().add(cashier);
@@ -174,24 +178,54 @@ public class PizzeriaController {
         return cashiers;
     }
 
-    static public void generateClientsForCashiers(List<HBox> cashierQueues, Animation animationInstance, int numberOfClientsPerCashier) {
-        for (HBox clientsQueue : cashierQueues) {
-            if (clientsQueue.getChildren().size() < 5) {
-                Client client = new Client();
-                clientsQueue.getChildren().add(client);
+    static public void generateClientsForCashiers(int orderId, int cashierId) {
 
-                if (getNumberOfCashier() == 5) {
-                    initialDistance += 8;
-                } else {
-                    initialDistance += 10;
-                }
+        double initialDistance = -400;
 
-                PauseTransition pauseTransition = new PauseTransition(Duration.seconds(0.05));
-                pauseTransition.setOnFinished(event -> animationInstance.animateClient(client, initialDistance));
-                pauseTransition.play();
+        List<HBox> cashierQueues = PizzeriaController.getCashierQueuesUi();
+        if(cashierQueues == null) return;
+        for (int i = 0; i < cashierQueues.size(); i++) {
+            HBox clientsQueue = cashierQueues.get(i);
+            if (i + 1 == cashierId) {
+                Platform.runLater(() -> {
+                    Client client = new Client(orderId);
+                    clientsQueue.getChildren().add(client);
+
+                    double finalInitialDistance = initialDistance;
+                    Animation.animateClient(client, finalInitialDistance);
+                });
             }
         }
     }
+
+
+    static public void orderFinished(int orderId) {
+
+        System.out.println("orderFinished invoked " + orderId);
+        List<HBox> cashierQueues = PizzeriaController.getCashierQueuesUi();
+        if (cashierQueues == null) return;
+
+        for (HBox clientsQueue : cashierQueues) {
+            Platform.runLater(() -> {
+                int indexToRemove = -1;
+                for (int i = 0; i < clientsQueue.getChildren().size(); i++) {
+                    Node node = clientsQueue.getChildren().get(i);
+                    if (node instanceof Client) {
+                        Client client = (Client) node;
+                        if (orderId == client.getOrderId()) {
+                            indexToRemove = i;
+                            Animation.animateClientRemoval(client, clientsQueue, indexToRemove);
+
+                            break;
+                        }
+                    }
+                }
+            });
+        }
+    }
+
+
+
 
     public static List<HBox> createClientsQueues(int size) {
         List<HBox> cashierQueues = new ArrayList<>();
@@ -214,7 +248,13 @@ public class PizzeriaController {
             }
         }
 
+        cashierQueuesUi = cashierQueues;
+
         return cashierQueues;
+    }
+
+    public static List<HBox> getCashierQueuesUi() {
+        return cashierQueuesUi;
     }
 
     static public void setClientsSpacing(int numberOfCashiers, VBox cashiersContainer) {

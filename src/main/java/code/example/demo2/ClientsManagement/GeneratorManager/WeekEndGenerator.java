@@ -1,7 +1,10 @@
 package code.example.demo2.ClientsManagement.GeneratorManager;
 
+import code.example.demo2.ClientsManagement.CashiersManager.Cashier;
 import code.example.demo2.ClientsManagement.CashiersManager.CashierManager;
+import code.example.demo2.ClientsManagement.OrderManager.Order;
 import code.example.demo2.ClientsManagement.PizzeriaClient;
+import code.example.demo2.UIManagement.controllers.PizzeriaController;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -32,11 +35,16 @@ public class WeekEndGenerator implements ClientGenerator{
 
     }
 
+    public void processClient(PizzeriaClient client) {
+        Order order = client.makeOrder();
+        Cashier cashier = client.chooseQueue(this.cashierManager);
+        PizzeriaController.generateClientsForCashiers(order.getId(), cashier.getId());
+    }
+
     private void generateClient() {
 
         PizzeriaClient client = new PizzeriaClient();
-        client.makeOrder();
-        client.chooseQueue(this.cashierManager);
+        processClient(client);
         clientGeneratorContext.addClient(client);
 
     }
