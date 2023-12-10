@@ -6,14 +6,23 @@ import javafx.scene.image.ImageView;
 
 public class Cook extends VBox {
     private CookState state;
+    private boolean isCookWorking = false;
     public Cook(CookState state) {
         this.state = state;
         renderCook();
     }
 
     public void renderCook() {
+        getChildren().clear();
         ImageView cookImage = new ImageView(Cook.class.getResource("/cook_icon.png").toExternalForm());
-        ImageView cloudImage = new ImageView(Cook.class.getResource("/MainPage/cloud.png").toExternalForm());
+        ImageView cloudImage = new ImageView();
+        ImageView cuttingOrBackingImage = new ImageView();
+        if(isCookWorking) {
+            cloudImage = new ImageView(Cook.class.getResource("/MainPage/cloud.png").toExternalForm());
+            String imageName = this.state.equals(CookState.AT_TABLE) ? "/MainPage/cutting-in-progress.png": "/MainPage/backing-in-progress.png";
+            cuttingOrBackingImage = new ImageView(Cook.class.getResource(imageName).toExternalForm());
+        }
+
         VBox cloudImageBox = new VBox();
 
         cookImage.setFitHeight(70);
@@ -22,8 +31,6 @@ public class Cook extends VBox {
         cloudImage.setFitHeight(60);
         cloudImage.setFitWidth(60);
 
-        String imageName = this.state.equals(CookState.AT_TABLE) ? "/MainPage/cutting-in-progress.png": "/MainPage/backing-in-progress.png";
-        ImageView cuttingOrBackingImage = new ImageView(Cook.class.getResource(imageName).toExternalForm());
         cuttingOrBackingImage.setFitHeight(20);
         cuttingOrBackingImage.setFitWidth(20);
 
@@ -43,9 +50,9 @@ public class Cook extends VBox {
         getChildren().addAll(cloudImageBox, cookImage);
     }
 
-    public void rerenderCook() {
-        getChildren().clear();
-        renderCook();
+    public void setIsCookWorking(boolean isCookWorking) {
+         this.isCookWorking = isCookWorking;
+         renderCook();
     }
 
     public void changeState(CookState state) {

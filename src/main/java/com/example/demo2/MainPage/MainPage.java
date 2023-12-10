@@ -3,6 +3,7 @@ package com.example.demo2.MainPage;
 import code.example.demo2.UIManagement.controllers.PizzeriaController;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.util.Duration;
@@ -35,8 +36,8 @@ public class MainPage {
 
         Button settingsButton = new Button();
         Button menuButton = new Button();
-        settingsButton.setOnAction(event -> PizzeriaController.handleSettingsButtonClick(primaryStage));
-        menuButton.setOnAction(event -> PizzeriaController.handleMenuButtonClick(primaryStage));
+        settingsButton.setOnAction(event -> Platform.runLater(() -> PizzeriaController.handleSettingsButtonClick(primaryStage)));
+        menuButton.setOnAction(event ->  Platform.runLater(() -> PizzeriaController.handleMenuButtonClick(primaryStage)));
         ImageView menuIconImageView = new ImageView(new Image(getClass().getResource("/menu.png").toExternalForm()));
         menuIconImageView.setFitHeight(40);
         menuIconImageView.setFitWidth(40);

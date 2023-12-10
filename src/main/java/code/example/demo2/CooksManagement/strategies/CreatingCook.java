@@ -1,8 +1,10 @@
 package code.example.demo2.CooksManagement.strategies;
 
+import code.example.demo2.CooksManagement.strategies.ThreadStopper.Stopper;
 import code.example.demo2.OrdersManagement.OrderManager;
 import code.example.demo2.OrdersManagement.PizzaStatus;
 import code.example.demo2.OrdersManagement.Task;
+import code.example.demo2.UIManagement.controllers.PizzeriaController;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,10 +15,11 @@ public class CreatingCook extends Cook{
     private CookStatus cookStatus;
     private List<PizzaStatus> pizzaStatuses = new ArrayList<>();
     private int id;
+    private Stopper stopper;
 
-    public CreatingCook(){
+    public CreatingCook(Stopper stopper){
         this.pizzaStatuses.add(PizzaStatus.NotTaken);
-
+        this.stopper = stopper;
     }
 
 
@@ -36,6 +39,7 @@ public Task takeTask() {
             }
         }
         try{
+            stopper.checkForSleep();
             Thread.sleep(1000);
         } catch (InterruptedException e){
             //Processing
@@ -51,28 +55,20 @@ public Task takeTask() {
                 System.out.println("CreatingCook thread "  + this.id + " is creating pizza Task: " + this.currentTask);
                 this.cookStatus = CookStatus.Creating;
 
-                //TODO: NOTIFY CONTROLLER COOK IS CREATING
+                PizzeriaController.setIsCookWorking(id, true);
 
+                // Spaghetti Code
+                stopper.checkForSleep();
                 Thread.sleep(COOKING_TIME/3); // Simulating some work
                 currentTask.setStatus(PizzaStatus.ReadyForBaking);
                 currentTask = null;
 
+                PizzeriaController.setIsCookWorking(id, false);
             }
         } catch (InterruptedException e) {
             // Handle InterruptedException if needed
         }
 
-    }
-
-    @Override
-    public void pauseCook() {
-        try {
-            System.out.println("Cook " + this.Id() +" is sleeping");
-            Thread.sleep(10000); // Pausing
-
-        } catch (InterruptedException e) {
-            // Handle InterruptedException if needed
-        }
     }
 
     @Override
@@ -97,23 +93,14 @@ public Task takeTask() {
         return "CreatingCook";
     }
 
-    public void run() {
-        while(!isInterrupted){
-            System.out.println("Getting the task cook id: " + this.id);
-            currentTask = takeTask();
-            if(currentTask != null){
-                System.out.println("Got the task cook id: " + this.id);
-                processPizza();
-            }
+    @Override
+    public void execute(){
+        System.out.println("Getting the task cook id: " + this.id);
+        currentTask = takeTask();
+        if(currentTask != null){
+            System.out.println("Got the task cook id: " + this.id);
+            processPizza();
         }
-        if(currentTask != null){currentTask.setStatus(PizzaStatus.NotTaken);}
     }
 
-    public void customInterrupt(){
-        isInterrupted = true;
-        if (currentTask != null)
-            currentTask.setStatus(PizzaStatus.NotTaken);
-        interrupt(); // Optional: Interrupt the thread if it is currently blocked in a sleep, wait, or join operation.
-
-    }
 }

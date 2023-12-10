@@ -2,6 +2,7 @@
 
 package code.example.demo2.CooksManagement.strategies;
 
+import code.example.demo2.CooksManagement.strategies.ThreadStopper.Stopper;
 import code.example.demo2.OrdersManagement.OrderManager;
 import code.example.demo2.OrdersManagement.PizzaStatus;
 import code.example.demo2.OrdersManagement.Task;
@@ -16,10 +17,12 @@ public class FullCook extends Cook{
     private CookStatus cookStatus;
     private List<PizzaStatus> pizzaStatuses = new ArrayList<>();
     private int id;
+    private Stopper stopper;
 
-    public FullCook(){
+    public FullCook(Stopper stopper){
         this.pizzaStatuses.add(PizzaStatus.NotTaken);
         this.pizzaStatuses.add(PizzaStatus.ReadyForBaking);
+        this.stopper = stopper;
     }
 
 
@@ -40,6 +43,8 @@ public class FullCook extends Cook{
             }
             try{
                 if(Thread.interrupted()){return null;}
+                // Spaghetti Code
+                stopper.checkForSleep();
                 Thread.sleep(1000);
             } catch (InterruptedException e){
                 //Processing
@@ -59,9 +64,13 @@ public class FullCook extends Cook{
                 this.cookStatus = CookStatus.Creating;
                 System.out.println("FullCook thread " + this.id + " is creating pizza Task: " + this.currentTask);
                 PizzeriaController.startCookAnimation(this.id);
-                //TODO: NOTIFY CONTROLLER COOK IS CREATING
+
+                PizzeriaController.setIsCookWorking(id, true);
 
                 if(Thread.interrupted()){return;}
+
+                // Spaghetti Code
+                stopper.checkForSleep();
                 Thread.sleep(COOKING_TIME/2); // Simulating some work
 //                currentTask.setStatus(PizzaStatus.ReadyForBaking);
 
@@ -74,26 +83,20 @@ public class FullCook extends Cook{
                 //TODO: NOTIFY CONTROLLER COOK IS BAKING
 
                 if(Thread.interrupted()){return;}
+
+                // Spaghetti Code
+                stopper.checkForSleep();
                 Thread.sleep(COOKING_TIME/2); // Simulating some work
                 currentTask.setStatus(PizzaStatus.Baked);
                 currentTask = null;
+
+                PizzeriaController.setIsCookWorking(id, false);
             }
         } catch (InterruptedException e) {
             // Handle InterruptedException if needed
         }
 
 
-    }
-
-    @Override
-    public void pauseCook() {
-        try {
-            System.out.println("Cook " + this.Id() +" is sleeping");
-            Thread.sleep(10000); // Pausing
-
-        } catch (InterruptedException e) {
-            // Handle InterruptedException if needed
-        }
     }
 
     @Override
@@ -115,27 +118,18 @@ public class FullCook extends Cook{
     }
 
     @Override
-    public void customInterrupt() {
-
-    }
-
-    @Override
     public String getType(){
         return "FullCook";
     }
 
-    public void run() {
-
-        while(!Thread.interrupted()){
-            System.out.println("Getting the task cook id: " + this.id);
-            currentTask = takeTask();
-            if(currentTask != null){
-                System.out.println("Got the task cook id: " + this.id);
-                processPizza();
-            }
+    @Override
+    public void execute(){
+        System.out.println("Getting the task cook id: " + this.id);
+        currentTask = takeTask();
+        if(currentTask != null){
+            System.out.println("Got the task cook id: " + this.id);
+            processPizza();
         }
-        if(currentTask != null){currentTask.setStatus(PizzaStatus.NotTaken);}
-
     }
 
 }

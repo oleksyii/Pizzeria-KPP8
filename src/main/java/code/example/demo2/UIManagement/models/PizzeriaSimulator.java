@@ -12,6 +12,9 @@ import code.example.demo2.ClientsManagement.CashiersManager.CashierManager;
 import code.example.demo2.ClientsManagement.GeneratorManager.ClientGeneratorContext;
 import code.example.demo2.ClientsManagement.OrderManager.Order;
 import code.example.demo2.ClientsManagement.OrderManager.OrderStatus;
+import com.example.demo2.MainPage.MainPage;
+import com.example.demo2.PizzaMenu.MenuPage;
+import com.example.demo2.Settings.SettingsPage;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -27,6 +30,10 @@ public class PizzeriaSimulator {
     private final CashierManager cashierManager;
     private final OrderManager orderManager;
     private final ClientGeneratorContext generatorContext;
+
+    private MainPage mainPage;
+    private SettingsPage settingsPage;
+    private MenuPage menuPage;
 
     private PizzeriaSimulator(int numOfCooks, int numOfCashiers, List<Integer> pizzasAvailable, ClientGenerationStrategies strategy, int minTimeCooking) {
         // Order Manager initialization
@@ -44,6 +51,8 @@ public class PizzeriaSimulator {
         this.kitchenManager =  new KitchenManager(numOfCooks, minTimeCooking);
 
         this.StartJob();
+
+        this.generateScreens();
     }
 
     public static synchronized PizzeriaSimulator setInstance(int numOfCooks, int numOfCashiers, List<Integer> pizzasAvailable, ClientGenerationStrategies strategy, int minTimeCooking) {
@@ -57,8 +66,30 @@ public class PizzeriaSimulator {
         return instance;
     }
 
+    public String getPizzaSimulatorStrategy() {
+        return generatorContext.getStrategy();
+    }
+
     public Menu getMenu(){
         return menu;
+    }
+
+    public void generateScreens() {
+        this.mainPage = new MainPage();
+        this.settingsPage = new SettingsPage();
+        this.menuPage = new MenuPage();
+    }
+
+    public MainPage getMainPage() {
+        return this.mainPage;
+    }
+
+    public SettingsPage getSettingsPage() {
+        return this.settingsPage;
+    }
+
+    public MenuPage getMenuPage() {
+        return this.menuPage;
     }
 
     public void addPizza(Integer id) {
