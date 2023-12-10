@@ -17,6 +17,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -37,6 +38,8 @@ public class PizzeriaController {
     static private StackPane uiTable = new StackPane();
     static private List<HBox> cashierQueuesUi;
     static private PizzeriaSimulator pizzeriaSimulator;
+    private static long lastClickTime = 0;
+    private static final long DOUBLE_CLICK_TIME_DELTA = 30000;
 
     static public void handleSettingsButtonClick(Stage primaryStage) {
         SettingsPage settings = PizzeriaSimulator.getInstance().getSettingsPage();
@@ -189,6 +192,12 @@ public class PizzeriaController {
             if (i + 1 == cashierId) {
                 Platform.runLater(() -> {
                     Client client = new Client(orderId);
+                    client.setOnMouseEntered(event -> {
+                        client.showDetailsPopup(pizzeriaSimulator.showOrderByClientId(client.getOrderId()));
+                    });
+                    client.setOnMouseExited(event -> {
+                        client.hideTooltip(client.getTooltip());
+                    });
                     clientsQueue.getChildren().add(client);
 
                     double finalInitialDistance = initialDistance;
@@ -197,7 +206,6 @@ public class PizzeriaController {
             }
         }
     }
-
 
     static public void orderFinished(int orderId) {
 

@@ -72,9 +72,9 @@ public class Order {
     @Override
     public String toString(){
         return "Order{" +
-                "orderId=" + orderId +
-                ", orderStatus=" + orderStatus +
-                ", pizzas and ids=" + pizzaIdAmount +
+                "\norderId=" + orderId +
+                ", \norderStatus=" + orderStatus +
+                ", \npizzas and ids=" + pizzaIdAmount +
                 '}';
     }
 

@@ -149,4 +149,8 @@ public class PizzeriaSimulator {
     public List<SpecificCook> getAllCooks() {
         return kitchenManager.getCooks();
     }
+
+    public String showOrderByClientId(int clientId) {
+        return this.orderManager.getOrder(clientId).toString();
+    }
 }

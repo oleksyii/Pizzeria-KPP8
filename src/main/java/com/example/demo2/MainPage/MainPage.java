@@ -85,7 +85,7 @@ public class MainPage {
         root.getChildren().addAll(header, settingsButton, menuButton);
 
         Scene scene = new Scene(root,  1320, 780);
-
+        scene.getStylesheets().add(getClass().getResource("/styles/tooltip_style.css").toExternalForm());
         primaryStage.setResizable(false);
         primaryStage.setTitle("Pizza Simulator");
         primaryStage.setScene(scene);
