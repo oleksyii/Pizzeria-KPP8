@@ -14,13 +14,11 @@ import javafx.geometry.Pos;
 import java.util.*;
 
 public class PizzaComponent extends HBox {
-
-    private Label nameLabel;
-    private Label descriptionLabel;
-
-    public PizzaComponent(Integer id, String imageUrl, List<String> ingredients) {
-        nameLabel = new Label();
-        descriptionLabel = new Label();
+    public PizzaComponent(Integer id, List<String> ingredients, String name, String description) {
+        Label nameLabel = new Label();
+        nameLabel.setText(name);
+        Label descriptionLabel = new Label();
+        descriptionLabel.setText(description);
 
         nameLabel.setStyle("-fx-font-family: 'Comic Sans MS'; -fx-font-size: 32px; -fx-font-weight: 800; -fx-underline: true; -fx-text-fill: white;");
 
@@ -51,7 +49,8 @@ public class PizzaComponent extends HBox {
 
         descriptionLabel.setStyle("-fx-font-family: 'Comic Sans MS'; -fx-font-size: 16px; -fx-font-weight: 700; -fx-text-fill: #5F2D04;");
 
-        ImageView imageView = new ImageView(new Image(imageUrl));
+        String resourceName = "/pizzas/" + id % 5 + ".jpg";
+        ImageView imageView = new ImageView(new Image(getClass().getResource(resourceName).toExternalForm()));
         imageView.setFitWidth(148);
         imageView.setFitHeight(148);
 
@@ -94,13 +93,5 @@ public class PizzaComponent extends HBox {
 
         getChildren().addAll(contextAndTimeVBox);
         setPadding(new Insets(25, 0, 15, 0));
-    }
-
-    public void setPizzaName(String name) {
-        nameLabel.setText(name);
-    }
-
-    public void setPizzaDescription(String description) {
-        descriptionLabel.setText(description);
     }
 }
