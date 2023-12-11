@@ -48,6 +48,7 @@ public class CashierManager {
     }
 
     public void createCashiers(int amount){
+        cashiers = new ArrayList<>();
         cashierAmount = amount;
         for(int i = 0;i<amount;i++){
             Cashier cashier = new Cashier();

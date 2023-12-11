@@ -42,6 +42,12 @@ public class PizzeriaSimulator {
     private static MenuPage menuPage;
 
     private PizzeriaSimulator(int numOfCooks, int numOfCashiers, List<Integer> pizzasAvailable, ClientGenerationStrategies strategy, int minTimeCooking) {
+        mainPage = null;
+        mainPageScene = null;
+        menuPageScene = null;
+        settingsPageScene = null;
+        settingsPage = null;
+        menuPage = null;
         this.generateScreens();
         // Order Manager initialization
         this.orderManager = new OrderManager();
@@ -49,6 +55,7 @@ public class PizzeriaSimulator {
 
         // Cashiers initialization
         this.cashierManager = new CashierManager(numOfCashiers);
+        ClientGeneratorContext.clearInstance();
         this.generatorContext = ClientGeneratorContext.getInstance();
         generatorContext.setStrategy(strategy, this.cashierManager);
 
@@ -61,9 +68,7 @@ public class PizzeriaSimulator {
     }
 
     public static synchronized PizzeriaSimulator setInstance(int numOfCooks, int numOfCashiers, List<Integer> pizzasAvailable, ClientGenerationStrategies strategy, int minTimeCooking) {
-        if (instance == null) {
-            instance = new PizzeriaSimulator(numOfCooks, numOfCashiers, pizzasAvailable, strategy, minTimeCooking);
-        }
+        instance = new PizzeriaSimulator(numOfCooks, numOfCashiers, pizzasAvailable, strategy, minTimeCooking);
         return instance;
     }
 

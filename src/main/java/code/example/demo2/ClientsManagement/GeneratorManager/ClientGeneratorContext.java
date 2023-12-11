@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class ClientGeneratorContext  {
-    private static final ClientGeneratorContext INSTANCE = new ClientGeneratorContext();
+    private static ClientGeneratorContext INSTANCE = new ClientGeneratorContext();
     CashierManager cashierManager;
 
     private ClientGenerator strategy;
@@ -34,6 +34,9 @@ public class ClientGeneratorContext  {
         return INSTANCE;
     }
 
+    public static void clearInstance() {
+        INSTANCE = new ClientGeneratorContext();
+    }
 
     public void setStrategy(ClientGenerationStrategies strategy, CashierManager cashierMan) {
           String strategyWork = strategy.toString();
