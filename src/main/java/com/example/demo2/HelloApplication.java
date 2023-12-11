@@ -16,13 +16,7 @@ public class HelloApplication extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-//        PizzeriaSimulator.setInstance(
-//                4,
-//                3,
-//                new ArrayList<>(List.of(1)),
-//                ClientGenerationStrategies.Weekend,
-//                20000
-//        );
+
 
 
 
@@ -34,6 +28,14 @@ public class HelloApplication extends Application {
         configuration.start(primaryStage);
 //      menuPage.start(primaryStage);
 //      settingsPage.start(primaryStage);
+
+//        PizzeriaSimulator.setInstance(
+//                4,
+//                3,
+//                new ArrayList<>(List.of(1)),
+//                ClientGenerationStrategies.Weekend,
+//                20000
+//        );
 
         //        p.getKitchenManager().morphCook(1, CookType.Creating);
 //        p.getKitchenManager().morphCook(2, CookType.Creating);

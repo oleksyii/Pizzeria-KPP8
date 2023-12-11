@@ -35,7 +35,7 @@ public class OrderManager {
                 .collect(Collectors.groupingBy(task -> getOrder(task.getOrderId())));
                 mapOrderTasks.forEach((order, tasks) -> {
             if (tasks.stream().allMatch(task -> task.getStatus() == PizzaStatus.Baked)) {
-                order.setStatus(OrderStatus.Completed);
+//                order.setStatus(OrderStatus.Completed);
                 order.giveAwayOrder();
 
                 System.out.println("Removed order " + order);

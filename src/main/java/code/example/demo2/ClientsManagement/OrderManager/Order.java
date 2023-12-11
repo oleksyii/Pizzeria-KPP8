@@ -9,7 +9,6 @@ public class Order {
     private static int nextOrderId = 1;
     private int orderId;
     private Map<Integer, Integer> pizzaIdAmount;
-    OrderObserver observer;
     private OrderStatus orderStatus;
     private int clientId;
 
@@ -17,7 +16,7 @@ public class Order {
 
         this.orderId=nextOrderId++;
         this.pizzaIdAmount=pizzaIdAmount;
-
+        this.setStatus(OrderStatus.NotTaken);
     }
 
     public void setClientId(int clientId) {
@@ -30,6 +29,7 @@ public class Order {
 
     public void setStatus(OrderStatus status){
         orderStatus = status;
+        notifyObserver();
     }
 
     public OrderStatus getOrderStatus(){
@@ -46,27 +46,15 @@ public class Order {
     }
 
     public Order giveAwayOrder(){
-        orderStatus = OrderStatus.Completed;
-
+        this.setStatus(OrderStatus.Completed);
         //TODO: NOTIFY CONTROLLER ORDER FINISHED
         PizzeriaController.orderFinished(orderId);
 
         return this;
     }
 
-    public void registerObserver(OrderObserver orderObserver){
-        observer = orderObserver;
-    }
-
-    public void removeObserver(){
-
-    }
-
-    public void notifyObserver(Order newRecord){
-
-
-    observer.addNewRecord(newRecord);
-
+    public void notifyObserver(){
+    OrderObserver.addNewRecord(this);
     }
 
     @Override

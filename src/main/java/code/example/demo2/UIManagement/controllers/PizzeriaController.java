@@ -4,6 +4,7 @@ import code.example.demo2.ClientsManagement.CashiersManager.CashierManager;
 import code.example.demo2.ClientsManagement.GeneratorManager.ClientGenerationStrategies;
 import code.example.demo2.CooksManagement.KitchenManager;
 import code.example.demo2.CooksManagement.strategies.CookStatus;
+import code.example.demo2.Observer.OrderObserver;
 import code.example.demo2.UIManagement.models.PizzeriaSimulator;
 import com.example.demo2.MainPage.*;
 import com.example.demo2.PizzaMenu.MenuPage;
@@ -304,6 +305,7 @@ public class PizzeriaController {
     }
 
     static public void handlePizzaConfigurationButtonClick(Stage primaryStage, TextField numberOfCooks, TextField numberOfCashiers, TextField numberOfPizza, ChoiceBox<String> strategy, TextField minTime) {
+
         String selectedStrategy = (strategy != null && strategy.getValue() != null && !strategy.getValue().isEmpty())
                 ? strategy.getValue()
                 : "Regular Day";
