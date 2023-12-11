@@ -78,6 +78,8 @@ public class MainPage {
         backgroundImageView.setFitWidth(1320);
         backgroundImageView.setFitHeight(780);
 
+        HBox mainContainer = new HBox();
+
         int numberOfCooks = PizzeriaController.getNumberOfCooks();
         int numberOfCashiers = PizzeriaController.getNumberOfCashier();
         VBox ovens = PizzeriaController.generateOvens(numberOfCooks);
@@ -91,8 +93,23 @@ public class MainPage {
         VBox queuesBox = PizzeriaController.createQueuesBox(clientsQueues);
         PizzeriaController.setClientsSpacing(numberOfCashiers, queuesBox);
 
+        cooks.setPickOnBounds(true);
+        cashiers.setPickOnBounds(true);
+        ovens.setPickOnBounds(true);
+
+        ovens.setMaxWidth(230);
+        ovens.setMinWidth(230);
+        cooks.setMaxWidth(210);
+        cooks.setMinWidth(210);
+        cashiers.setMaxWidth(200);
+        cashiers.setMinWidth(200);
+        clientsContainer.setMaxWidth(600);
+        clientsContainer.setMinWidth(600);
+
+
         clientsContainer.getChildren().add(queuesBox);
-        root.getChildren().addAll(backgroundImageView, ovens, cooks, table, cashiers, clientsContainer);
+        mainContainer.getChildren().addAll(ovens, cooks, table, cashiers, clientsContainer);
+        root.getChildren().addAll(backgroundImageView, mainContainer);
         root.getChildren().addAll(header, settingsButton, menuButton);
 
         Scene scene = new Scene(root,  1320, 780);

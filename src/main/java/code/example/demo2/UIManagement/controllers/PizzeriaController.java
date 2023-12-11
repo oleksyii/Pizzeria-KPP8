@@ -102,6 +102,9 @@ public class PizzeriaController {
 
         for (int i = 0; i < numberOfOvens; i++) {
             Oven oven = new Oven();
+            oven.setOnMouseClicked(event -> {
+                System.out.println("TETETTETETTETETTE");
+            });
             ovens.getChildren().add(oven);
         }
 
@@ -115,7 +118,7 @@ public class PizzeriaController {
     static public VBox generateCooks(int numberOfCooks) {
         VBox cooks = new VBox();
         cooks.setAlignment(Pos.TOP_LEFT);
-        cooks.setPadding(new Insets(180, 0, 150, 230));
+        cooks.setPadding(new Insets(180, 0, 150, 0));
 
         setSpacingDynamically(numberOfCooks, cooks, 330);
 
@@ -123,7 +126,14 @@ public class PizzeriaController {
             CookState cookState = KitchenManager.getCookStatus(i + 1) == CookStatus.Baking ?
                     CookState.AT_OVEN:
                     CookState.AT_TABLE;
-            com.example.demo2.MainPage.Cook cook = new Cook(cookState);
+            Cook cook = new Cook(cookState);
+            int finalI = i;
+            cook.setOnMouseClicked(event -> {
+                // Додаємо анімацію паузи на 0.5 секунди
+                PizzeriaSimulator.getInstance().getKitchenManager().pauseCook(finalI + 1);
+                PauseTransition pause = new PauseTransition(Duration.seconds(10));
+                pause.play();
+            });
             cooks.getChildren().add(cook);
         }
 
@@ -163,7 +173,7 @@ public class PizzeriaController {
         }
 
         uiTable.setAlignment(Pos.TOP_LEFT);
-        uiTable.setPadding(new Insets(210, 0, 150, 430));
+        uiTable.setPadding(new Insets(210, 0, 150, 0));
         uiTable.getChildren().addAll(rectangle, pizzaImages);
 
         return uiTable;
@@ -177,6 +187,10 @@ public class PizzeriaController {
         setSpacingDynamically(numberOfCashiers, cashiers);
         for (int i = 0; i < numberOfCashiers; i++) {
             Cashier cashier = new Cashier();
+
+            cashier.setOnMouseClicked(event -> {
+                System.out.println("TETETTETETTETETTE");
+            });
             cashiers.getChildren().add(cashier);
         }
 
