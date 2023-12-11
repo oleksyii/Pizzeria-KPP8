@@ -1,6 +1,7 @@
 package com.example.demo2.PizzaMenu;
 
 import code.example.demo2.UIManagement.controllers.PizzeriaController;
+import code.example.demo2.UIManagement.models.PizzeriaSimulator;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -18,6 +19,16 @@ import javafx.scene.paint.Color;
 
 public class MenuPage {
     public void start(Stage primaryStage) {
+
+        Scene savedScene = PizzeriaSimulator.getInstance().getMenuScene();
+
+        if(savedScene != null) {
+            primaryStage.setResizable(false);
+            primaryStage.setTitle("Menu");
+            primaryStage.setScene(savedScene);
+            primaryStage.show();
+            return;
+        }
         StackPane root = new StackPane();
 
         HBox header = new HBox();
@@ -99,6 +110,8 @@ public class MenuPage {
         root.getChildren().addAll(header, backButton);
 
         Scene scene = new Scene(root, 1320, 780);
+
+        PizzeriaSimulator.getInstance().setMenuScene(scene);
 
         primaryStage.setResizable(false);
         primaryStage.setTitle("Menu");

@@ -29,6 +29,17 @@ import java.util.List;
 
 public class SettingsPage {
     public void start(Stage primaryStage) {
+
+        Scene savedScene = PizzeriaSimulator.getInstance().getSettingsScene();
+
+        if(savedScene != null) {
+            primaryStage.setResizable(false);
+            primaryStage.setTitle("Settings");
+            primaryStage.setScene(savedScene);
+            primaryStage.show();
+            return;
+        }
+
         StackPane root = new StackPane();
 
         Image backgroundImage = new Image(getClass().getResource("/pizza-background.png").toExternalForm());
@@ -176,6 +187,8 @@ public class SettingsPage {
         root.getChildren().add(header);
 
         Scene scene = new Scene(root, 1320, 780);
+
+        PizzeriaSimulator.getInstance().setSettingsScene(scene);
 
         primaryStage.setResizable(false);
         primaryStage.setTitle("Settings");

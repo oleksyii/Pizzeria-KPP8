@@ -36,6 +36,8 @@ public class PizzeriaSimulator {
 
     private static MainPage mainPage;
     private static Scene mainPageScene;
+    private static Scene menuPageScene;
+    private static Scene settingsPageScene;
     private static SettingsPage settingsPage;
     private static MenuPage menuPage;
 
@@ -83,6 +85,22 @@ public class PizzeriaSimulator {
 
     public Scene getMainScene() {
         return  mainPageScene;
+    }
+
+    public Scene getMenuScene() {
+        return  menuPageScene;
+    }
+
+    public void setMenuScene(Scene scene) {
+        menuPageScene = scene;
+    }
+
+    public void setSettingsScene(Scene scene) {
+        settingsPageScene = scene;
+    }
+
+    public Scene getSettingsScene() {
+        return  settingsPageScene;
     }
 
     public void generateScreens() {

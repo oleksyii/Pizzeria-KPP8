@@ -1,6 +1,8 @@
 package com.example.demo2.MainPage;
 
+import javafx.application.Platform;
 import javafx.geometry.Insets;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.image.ImageView;
 
