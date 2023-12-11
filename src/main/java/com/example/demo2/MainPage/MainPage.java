@@ -1,6 +1,7 @@
 package com.example.demo2.MainPage;
 
 import code.example.demo2.UIManagement.controllers.PizzeriaController;
+import code.example.demo2.UIManagement.models.PizzeriaSimulator;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
@@ -25,7 +26,20 @@ public class MainPage {
     private Animation animationInstance;
 
     public void start(Stage primaryStage) {
+
+        Scene savedScene = PizzeriaSimulator.getInstance().getMainScene();
+
+        if(savedScene != null) {
+            System.out.println("On the null statement");
+            primaryStage.setResizable(false);
+            primaryStage.setTitle("Pizza Simulator");
+            primaryStage.setScene(savedScene);
+            primaryStage.show();
+            return;
+        }
         StackPane root = new StackPane();
+
+        System.out.println("INITIALIZE NAIM PAGE");
 
         HBox header = new HBox();
         header.setMinHeight(70);
@@ -86,6 +100,10 @@ public class MainPage {
 
         Scene scene = new Scene(root,  1320, 780);
         scene.getStylesheets().add(getClass().getResource("/styles/tooltip_style.css").toExternalForm());
+
+        PizzeriaSimulator.getInstance().setMainScene(scene);
+
+
         primaryStage.setResizable(false);
         primaryStage.setTitle("Pizza Simulator");
         primaryStage.setScene(scene);

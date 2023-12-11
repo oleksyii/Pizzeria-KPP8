@@ -17,6 +17,7 @@ import com.example.demo2.MainPage.MainPage;
 import com.example.demo2.PizzaMenu.MenuPage;
 import com.example.demo2.Settings.SettingsPage;
 import javafx.collections.ListChangeListener;
+import javafx.scene.Scene;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -33,9 +34,10 @@ public class PizzeriaSimulator {
     private final OrderManager orderManager;
     private final ClientGeneratorContext generatorContext;
 
-    private MainPage mainPage;
-    private SettingsPage settingsPage;
-    private MenuPage menuPage;
+    private static MainPage mainPage;
+    private static Scene mainPageScene;
+    private static SettingsPage settingsPage;
+    private static MenuPage menuPage;
 
     private PizzeriaSimulator(int numOfCooks, int numOfCashiers, List<Integer> pizzasAvailable, ClientGenerationStrategies strategy, int minTimeCooking) {
         this.generateScreens();
@@ -75,10 +77,18 @@ public class PizzeriaSimulator {
         return menu;
     }
 
+    public void setMainScene(Scene scene) {
+        mainPageScene = scene;
+    }
+
+    public Scene getMainScene() {
+        return  mainPageScene;
+    }
+
     public void generateScreens() {
-        this.mainPage = new MainPage();
-        this.settingsPage = new SettingsPage();
-        this.menuPage = new MenuPage();
+        mainPage = new MainPage();
+        settingsPage = new SettingsPage();
+        menuPage = new MenuPage();
     }
 
     public MainPage getMainPage() {
