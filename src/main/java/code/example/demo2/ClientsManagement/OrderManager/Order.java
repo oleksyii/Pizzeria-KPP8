@@ -9,7 +9,6 @@ public class Order {
     private static int nextOrderId = 1;
     private int orderId;
     private Map<Integer, Integer> pizzaIdAmount;
-    OrderObserver observer;
     private OrderStatus orderStatus;
     private int clientId;
 
@@ -54,16 +53,8 @@ public class Order {
         return this;
     }
 
-    public void registerObserver(OrderObserver orderObserver){
-        observer = orderObserver;
-    }
-
-    public void removeObserver(){
-
-    }
-
     public void notifyObserver(){
-    observer.addNewRecord(this);
+    OrderObserver.addNewRecord(this);
     }
 
     @Override
