@@ -58,7 +58,7 @@ public class Cook extends VBox {
         if (isCookWorking) {
             if(!this.getCookPauseValue()) {
                 cloudImage = new ImageView(Cook.class.getResource("/MainPage/cloud.png").toExternalForm());
-                String imageName = this.state.equals(CookState.AT_TABLE) ? "/MainPage/cutting-in-progress.png" : "/MainPage/backing-in-progress.png";
+                String imageName = currentState.equals(CookState.AT_TABLE) ? "/MainPage/cutting-in-progress.png": "/MainPage/backing-in-progress.png";
                 cuttingOrBackingImage = new ImageView(Cook.class.getResource(imageName).toExternalForm());
             } else {
                 cloudImage = new ImageView(Cook.class.getResource("/MainPage/cloud.png").toExternalForm());
