@@ -25,6 +25,11 @@ public class RegularDayGenerator implements ClientGenerator {
     public String getName() {
         return "RegularDay";
     }
+    @Override
+    public void stopGeneration() {
+        scheduler.shutdownNow();
+    }
+
     public RegularDayGenerator(CashierManager cashierManager){
 
         this.cashierManager = cashierManager;

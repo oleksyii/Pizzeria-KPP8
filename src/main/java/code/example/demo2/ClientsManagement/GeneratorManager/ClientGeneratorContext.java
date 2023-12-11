@@ -69,5 +69,10 @@ public class ClientGeneratorContext  {
     public List<PizzeriaClient> getClientsList() {
         return new ArrayList<>(currentClients);
     }
+
+    public void stopClientGeneration(){
+        strategy.stopGeneration();
+        strategy = null;
+    }
 }
 

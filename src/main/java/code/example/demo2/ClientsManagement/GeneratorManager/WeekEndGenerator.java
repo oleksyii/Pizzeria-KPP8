@@ -25,6 +25,12 @@ public class WeekEndGenerator implements ClientGenerator{
     public String getName() {
         return "WeekEndDay";
     }
+
+    @Override
+    public void stopGeneration() {
+        scheduler.shutdownNow();
+    }
+
     public WeekEndGenerator(CashierManager cashierManager){
 
         this.cashierManager = cashierManager;
@@ -48,4 +54,6 @@ public class WeekEndGenerator implements ClientGenerator{
         clientGeneratorContext.addClient(client);
 
     }
+
+
 }

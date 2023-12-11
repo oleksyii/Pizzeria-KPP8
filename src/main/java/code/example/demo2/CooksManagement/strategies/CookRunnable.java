@@ -1,20 +1,30 @@
 package code.example.demo2.CooksManagement.strategies;
 
+import code.example.demo2.CooksManagement.strategies.ThreadStopper.Terminator;
 import code.example.demo2.OrdersManagement.PizzaStatus;
 
 public class CookRunnable implements Runnable{
     private Cook strategy;
     private int Id;
+    private Terminator terminator;
 
-    public CookRunnable(Cook strategy, int id) {
+    public CookRunnable(Cook strategy, int id, Terminator terminator) {
         this.strategy = strategy;
         this.Id = id;
+        this.terminator = terminator;
     }
 
     @Override
     public void run() {
-        while(!Thread.interrupted()){
+//
+        while(!Thread.interrupted() && !terminator.checkForStop()){
             strategy.execute();
+
+            // Check interrupt status explicitly and break out if interrupted
+//            if (Thread.interrupted()) {
+//                return;
+////                break;
+//            }
         }
     }
     public void pauseCook() {

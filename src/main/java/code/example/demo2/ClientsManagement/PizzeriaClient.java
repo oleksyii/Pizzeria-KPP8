@@ -49,7 +49,6 @@ public class PizzeriaClient {
 
         OrderManager.addOrderAndCreateTasks(order);
         return order;
-        // TODO: CALL THE CONTROLLER THAT CLIENT WAS CREATED
     }
 
     public void takeOrderAndLeave(){

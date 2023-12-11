@@ -3,6 +3,7 @@ package code.example.demo2.CooksManagement;
 import code.example.demo2.CooksManagement.strategies.Cook;
 import code.example.demo2.CooksManagement.strategies.CookRunnable;
 import code.example.demo2.CooksManagement.strategies.CookStatus;
+import code.example.demo2.CooksManagement.strategies.ThreadStopper.Terminator;
 import code.example.demo2.OrdersManagement.PizzaStatus;
 
 import java.util.ArrayList;
@@ -21,10 +22,10 @@ public class SpecificCook {
     CookRunnable runningCook;
     Thread workingThread;
 
-    SpecificCook(Cook strategy){
+    SpecificCook(Cook strategy, Terminator terminator){
         id++;
         strategy.Id(id);
-        runningCook = new CookRunnable(strategy, id);
+        runningCook = new CookRunnable(strategy, id, terminator);
         this.runningCook.setStrategy(strategy);
     }
     public void setStrategy(Cook strategy){
@@ -44,6 +45,9 @@ public class SpecificCook {
 
     public CookStatus getCookStatus(){return runningCook.getStatus();}
 
+    public void terminate(){
+        workingThread.interrupt();
+    }
     @Override
     public String toString(){
         return "SpecificCook{" +

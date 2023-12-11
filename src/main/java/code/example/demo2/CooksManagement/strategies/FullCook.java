@@ -42,12 +42,13 @@ public class FullCook extends Cook{
                 }
             }
             try{
-                if(Thread.interrupted()){return null;}
+
                 // Spaghetti Code
                 stopper.checkForSleep();
                 Thread.sleep(1000);
             } catch (InterruptedException e){
                 //Processing
+                return null;
             }
         }
         return res;
@@ -58,7 +59,7 @@ public class FullCook extends Cook{
     public void processPizza() {
 
         try {
-            if(currentTask.getStatus() == PizzaStatus.Processing && !Thread.interrupted()){
+            if(currentTask.getStatus() == PizzaStatus.Processing ){
 
 
                 this.cookStatus = CookStatus.Creating;
@@ -67,7 +68,6 @@ public class FullCook extends Cook{
 
                 PizzeriaController.setIsCookWorking(id, true);
 
-                if(Thread.interrupted()){return;}
 
                 // Spaghetti Code
                 stopper.checkForSleep();
@@ -78,11 +78,9 @@ public class FullCook extends Cook{
 
 
                 this.cookStatus = CookStatus.Baking;
-//                currentTask.setStatus(PizzaStatus.Processing);
+                currentTask.setStatus(PizzaStatus.Processing);
                 PizzeriaController.finishCookAnimation(this.id);
-                //TODO: NOTIFY CONTROLLER COOK IS BAKING
 
-                if(Thread.interrupted()){return;}
 
                 // Spaghetti Code
                 stopper.checkForSleep();
@@ -94,6 +92,8 @@ public class FullCook extends Cook{
             }
         } catch (InterruptedException e) {
             // Handle InterruptedException if needed
+            currentTask = null;
+            return;
         }
 
 
@@ -126,7 +126,7 @@ public class FullCook extends Cook{
     public void execute(){
         System.out.println("Getting the task cook id: " + this.id);
         currentTask = takeTask();
-        if(currentTask != null){
+        if(currentTask != null ){
             System.out.println("Got the task cook id: " + this.id);
             processPizza();
         }

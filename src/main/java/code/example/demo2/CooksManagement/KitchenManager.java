@@ -2,6 +2,7 @@ package code.example.demo2.CooksManagement;
 
 import code.example.demo2.CooksManagement.strategies.*;
 import code.example.demo2.CooksManagement.strategies.ThreadStopper.Stopper;
+import code.example.demo2.CooksManagement.strategies.ThreadStopper.Terminator;
 import code.example.demo2.UIManagement.controllers.PizzeriaController;
 
 import java.util.ArrayList;
@@ -10,18 +11,22 @@ import java.util.HashMap;
 public class KitchenManager {
     static ArrayList<SpecificCook> cooks;
     static HashMap<Integer, Stopper> stoppers;
+    static HashMap<Integer, Terminator> terminators;
 
     public KitchenManager(int cooksAmount, int minCookingTime){
         Cook.COOKING_TIME = minCookingTime;
         cooks = new ArrayList<>();
         stoppers = new HashMap<>();
+        terminators = new HashMap<>();
         createCooks(cooksAmount);
     }
     public void createCooks(int amount){
         for(int i = 0; i < amount; i++){
             Stopper stp = new Stopper();
-             cooks.add(new SpecificCook(new FullCook(stp)));
+            Terminator ter = new Terminator();
+             cooks.add(new SpecificCook(new FullCook(stp), ter));
              stoppers.put(cooks.get(i).Id(), stp);
+             terminators.put(cooks.get(i).Id(), ter);
         }
     }
     public void startCooks(){
@@ -47,7 +52,7 @@ public class KitchenManager {
                         cooks) {
                     if (cook.Id() == id) {
                         cook.setStrategy(new BakingCook(stoppers.get(cook.Id())));
-                        PizzeriaController.changeCookState(cook.Id(), CookType.Baking);
+//                        PizzeriaController.changeCookState(cook.Id(), CookType.Baking);
                     }
                 }
             }
@@ -56,7 +61,7 @@ public class KitchenManager {
                         cooks) {
                     if (cook.Id() == id) {
                         cook.setStrategy(new CreatingCook(stoppers.get(cook.Id())));
-                        PizzeriaController.changeCookState(cook.Id(), CookType.Creating);
+//                        PizzeriaController.changeCookState(cook.Id(), CookType.Creating);
                     }
                 }
             }
@@ -83,4 +88,12 @@ public class KitchenManager {
     }
 
     public ArrayList<SpecificCook> getCooks() {return cooks;}
+
+    public void stopCooks(){
+        for (SpecificCook cook :
+                cooks) {
+            cook.terminate();
+            terminators.get(cook.Id()).putCookToStop();
+        }
+    }
 }

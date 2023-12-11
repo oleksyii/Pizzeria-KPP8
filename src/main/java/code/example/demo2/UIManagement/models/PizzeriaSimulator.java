@@ -29,10 +29,10 @@ public class PizzeriaSimulator {
     private static PizzeriaSimulator instance;
 
     private Menu menu;
-    private final KitchenManager kitchenManager;
+    private KitchenManager kitchenManager;
     private final CashierManager cashierManager;
     private final OrderManager orderManager;
-    private final ClientGeneratorContext generatorContext;
+    private ClientGeneratorContext generatorContext;
 
     private static MainPage mainPage;
     private static Scene mainPageScene;
@@ -183,5 +183,20 @@ public class PizzeriaSimulator {
 
     public String showOrderByClientId(int clientId) {
         return this.orderManager.getOrder(clientId).toString();
+    }
+
+    /**
+     * <p>Clears cook threads and client generation</p>
+     * NECESSARY to call before starting a new game
+     */
+    public void stopThreadsAndCleanResources(){
+        generatorContext.stopClientGeneration();
+        kitchenManager.stopCooks();
+
+        //those are superstitions, idk if they're necessary
+        generatorContext = null;
+        kitchenManager = null;
+
+        // Threads are shut, restart this instance now
     }
 }

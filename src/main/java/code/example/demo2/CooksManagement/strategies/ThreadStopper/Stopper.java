@@ -6,10 +6,10 @@ public class Stopper {
     public synchronized void checkForSleep() throws InterruptedException {
         try{
             if (cookHasToSleep) {
-                System.out.println("Having a break...");
+                System.out.println("\n\nHaving a break...\n\n");
 //            wait(); // Release the lock and wait for notification
                 Thread.sleep(10000);
-                System.out.println("Back to work!");
+                System.out.println("\n\nBack to work!\n\n");
                 cookHasToSleep = false;
             }
         } catch (InterruptedException e){

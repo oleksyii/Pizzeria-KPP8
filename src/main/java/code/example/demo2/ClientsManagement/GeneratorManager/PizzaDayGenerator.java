@@ -28,7 +28,6 @@ public class PizzaDayGenerator implements ClientGenerator{
     @Override
     public void generateClients() {
         scheduler.scheduleAtFixedRate(this::generateClient, 0, interval, TimeUnit.SECONDS);
-
     }
 
     public void processClient(PizzeriaClient client) {
@@ -40,6 +39,11 @@ public class PizzaDayGenerator implements ClientGenerator{
     public String getName() {
            return "PizzaDay";
     }
+    @Override
+    public void stopGeneration() {
+        scheduler.shutdownNow();
+    }
+
 
     private void generateClient() {
 
