@@ -25,7 +25,7 @@ public class OrderObserver {
             }
             FileWriter writer = new FileWriter(file, true);
             String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-            String eventString = "Order id: " + String.valueOf(order.getId()) + " | status: "  + order.getOrderStatus() + "\t|";
+            String eventString = "Order id: " + String.valueOf(order.getId()) + "\t| status: "  + order.getOrderStatus() + "\t|";
             String logEntry = "[" + timestamp + "] " + eventString + "\n";
             writer.write(logEntry);
             writer.close();
