@@ -64,7 +64,6 @@ public class KitchenManager {
                 cooks) {
             if (cook.Id() == id) {
                 stoppers.get(cook.Id()).putCookToSleep();
-//                cook.pause();
             }
         }
     }

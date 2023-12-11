@@ -43,10 +43,6 @@ public class SpecificCook {
     public int Id(){return runningCook.getId();}
 
     public CookStatus getCookStatus(){return runningCook.getStatus();}
-    public void pause(){
-        runningCook.pauseCook();
-//        workingThread.suspend();
-    }
 
     @Override
     public String toString(){
