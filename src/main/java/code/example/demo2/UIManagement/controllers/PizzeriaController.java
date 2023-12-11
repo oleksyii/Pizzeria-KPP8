@@ -89,16 +89,12 @@ public class PizzeriaController {
         }
     }
 
-    static private void setSpacingDynamically(int numberOfElements, VBox elements) {
-        setSpacingDynamically(numberOfElements, elements, 360);
-    }
-
     static public VBox generateOvens(int numberOfOvens) {
         VBox ovens = new VBox();
         ovens.setAlignment(Pos.TOP_LEFT);
-        ovens.setPadding(new Insets(220, 0, 150, 100));
+        ovens.setPadding(new Insets(220  + ((5 - numberOfOvens) * 40), 0, 150, 100));
 
-        setSpacingDynamically(numberOfOvens, ovens);
+        setSpacingDynamically(numberOfOvens, ovens, 460);
 
         for (int i = 0; i < numberOfOvens; i++) {
             Oven oven = new Oven();
@@ -118,9 +114,9 @@ public class PizzeriaController {
     static public VBox generateCooks(int numberOfCooks) {
         VBox cooks = new VBox();
         cooks.setAlignment(Pos.TOP_LEFT);
-        cooks.setPadding(new Insets(180, 0, 150, 0));
+        cooks.setPadding(new Insets(180 + ((5 - numberOfCooks) * 40), 0, 150, 0));
 
-        setSpacingDynamically(numberOfCooks, cooks, 330);
+        setSpacingDynamically(numberOfCooks, cooks, 440);
 
         for (int i = 0; i < numberOfCooks; i++) {
             CookState cookState = KitchenManager.getCookStatus(i + 1) == CookStatus.Baking ?
@@ -182,9 +178,9 @@ public class PizzeriaController {
     static public VBox generateCashiers(int numberOfCashiers) {
         VBox cashiers = new VBox();
         cashiers.setAlignment(Pos.TOP_CENTER);
-        cashiers.setPadding(new Insets(220, 0, 150, 50));
+        cashiers.setPadding(new Insets(220 + ((5 - numberOfCashiers) * 40), 0, 150, 50));
 
-        setSpacingDynamically(numberOfCashiers, cashiers);
+        setSpacingDynamically(numberOfCashiers, cashiers, 440);
         for (int i = 0; i < numberOfCashiers; i++) {
             Cashier cashier = new Cashier();
 
