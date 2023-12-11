@@ -128,6 +128,10 @@ public class PizzeriaController {
                 // Додаємо анімацію паузи на 0.5 секунди
                 PizzeriaSimulator.getInstance().getKitchenManager().pauseCook(finalI + 1);
                 PauseTransition pause = new PauseTransition(Duration.seconds(10));
+                cook.setCookPause(true);
+                pause.setOnFinished(e -> {
+                    cook.setCookPause(false); // Скидання статусу зупинки після завершення анімації
+                });
                 pause.play();
             });
             cooks.getChildren().add(cook);

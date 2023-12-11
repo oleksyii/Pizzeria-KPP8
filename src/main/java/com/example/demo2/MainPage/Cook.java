@@ -1,14 +1,22 @@
 package com.example.demo2.MainPage;
 
+import code.example.demo2.CooksManagement.KitchenManager;
+import code.example.demo2.UIManagement.models.PizzeriaSimulator;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 
 public class Cook extends VBox {
     private CookState state;
     private boolean isCookWorking = false;
+    private boolean isPaused = false;
     public Cook(CookState state) {
         this.state = state;
         renderCook();
@@ -19,10 +27,14 @@ public class Cook extends VBox {
         ImageView cookImage = new ImageView(Cook.class.getResource("/cook_icon.png").toExternalForm());
         ImageView cloudImage = new ImageView();
         ImageView cuttingOrBackingImage = new ImageView();
-        if(isCookWorking) {
+        ImageView sleepImage = new ImageView();
+        if(!this.getCookPauseValue()) {
             cloudImage = new ImageView(Cook.class.getResource("/MainPage/cloud.png").toExternalForm());
-            String imageName = this.state.equals(CookState.AT_TABLE) ? "/MainPage/cutting-in-progress.png": "/MainPage/backing-in-progress.png";
+            String imageName = this.state.equals(CookState.AT_TABLE) ? "/MainPage/cutting-in-progress.png" : "/MainPage/backing-in-progress.png";
             cuttingOrBackingImage = new ImageView(Cook.class.getResource(imageName).toExternalForm());
+        } else {
+            cloudImage = new ImageView(Cook.class.getResource("/MainPage/cloud.png").toExternalForm());
+            sleepImage = new ImageView(Cook.class.getResource("/MainPage/sleep_icon.png").toExternalForm());
         }
 
         VBox cloudImageBox = new VBox();
@@ -35,12 +47,20 @@ public class Cook extends VBox {
 
         cuttingOrBackingImage.setFitHeight(20);
         cuttingOrBackingImage.setFitWidth(20);
+        sleepImage.setFitHeight(20);
+        sleepImage.setFitWidth(20);
 
         VBox cuttingOrBackingImageBox = new VBox();
+        VBox sleepImageBox = new VBox();
         cuttingOrBackingImageBox.getChildren().add(cuttingOrBackingImage);
+        sleepImageBox.getChildren().add(sleepImage);
         cuttingOrBackingImageBox.setPadding(new Insets(-40, 0, 0, 22));
-
-        cloudImageBox.getChildren().addAll(cloudImage, cuttingOrBackingImageBox);
+        sleepImageBox.setPadding(new Insets(-40, 0, 0, 22));
+        if (this.getCookPauseValue()) {
+            cloudImageBox.getChildren().addAll(cloudImage, sleepImageBox);
+        } else {
+            cloudImageBox.getChildren().addAll(cloudImage, cuttingOrBackingImageBox);
+        }
 
         if(this.state.equals(CookState.AT_TABLE)) {
             setPadding(new Insets(0, 0, 0, 110));
@@ -65,5 +85,13 @@ public class Cook extends VBox {
 
     public CookState getState() {
         return this.state;
+    }
+
+    public void setCookPause(boolean status) {
+        this.isPaused = status;
+    }
+
+    public boolean getCookPauseValue() {
+        return this.isPaused;
     }
 }
