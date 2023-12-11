@@ -9,10 +9,9 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class OrderObserver {
-    private final String logFilePath;
+    private static String logFilePath = "log.txt";
 
     public OrderObserver(){
-        logFilePath = "log.txt";
     }
     public OrderObserver(String logFilePath) {
         OrderObserver.logFilePath = logFilePath;
