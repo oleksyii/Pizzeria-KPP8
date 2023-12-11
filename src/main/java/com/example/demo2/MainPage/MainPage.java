@@ -30,7 +30,6 @@ public class MainPage {
         Scene savedScene = PizzeriaSimulator.getInstance().getMainScene();
 
         if(savedScene != null) {
-            System.out.println("On the null statement");
             primaryStage.setResizable(false);
             primaryStage.setTitle("Pizza Simulator");
             primaryStage.setScene(savedScene);
@@ -38,8 +37,6 @@ public class MainPage {
             return;
         }
         StackPane root = new StackPane();
-
-        System.out.println("INITIALIZE NAIM PAGE");
 
         HBox header = new HBox();
         header.setMinHeight(70);
