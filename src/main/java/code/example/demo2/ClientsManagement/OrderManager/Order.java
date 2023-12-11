@@ -17,7 +17,7 @@ public class Order {
 
         this.orderId=nextOrderId++;
         this.pizzaIdAmount=pizzaIdAmount;
-
+        this.setStatus(OrderStatus.NotTaken);
     }
 
     public void setClientId(int clientId) {
@@ -30,6 +30,7 @@ public class Order {
 
     public void setStatus(OrderStatus status){
         orderStatus = status;
+        notifyObserver();
     }
 
     public OrderStatus getOrderStatus(){
@@ -46,8 +47,7 @@ public class Order {
     }
 
     public Order giveAwayOrder(){
-        orderStatus = OrderStatus.Completed;
-
+        this.setStatus(OrderStatus.Completed);
         //TODO: NOTIFY CONTROLLER ORDER FINISHED
         PizzeriaController.orderFinished(orderId);
 
@@ -62,11 +62,8 @@ public class Order {
 
     }
 
-    public void notifyObserver(Order newRecord){
-
-
-    observer.addNewRecord(newRecord);
-
+    public void notifyObserver(){
+    observer.addNewRecord(this);
     }
 
     @Override
