@@ -117,7 +117,7 @@ public class SettingsPage {
         TextField cashersInput = createTextInput("CASHERS", String.valueOf(PizzeriaSimulator.getInstance().getAllCashiers().size()));
         cashersInput.setEditable(false);
 
-        TextField minTimeInput = createTextInput("MIN.TIME", String.valueOf(Cook.COOKING_TIME) + "ms");
+        TextField minTimeInput = createTextInput("MIN.TIME", String.valueOf(Cook.COOKING_TIME/500) + "s");
         minTimeInput.setEditable(false);
 
         TextField strategyInput = createTextInput("STRATEGY", PizzeriaSimulator.getInstance().getPizzaSimulatorStrategy());

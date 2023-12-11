@@ -30,8 +30,8 @@ public class PizzeriaSimulator {
 
     private Menu menu;
     private KitchenManager kitchenManager;
-    private final CashierManager cashierManager;
-    private final OrderManager orderManager;
+    private CashierManager cashierManager;
+    private OrderManager orderManager;
     private ClientGeneratorContext generatorContext;
 
     private static MainPage mainPage;
@@ -196,6 +196,8 @@ public class PizzeriaSimulator {
         //those are superstitions, idk if they're necessary
         generatorContext = null;
         kitchenManager = null;
+        orderManager = null;
+        cashierManager = null;
 
         // Threads are shut, restart this instance now
     }
