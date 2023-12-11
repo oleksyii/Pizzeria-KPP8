@@ -98,14 +98,6 @@ public class SettingsPage {
         scrollPane.setStyle("-fx-background: transparent; -fx-background-color: transparent; ");
         scrollPane.setPadding(new Insets(130, 0, 150, 50));
 
-// Нижня кнопка "Close"
-        Button closeButton = new Button("CLOSE");
-        closeButton.setStyle("-fx-font-size: 27; -fx-min-height: 50px; -fx-min-width: 140px; -fx-font-weight: bold; -fx-text-fill: white; -fx-padding: 0 15 0 15; -fx-font-family: 'Comic Sans MS'; -fx-background-color: #5F2D04; -fx-border-radius: 15px");
-        StackPane.setAlignment(closeButton, Pos.BOTTOM_LEFT);
-        StackPane.setMargin(closeButton, new Insets(0, 0, 30, 60));
-
-
-        closeButton.setOnAction(event ->  Platform.runLater(() -> PizzeriaController.handleCloseButtonClick(primaryStage)));
 
 
         // Додаємо поля вводу та кнопки до другої колонки
@@ -165,22 +157,21 @@ public class SettingsPage {
         StackPane.setAlignment(header, Pos.TOP_CENTER);
 
         // Додаємо всі елементи до mainLayout
-        mainLayout.getChildren().addAll(header, scrollPane, verticalLine, closeButton);
+        mainLayout.getChildren().addAll(header, scrollPane, verticalLine);
 
-        Button saveButton = new Button("CLOSE");
-        saveButton.setStyle("-fx-font-size: 27; -fx-min-height: 50px; -fx-min-width: 140px; -fx-font-weight: bold; -fx-text-fill: white; -fx-padding: 0 15 0 15; -fx-font-family: 'Comic Sans MS'; -fx-background-color: #5F2D04; -fx-border-radius: 15px");
+        Button closeButton = new Button("CLOSE");
+        closeButton.setStyle("-fx-font-size: 27; -fx-min-height: 50px; -fx-min-width: 140px; -fx-font-weight: bold; -fx-text-fill: white; -fx-padding: 0 15 0 15; -fx-font-family: 'Comic Sans MS'; -fx-background-color: #5F2D04; -fx-border-radius: 15px");
 
-        saveButton.setOnAction(event -> {
-            MainPage main = new MainPage();
-            main.start(primaryStage);
+        closeButton.setOnAction(event -> {
+            PizzeriaController.handleCloseButtonClick(primaryStage);
         });
 
 
-        StackPane.setAlignment(saveButton, Pos.BOTTOM_RIGHT);
-        StackPane.setMargin(saveButton, new Insets(0, 50, 30, 240));  // Відстань зліва
+        StackPane.setAlignment(closeButton, Pos.BOTTOM_RIGHT);
+        StackPane.setMargin(closeButton, new Insets(0, 50, 30, 240));  // Відстань зліва
 
         // Додаємо backgroundImageView та mainLayout до кореневого вузла
-        root.getChildren().addAll(backgroundImageView, scrollPane, verticalLine, saveButton);
+        root.getChildren().addAll(backgroundImageView, scrollPane, verticalLine, closeButton);
 
         root.getChildren().add(header);
 

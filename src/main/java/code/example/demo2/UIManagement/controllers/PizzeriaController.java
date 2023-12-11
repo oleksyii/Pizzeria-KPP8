@@ -47,6 +47,7 @@ public class PizzeriaController {
     }
 
     static public void handleCloseButtonClick(Stage primaryStage) {
+        System.out.println("Helllllllo");
         MainPage main = PizzeriaSimulator.getInstance().getMainPage();
         main.start(primaryStage);
     }

@@ -110,7 +110,7 @@ public class PizzaConfiguration {
 
         Label textMinTime = new Label("MIN.TIME");
         textMinTime.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, 20));
-        TextField minTime = new TextField ("40");
+        TextField minTime = new TextField ("10");
         minTime.setFont(Font.font("Comic Sans MS", FontWeight.EXTRA_BOLD, 20));
         textMinTime.setStyle("-fx-text-fill: white;");
         minTime.setStyle(

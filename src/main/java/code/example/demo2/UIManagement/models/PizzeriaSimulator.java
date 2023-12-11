@@ -54,7 +54,6 @@ public class PizzeriaSimulator {
         this.kitchenManager =  new KitchenManager(numOfCooks, minTimeCooking);
 
         this.StartJob();
-
     }
 
     public static synchronized PizzeriaSimulator setInstance(int numOfCooks, int numOfCashiers, List<Integer> pizzasAvailable, ClientGenerationStrategies strategy, int minTimeCooking) {
