@@ -127,9 +127,7 @@ public class SettingsPage {
         Button quitButton = createButton("QUIT");
 
         quitButton.setOnAction(event -> System.exit(0));
-        newGameButton.setOnAction(event -> {
-            PizzaConfiguration configuration = new PizzaConfiguration();
-            configuration.start(primaryStage);
+        newGameButton.setOnAction(event -> {PizzeriaController.handleNewGameButtonClick(primaryStage);
         });
 
         newGameButton.setStyle("-fx-font-size: 20; -fx-min-height: 45px; -fx-min-width: 200px; -fx-max-width: 170px; -fx-font-weight: bold; -fx-text-fill: #AF5D26; -fx-padding: 0 15 0 15; -fx-font-family: 'Comic Sans MS'; -fx-background-color: #ffffff; -fx-border-radius: 20px");

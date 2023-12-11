@@ -32,6 +32,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -52,6 +53,13 @@ public class PizzeriaController {
         System.out.println("Helllllllo");
         MainPage main = PizzeriaSimulator.getInstance().getMainPage();
         main.start(primaryStage);
+    }
+
+    static public void handleNewGameButtonClick(Stage primaryStage) {
+        PizzeriaSimulator.getInstance().stopThreadsAndCleanResources();
+        PizzeriaSimulator.deleteInstance();
+        PizzaConfiguration configuration = new PizzaConfiguration();
+        configuration.start(primaryStage);
     }
 
     static public void startCookAnimation(int cookId) {

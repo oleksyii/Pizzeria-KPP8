@@ -71,6 +71,10 @@ public class PizzeriaSimulator {
         return instance;
     }
 
+    public static synchronized void deleteInstance(){
+        instance = null;
+    }
+
     public static synchronized PizzeriaSimulator getInstance() {
         return instance;
     }
