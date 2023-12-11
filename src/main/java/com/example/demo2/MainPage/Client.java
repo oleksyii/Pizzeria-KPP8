@@ -44,4 +44,20 @@ public class Client extends ImageView {
     public Tooltip getTooltip() {
         return this.tooltip;
     }
+
+    public double getClientX() {
+        return getLayoutX();
+    }
+
+    public void setClientX(double x) {
+        setLayoutX(x);
+    }
+
+    public double getClientY() {
+        return getLayoutY();
+    }
+
+    public void setClientY(double y) {
+        setLayoutY(y);
+    }
 }

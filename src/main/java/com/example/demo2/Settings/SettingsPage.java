@@ -106,7 +106,7 @@ public class SettingsPage {
 
 
         closeButton.setOnAction(event ->  Platform.runLater(() -> PizzeriaController.handleCloseButtonClick(primaryStage)));
-
+//        closeButton.setOnAction(event -> PizzeriaController.handleCloseButtonClick(primaryStage));
 
         // Додаємо поля вводу та кнопки до другої колонки
         TextField kucharsInput = createTextInput("KUCHARS", String.valueOf(PizzeriaSimulator.getInstance().getAllCooks().size()));

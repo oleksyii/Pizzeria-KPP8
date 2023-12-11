@@ -5,6 +5,8 @@ import code.example.demo2.ClientsManagement.GeneratorManager.ClientGenerationStr
 import code.example.demo2.CooksManagement.KitchenManager;
 import code.example.demo2.CooksManagement.strategies.CookStatus;
 import code.example.demo2.UIManagement.models.PizzeriaSimulator;
+import com.example.demo2.AppState;
+import com.example.demo2.ClientPosition;
 import com.example.demo2.MainPage.*;
 import com.example.demo2.PizzaMenu.MenuPage;
 import com.example.demo2.Settings.SettingsPage;
@@ -40,17 +42,56 @@ public class PizzeriaController {
     static private PizzeriaSimulator pizzeriaSimulator;
     private static long lastClickTime = 0;
     private static final long DOUBLE_CLICK_TIME_DELTA = 30000;
+//    private static MainPage main;
+    private static List<ClientPosition> clientPositions;
+    private static AppState state = new AppState();
 
     static public void handleSettingsButtonClick(Stage primaryStage) {
+        clientPositions = new ArrayList<>();
+        int id = 0;
+        for (HBox clientsQueue : cashierQueuesUi) {
+            for (Node node : clientsQueue.getChildren()) {
+                if (node instanceof Client) {
+                    Client client = (Client) node;
+                    clientPositions.add(new ClientPosition(client.getOrderId(), client.getLayoutX(), client.getLayoutY(), id));
+                }
+            }
+            id++;
+        }
+        state.setClientPositions(clientPositions);
         SettingsPage settings = PizzeriaSimulator.getInstance().getSettingsPage();
         settings.start(primaryStage);
     }
 
-    static public void handleCloseButtonClick(Stage primaryStage) {
-        MainPage main = PizzeriaSimulator.getInstance().getMainPage();
-        main.start(primaryStage);
+    static public void addClientsOnStartup() {
+        List<HBox> cashierQueues = PizzeriaController.getCashierQueuesUi();
+        if (cashierQueues == null) return;
+
+        for (int i = 0; i < cashierQueues.size(); i++) {
+            HBox clientsQueue = cashierQueues.get(i);
+            for (ClientPosition position : state.getClientPositions()) {
+                if (position.getCashierId() == i + 1) {
+                    Client client = new Client(position.getOrderId());
+                    client.setLayoutX(position.getLayoutX());
+                    client.setLayoutY(position.getLayoutY());
+                    client.setOnMouseEntered(event -> {
+                        client.showDetailsPopup(pizzeriaSimulator.showOrderByClientId(client.getOrderId()));
+                    });
+                    client.setOnMouseExited(event -> {
+                        client.hideTooltip(client.getTooltip());
+                    });
+                    clientsQueue.getChildren().add(client);
+                }
+            }
+        }
     }
 
+    static public void handleCloseButtonClick(Stage primaryStage) {
+        System.out.println("Hello");
+//        MainPage main = PizzeriaSimulator.getInstance().getMainPage();
+//        main.start(primaryStage);
+        addClientsOnStartup();
+    }
     static public void startCookAnimation(int cookId) {
         Animation.startCookAnimation(cookId - 1);
     }
@@ -232,9 +273,6 @@ public class PizzeriaController {
         }
     }
 
-
-
-
     public static List<HBox> createClientsQueues(int size) {
         List<HBox> cashierQueues = new ArrayList<>();
 
@@ -316,7 +354,6 @@ public class PizzeriaController {
         MainPage mainPage = pizzeriaSimulator.getMainPage();
         mainPage.start(primaryStage);
     }
-
 
     private static ClientGenerationStrategies convertToClientGenerationStrategy(String selectedStrategy) {
         switch (selectedStrategy) {
