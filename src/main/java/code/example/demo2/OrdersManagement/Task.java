@@ -1,5 +1,7 @@
 package code.example.demo2.OrdersManagement;
 
+import code.example.demo2.Observer.TaskObserver;
+
 public class Task {
     private final int orderId;
     private final int pizzaId;
@@ -9,8 +11,12 @@ public class Task {
     public Task(int orderId, int pizzaId, int taskId){
         this.orderId = orderId;
         this.pizzaId = pizzaId;
-        status = PizzaStatus.NotTaken;
         id = taskId;
+        this.setStatus(PizzaStatus.NotTaken);
+    }
+
+    public int getTaskId(){
+        return id;
     }
 
     public int getOrderId() {
@@ -27,6 +33,11 @@ public class Task {
 
     public void setStatus(PizzaStatus status) {
         this.status = status;
+        notifyObserver();
+    }
+
+    public void notifyObserver(){
+        TaskObserver.addNewRecord(this);
     }
 
     @Override
