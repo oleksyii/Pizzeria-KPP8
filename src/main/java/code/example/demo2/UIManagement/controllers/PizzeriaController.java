@@ -4,6 +4,7 @@ import code.example.demo2.ClientsManagement.CashiersManager.CashierManager;
 import code.example.demo2.ClientsManagement.GeneratorManager.ClientGenerationStrategies;
 import code.example.demo2.CooksManagement.KitchenManager;
 import code.example.demo2.CooksManagement.strategies.CookStatus;
+import code.example.demo2.CooksManagement.strategies.CookType;
 import code.example.demo2.Observer.OrderObserver;
 import code.example.demo2.UIManagement.models.PizzeriaSimulator;
 import com.example.demo2.MainPage.*;
@@ -111,7 +112,21 @@ public class PizzeriaController {
         return uiCooks;
     }
 
+    static  public void changeCookState(int cookId, CookType type) {
+        Cook currentUiCook;
+        ObservableList<Node> uiCooksChildren = PizzeriaController.getUiCooks().getChildren();
+
+        currentUiCook = (Cook) uiCooksChildren.get(cookId - 1);
+
+        CookState newState = type == CookType.Baking ? CookState.AT_OVEN : CookState.AT_TABLE;
+        currentUiCook.changeState(newState);
+
+        System.out.println("New state" + currentUiCook.getState());
+    }
+
     static public VBox generateCooks(int numberOfCooks) {
+        System.out.println("ALL COOKS" + getUiCooks());
+        if(uiCooks != null) return uiCooks;
         VBox cooks = new VBox();
         cooks.setAlignment(Pos.TOP_LEFT);
         cooks.setPadding(new Insets(180 + ((5 - numberOfCooks) * 40), 0, 150, 0));
@@ -122,7 +137,7 @@ public class PizzeriaController {
             CookState cookState = KitchenManager.getCookStatus(i + 1) == CookStatus.Baking ?
                     CookState.AT_OVEN:
                     CookState.AT_TABLE;
-            Cook cook = new Cook(cookState);
+            Cook cook = new Cook(cookState, i);
             int finalI = i;
             cook.setOnMouseClicked(event -> {
                 // Додаємо анімацію паузи на 0.5 секунди
@@ -140,6 +155,8 @@ public class PizzeriaController {
         uiCooks = cooks;
         return cooks;
     }
+
+
 
     static public StackPane generateTable() {
         uiTable.getChildren().clear();

@@ -2,6 +2,7 @@ package code.example.demo2.CooksManagement;
 
 import code.example.demo2.CooksManagement.strategies.*;
 import code.example.demo2.CooksManagement.strategies.ThreadStopper.Stopper;
+import code.example.demo2.UIManagement.controllers.PizzeriaController;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -46,6 +47,7 @@ public class KitchenManager {
                         cooks) {
                     if (cook.Id() == id) {
                         cook.setStrategy(new BakingCook(stoppers.get(cook.Id())));
+                        PizzeriaController.changeCookState(cook.Id(), CookType.Baking);
                     }
                 }
             }
@@ -54,6 +56,7 @@ public class KitchenManager {
                         cooks) {
                     if (cook.Id() == id) {
                         cook.setStrategy(new CreatingCook(stoppers.get(cook.Id())));
+                        PizzeriaController.changeCookState(cook.Id(), CookType.Creating);
                     }
                 }
             }
