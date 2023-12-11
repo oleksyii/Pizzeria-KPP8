@@ -111,11 +111,17 @@ public class SettingsPage {
 
 
 
-        // Додаємо поля вводу та кнопки до другої колонки
         TextField kucharsInput = createTextInput("KUCHARS", String.valueOf(PizzeriaSimulator.getInstance().getAllCooks().size()));
+        kucharsInput.setEditable(false);
+
         TextField cashersInput = createTextInput("CASHERS", String.valueOf(PizzeriaSimulator.getInstance().getAllCashiers().size()));
+        cashersInput.setEditable(false);
+
         TextField minTimeInput = createTextInput("MIN.TIME", String.valueOf(Cook.COOKING_TIME) + "ms");
+        minTimeInput.setEditable(false);
+
         TextField strategyInput = createTextInput("STRATEGY", PizzeriaSimulator.getInstance().getPizzaSimulatorStrategy());
+        strategyInput.setEditable(false);
 
         Button newGameButton = createButton("NEW GAME");
         Button quitButton = createButton("QUIT");
