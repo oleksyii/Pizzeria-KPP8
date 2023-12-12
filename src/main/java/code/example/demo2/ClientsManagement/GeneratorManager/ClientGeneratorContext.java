@@ -1,6 +1,7 @@
 package code.example.demo2.ClientsManagement.GeneratorManager;
 
 import code.example.demo2.ClientsManagement.CashiersManager.CashierManager;
+import code.example.demo2.ClientsManagement.OrderManager.Order;
 import code.example.demo2.ClientsManagement.PizzeriaClient;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -73,6 +74,10 @@ public class ClientGeneratorContext  {
     public void stopClientGeneration(){
         strategy.stopGeneration();
         strategy = null;
+    }
+
+    public static void resetOrderId(){
+        Order.resetId();
     }
 }
 

@@ -197,8 +197,10 @@ public class PizzeriaSimulator {
     public void stopThreadsAndCleanResources(){
         generatorContext.stopClientGeneration();
         kitchenManager.stopCooks();
+        Order.resetId();
 
         //those are superstitions, idk if they're necessary
+
 //        menuPage = null;
 //        mainPage = null;
 //        generatorContext = null;

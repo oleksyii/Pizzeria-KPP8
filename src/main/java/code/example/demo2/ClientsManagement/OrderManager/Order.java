@@ -47,7 +47,6 @@ public class Order {
 
     public Order giveAwayOrder(){
         this.setStatus(OrderStatus.Completed);
-        //TODO: NOTIFY CONTROLLER ORDER FINISHED
         PizzeriaController.orderFinished(orderId);
 
         return this;
@@ -55,6 +54,10 @@ public class Order {
 
     public void notifyObserver(){
     OrderObserver.addNewRecord(this);
+    }
+
+    public static void resetId(){
+        nextOrderId = 1;
     }
 
     @Override
