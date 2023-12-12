@@ -18,6 +18,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Animation {
+    private static List<TranslateTransition> animations = new ArrayList<>();
+    public static void setAnimate() {
+        animations.add(new TranslateTransition(Duration.seconds(2)));
+        animations.add(new TranslateTransition(Duration.seconds(2)));
+        animations.get(0).setByX(-120);
+        animations.get(1).setByX(120);
+    }
+
+    public static TranslateTransition getAnimation (int index) {
+        return animations.get(index);
+    }
+
+    public static void playAnimation(int index) {
+        animations.get(index).play();
+    }
+
+    public static void stopAnimation(int index) {
+        animations.get(index).stop();
+    }
+
     public static void animateClient(Client client, double targetX) {
         Platform.runLater(() -> {
             TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(3), client);
@@ -41,14 +61,16 @@ public class Animation {
             System.out.println("cook" + currentUiCook);
 
             Platform.runLater(() -> {
-                TranslateTransition moveLeft = new TranslateTransition(Duration.seconds(2), currentUiCook);
-                moveLeft.setByX(-120);
+//                TranslateTransition moveLeft = new TranslateTransition(Duration.seconds(2), currentUiCook);
+//                moveLeft.setByX(-120);
+                Animation.playAnimation(0);
 
-                moveLeft.setOnFinished(event -> {
+                Animation.getAnimation(0).setOnFinished(event -> {
                     currentUiCook.changeState(CookState.AT_OVEN);
                     PizzeriaController.generateTable();
                 });
-                moveLeft.play();
+//                Animation.play();
+                Animation.playAnimation(0);
             });
         } else {
             System.out.println("Animation skipped due to invalid cookId or missing cook");
@@ -70,19 +92,40 @@ public class Animation {
             System.out.println("cook" + currentUiCook);
 
             Platform.runLater(() -> {
-                TranslateTransition moveRight = new TranslateTransition(Duration.seconds(2), currentUiCook);
-                moveRight.setByX(120);
+//                TranslateTransition moveRight = new TranslateTransition(Duration.seconds(2), currentUiCook);
+//                moveRight.setByX(120);
+                Animation.playAnimation(1);
 
-                moveRight.setOnFinished(event -> {
+                Animation.getAnimation(1).setOnFinished(event -> {
                     currentUiCook.changeState(CookState.AT_TABLE);
                     PizzeriaController.generateTable();
                 });
-                moveRight.play();
+//                moveRight.play();
+                Animation.playAnimation(1);
             });
         } else {
             System.out.println("Animation skipped due to invalid cookId or missing cook");
         }
     }
+
+    public static void stopCookAnimation(int cookId) {
+        // Отримати доступ до потоку JavaFX Application
+        Platform.runLater(() -> {
+            ObservableList<Node> uiCooksChildren = PizzeriaController.getUiCooks().getChildren();
+
+            if (cookId >= 0 && cookId < uiCooksChildren.size()) {
+                Cook currentUiCook = (Cook) uiCooksChildren.get(cookId);
+                System.out.println("cook" + currentUiCook);
+
+                // Зупинити анімацію, яка вже виконується
+                Animation.stopAnimation(0);
+                Animation.stopAnimation(1);
+            } else {
+                System.out.println("Invalid cookId: " + cookId);
+            }
+        });
+    }
+
 
     public static void animateClientRemoval(Client client, HBox clientsQueue, int indexToRemove) {
         TranslateTransition moveRight = new TranslateTransition(Duration.seconds(1.5), client);

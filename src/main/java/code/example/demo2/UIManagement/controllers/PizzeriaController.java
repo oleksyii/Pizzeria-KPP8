@@ -57,12 +57,22 @@ public class PizzeriaController {
 
     static public void handleNewGameButtonClick(Stage primaryStage) {
         PizzeriaSimulator.getInstance().stopThreadsAndCleanResources();
+        ObservableList<Node> uiCooksChildren = uiCooks.getChildren();
+        for (int i = 0; i < uiCooksChildren.size(); i++) {
+            Node node = uiCooksChildren.get(i);
+            if (node instanceof Cook) {
+                Cook cook = (Cook) node;
+                int cookId = i + 1;  // Додаємо 1, оскільки індексація починається з 0
+                Animation.stopCookAnimation(cookId);
+            }
+        }
         PizzeriaSimulator.deleteInstance();
         PizzaConfiguration configuration = new PizzaConfiguration();
         configuration.start(primaryStage);
     }
 
     static public void startCookAnimation(int cookId) {
+        Animation.setAnimate();
         Animation.startCookAnimation(cookId - 1);
     }
 
@@ -353,7 +363,7 @@ public class PizzeriaController {
                 Integer.parseInt(numberOfCashiers.getText()),
                 new ArrayList<>(List.of(1)),
                 convertToClientGenerationStrategy(selectedStrategy),
-                Integer.parseInt(minTime.getText())* 500);
+                Integer.parseInt(minTime.getText())* 1000);
         pizzeriaSimulator = PizzeriaSimulator.getInstance();
         MainPage mainPage = pizzeriaSimulator.getMainPage();
         mainPage.start(primaryStage);
