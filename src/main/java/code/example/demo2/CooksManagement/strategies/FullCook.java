@@ -3,6 +3,7 @@
 package code.example.demo2.CooksManagement.strategies;
 
 import code.example.demo2.CooksManagement.strategies.ThreadStopper.Stopper;
+import code.example.demo2.CooksManagement.strategies.ThreadStopper.Terminator;
 import code.example.demo2.OrdersManagement.OrderManager;
 import code.example.demo2.OrdersManagement.PizzaStatus;
 import code.example.demo2.OrdersManagement.Task;
@@ -18,11 +19,14 @@ public class FullCook extends Cook{
     private List<PizzaStatus> pizzaStatuses = new ArrayList<>();
     private int id;
     private Stopper stopper;
+    private Terminator terminator;
 
-    public FullCook(Stopper stopper){
+
+    public FullCook(Stopper stopper, Terminator terminator){
         this.pizzaStatuses.add(PizzaStatus.NotTaken);
         this.pizzaStatuses.add(PizzaStatus.ReadyForBaking);
         this.stopper = stopper;
+        this.terminator = terminator;
     }
 
 
@@ -45,6 +49,8 @@ public class FullCook extends Cook{
 
                 // Spaghetti Code
                 stopper.checkForSleep();
+                if(terminator.checkForStop())
+                    return null;
                 Thread.sleep(1000);
             } catch (InterruptedException e){
                 //Processing
@@ -64,6 +70,8 @@ public class FullCook extends Cook{
 
                 this.cookStatus = CookStatus.Creating;
                 System.out.println("FullCook thread " + this.id + " is creating pizza Task: " + this.currentTask);
+                if(terminator.checkForStop())
+                    return;
                 PizzeriaController.startCookAnimation(this.id);
 
                 PizzeriaController.setIsCookWorking(id, true);
@@ -79,6 +87,8 @@ public class FullCook extends Cook{
 
                 this.cookStatus = CookStatus.Baking;
                 currentTask.setStatus(PizzaStatus.Processing);
+                if(terminator.checkForStop())
+                    return;
                 PizzeriaController.finishCookAnimation(this.id);
 
 
@@ -87,13 +97,13 @@ public class FullCook extends Cook{
                 Thread.sleep(COOKING_TIME/2); // Simulating some work
                 currentTask.setStatus(PizzaStatus.Baked);
                 currentTask = null;
-
+                if(terminator.checkForStop())
+                    return;
                 PizzeriaController.setIsCookWorking(id, false);
             }
         } catch (InterruptedException e) {
             // Handle InterruptedException if needed
             currentTask = null;
-            return;
         }
 
 

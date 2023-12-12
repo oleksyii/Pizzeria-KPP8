@@ -42,6 +42,7 @@ public class PizzeriaSimulator {
     private static MenuPage menuPage;
 
     private PizzeriaSimulator(int numOfCooks, int numOfCashiers, List<Integer> pizzasAvailable, ClientGenerationStrategies strategy, int minTimeCooking) {
+        System.out.println("Constructing the PizzeriaSimulator");
         mainPage = null;
         mainPageScene = null;
         menuPageScene = null;
@@ -198,8 +199,15 @@ public class PizzeriaSimulator {
         kitchenManager.stopCooks();
 
         //those are superstitions, idk if they're necessary
-        generatorContext = null;
-        kitchenManager = null;
+//        menuPage = null;
+//        mainPage = null;
+//        generatorContext = null;
+//        kitchenManager = null;
+//        mainPageScene = null;
+//        menuPageScene = null;
+//        settingsPageScene = null;
+//        settingsPage = null;
+
 
         // Threads are shut, restart this instance now
     }

@@ -1,6 +1,7 @@
 package code.example.demo2.CooksManagement.strategies;
 
 import code.example.demo2.CooksManagement.strategies.ThreadStopper.Stopper;
+import code.example.demo2.CooksManagement.strategies.ThreadStopper.Terminator;
 import code.example.demo2.OrdersManagement.OrderManager;
 import code.example.demo2.OrdersManagement.PizzaStatus;
 import code.example.demo2.OrdersManagement.Task;
@@ -16,12 +17,13 @@ public class BakingCook extends Cook{
     private List<PizzaStatus> pizzaStatuses = new ArrayList<>();
     private int id;
     private Stopper stopper;
+    private Terminator terminator;
 
-    public BakingCook(Stopper stopper){
+    public BakingCook(Stopper stopper,Terminator terminator){
         this.pizzaStatuses.add(PizzaStatus.ReadyForBaking);
         this.stopper = stopper;
         this.cookStatus = CookStatus.Baking;
-
+        this.terminator = terminator;
     }
 
     @Override
@@ -41,6 +43,8 @@ public class BakingCook extends Cook{
             }
             try{
                 stopper.checkForSleep();
+                if(terminator.checkForStop())
+                    return null;
                 Thread.sleep(1000);
             } catch (InterruptedException e){
                 //Processing
@@ -56,6 +60,8 @@ public class BakingCook extends Cook{
             this.cookStatus = CookStatus.Baking;
             currentTask.setStatus(PizzaStatus.Processing);
 
+            if(terminator.checkForStop())
+                return;
             PizzeriaController.setIsCookWorking(id, true);
 
             // Spaghetti Code
@@ -64,6 +70,8 @@ public class BakingCook extends Cook{
             currentTask.setStatus(PizzaStatus.Baked);
             currentTask = null;
 
+            if(terminator.checkForStop())
+                return;
             PizzeriaController.setIsCookWorking(id, false);
         } catch (InterruptedException e) {
             // Handle InterruptedException if needed

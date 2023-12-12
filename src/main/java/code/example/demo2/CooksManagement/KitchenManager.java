@@ -24,7 +24,7 @@ public class KitchenManager {
         for(int i = 0; i < amount; i++){
             Stopper stp = new Stopper();
             Terminator ter = new Terminator();
-             cooks.add(new SpecificCook(new FullCook(stp), ter));
+             cooks.add(new SpecificCook(new FullCook(stp, ter), ter));
              stoppers.put(cooks.get(i).Id(), stp);
              terminators.put(cooks.get(i).Id(), ter);
         }
@@ -43,7 +43,7 @@ public class KitchenManager {
                 for (SpecificCook cook :
                         cooks) {
                     if (cook.Id() == id) {
-                        cook.setStrategy(new FullCook(stoppers.get(cook.Id())));
+                        cook.setStrategy(new FullCook(stoppers.get(cook.Id()), terminators.get(cook.Id())));
                     }
                 }
             }
@@ -51,7 +51,7 @@ public class KitchenManager {
                 for (SpecificCook cook :
                         cooks) {
                     if (cook.Id() == id) {
-                        cook.setStrategy(new BakingCook(stoppers.get(cook.Id())));
+                        cook.setStrategy(new BakingCook(stoppers.get(cook.Id()), terminators.get(cook.Id())));
 //                        PizzeriaController.changeCookState(cook.Id(), CookType.Baking);
                     }
                 }
@@ -60,7 +60,7 @@ public class KitchenManager {
                 for (SpecificCook cook :
                         cooks) {
                     if (cook.Id() == id) {
-                        cook.setStrategy(new CreatingCook(stoppers.get(cook.Id())));
+                        cook.setStrategy(new CreatingCook(stoppers.get(cook.Id()), terminators.get(cook.Id())));
 //                        PizzeriaController.changeCookState(cook.Id(), CookType.Creating);
                     }
                 }
@@ -93,6 +93,7 @@ public class KitchenManager {
         for (SpecificCook cook :
                 cooks) {
             cook.terminate();
+            cook.clearId();
             terminators.get(cook.Id()).putCookToStop();
         }
     }

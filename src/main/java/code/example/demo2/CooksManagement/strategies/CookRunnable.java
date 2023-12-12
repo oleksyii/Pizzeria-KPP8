@@ -20,11 +20,6 @@ public class CookRunnable implements Runnable{
         while(!Thread.interrupted() && !terminator.checkForStop()){
             strategy.execute();
 
-            // Check interrupt status explicitly and break out if interrupted
-//            if (Thread.interrupted()) {
-//                return;
-////                break;
-//            }
         }
     }
     public void pauseCook() {

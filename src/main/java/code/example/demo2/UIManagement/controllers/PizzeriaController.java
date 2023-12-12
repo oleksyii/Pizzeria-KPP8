@@ -62,7 +62,7 @@ public class PizzeriaController {
             Node node = uiCooksChildren.get(i);
             if (node instanceof Cook) {
                 Cook cook = (Cook) node;
-                int cookId = i + 1;  // Додаємо 1, оскільки індексація починається з 0
+                int cookId = i;  // Додаємо 1, оскільки індексація починається з 0
                 Animation.stopCookAnimation(cookId);
             }
         }

@@ -46,7 +46,11 @@ public class SpecificCook {
     public CookStatus getCookStatus(){return runningCook.getStatus();}
 
     public void terminate(){
+        clearId();
         workingThread.interrupt();
+    }
+    public void clearId(){
+        this.id = 0;
     }
     @Override
     public String toString(){
