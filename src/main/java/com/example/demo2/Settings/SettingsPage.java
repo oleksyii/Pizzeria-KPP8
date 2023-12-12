@@ -123,16 +123,16 @@ public class SettingsPage {
         TextField strategyInput = createTextInput("STRATEGY", PizzeriaSimulator.getInstance().getPizzaSimulatorStrategy());
         strategyInput.setEditable(false);
 
-        Button newGameButton = createButton("NEW GAME");
+//        Button newGameButton = createButton("NEW GAME");
         Button quitButton = createButton("QUIT");
-
+//
         quitButton.setOnAction(event -> System.exit(0));
-        newGameButton.setOnAction(event -> {
-            PizzaConfiguration configuration = new PizzaConfiguration();
-            configuration.start(primaryStage);
-        });
-
-        newGameButton.setStyle("-fx-font-size: 20; -fx-min-height: 45px; -fx-min-width: 200px; -fx-max-width: 170px; -fx-font-weight: bold; -fx-text-fill: #AF5D26; -fx-padding: 0 15 0 15; -fx-font-family: 'Comic Sans MS'; -fx-background-color: #ffffff; -fx-border-radius: 20px");
+//        newGameButton.setOnAction(event -> {
+//            PizzaConfiguration configuration = new PizzaConfiguration();
+//            configuration.start(primaryStage);
+//        });
+//
+//        newGameButton.setStyle("-fx-font-size: 20; -fx-min-height: 45px; -fx-min-width: 200px; -fx-max-width: 170px; -fx-font-weight: bold; -fx-text-fill: #AF5D26; -fx-padding: 0 15 0 15; -fx-font-family: 'Comic Sans MS'; -fx-background-color: #ffffff; -fx-border-radius: 20px");
         quitButton.setStyle("-fx-font-size: 20; -fx-min-height: 45px; -fx-min-width: 200px; -fx-max-width: 170px; -fx-font-weight: bold; -fx-text-fill: white; -fx-padding: 0 15 0 15; -fx-font-family: 'Comic Sans MS'; -fx-background-color: #890303; -fx-border-radius: 20px");
 
         Label kucharsLabel = new Label("KUCHARS");
@@ -153,7 +153,7 @@ public class SettingsPage {
 
         VBox row0 = new VBox(new HBox(kucharsLabel, kucharsInput), new HBox(cahersLabel, cashersInput));
         VBox row1 = new VBox(new HBox(minTimeLabel, minTimeInput), new HBox(strategyLabel, strategyInput));
-        VBox row2 = new VBox(newGameButton, quitButton);
+        VBox row2 = new VBox(quitButton); //newGameButton,
 
         row2.setMinWidth(550);
         row1.setMinWidth(550);
