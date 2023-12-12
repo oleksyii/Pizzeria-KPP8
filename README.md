@@ -11,13 +11,13 @@ Instruction for executing pizzeria-simulator
     2. Import the project by selecting `File` > `Open` and choosing the project directory.
     3. Install required plugins (if any) by navigating to `File` > `Settings` > `Plugins`.
 
-2.## Usage
+2. ## Usage
    
     2.1. Find the `src/main` directory and choose it
     2.2. Then find the `java` directory and choose it
     2.3. Then find and choose the `com/example/demo2` directory and choose it
 
-3.## Building and Running
+3. ## Building and Running
 
 To build and run the project from IntelliJ:
 
