@@ -14,18 +14,18 @@ public class CookRunnable implements Runnable{
         this.terminator = terminator;
     }
 
+    /**
+     * Could've had a ThreadPoolExecutor to manipulate threads
+     */
     @Override
     public void run() {
 //
         while(!Thread.interrupted() && !terminator.checkForStop()){
             strategy.execute();
 
-            // Check interrupt status explicitly and break out if interrupted
-//            if (Thread.interrupted()) {
-//                return;
-////                break;
-//            }
+
         }
+        //Clean the resources
     }
     public void pauseCook() {
         try {

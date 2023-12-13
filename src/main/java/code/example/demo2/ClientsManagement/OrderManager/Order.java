@@ -47,7 +47,6 @@ public class Order {
 
     public Order giveAwayOrder(){
         this.setStatus(OrderStatus.Completed);
-        //TODO: NOTIFY CONTROLLER ORDER FINISHED
         PizzeriaController.orderFinished(orderId);
 
         return this;

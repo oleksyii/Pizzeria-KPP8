@@ -38,14 +38,20 @@ public class ClientGeneratorContext  {
         INSTANCE = new ClientGeneratorContext();
     }
 
+    /**
+     * This function sets strategy for generator
+     * Could be better if had a HashMap of strategies and picked a strategy not from if-else
+     * @param strategy The strategy to set
+     * @param cashierMan CashierManager instance to fill cashiers with clients
+     */
     public void setStrategy(ClientGenerationStrategies strategy, CashierManager cashierMan) {
           String strategyWork = strategy.toString();
           this.cashierManager = cashierMan;
           if(Objects.equals(strategyWork, "Regular")){
               this.strategy = new RegularDayGenerator(this.cashierManager);
-          } else if (strategyWork == "Weekend") {
+          } else if (Objects.equals(strategyWork, "Weekend")) {
               this.strategy = new WeekEndGenerator(this.cashierManager);
-          } else if (strategyWork =="PizzaDay") {
+          } else if (Objects.equals(strategyWork, "PizzaDay")) {
               this.strategy=new PizzaDayGenerator(this.cashierManager);
           }else{
               System.out.println("Incorrect strategy");

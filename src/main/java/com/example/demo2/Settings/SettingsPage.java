@@ -126,7 +126,9 @@ public class SettingsPage {
 //        Button newGameButton = createButton("NEW GAME");
         Button quitButton = createButton("QUIT");
 //
+        PizzeriaSimulator.getInstance().stopThreadsAndCleanResources();
         quitButton.setOnAction(event -> System.exit(0));
+
 //        newGameButton.setOnAction(event -> {
 //            PizzaConfiguration configuration = new PizzaConfiguration();
 //            configuration.start(primaryStage);
